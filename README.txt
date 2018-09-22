@@ -81,7 +81,7 @@ creating your backups. Be aware though that you will need to recreate the
 sessions table if you use this backup on an empty database.
 
 Do not change the file extension of backup files or the restore function will be
-unable to determine the compression type the file and will not function
+unable to determine the compression type of the file and will not function
 correctly.
 
 The module's permissions should only be given to trusted users due to the
@@ -105,3 +105,15 @@ $conf['backup_migrate_backup_memory_limit'] = '512M';
 
 // Backup & Migrate: Use 1GB when generating backups.
 $conf['backup_migrate_backup_memory_limit'] = '1G';
+
+
+If backups fail due to a timeout error, especially an error saying "MySQL server
+has gone away", use the "backup_migrate_backup_max_time" variable to adjust the
+timeout. Before doing this, check to see what PHP's "max_execution_time" is set
+to, then set the "backup_migrate_backup_max_time" variale to a higher number,
+e.g. if max_execution_time is 180 (seconds) try setting
+backup_migrate_backup_max_time to 240 seconds / 4 minutes, or 300 seconds / 5
+minutes
+
+// Backup & Migrate: Adjust the PHP timeout to 5 minutes / 300 seconds.
+$conf['backup_migrate_backup_max_time'] = 300;

@@ -1504,10 +1504,7 @@ function backup_migrate_perform_backup(&$settings) {
   backup_migrate_include('destinations', 'files', 'filters');
   timer_start('backup_migrate_backup');
 
-  // If not in 'safe mode', increase the maximum execution time:
-  if (!ini_get('safe_mode') && ini_get('max_execution_time') < variable_get('backup_migrate_backup_max_time', 1200)) {
-    drupal_set_time_limit(variable_get('backup_migrate_backup_max_time', 1200));
-  }
+  _backup_migrate_set_timeout();
 
   // Conditionally increase the memory limit
   // Get the current php memory limit
@@ -1610,10 +1607,7 @@ function backup_migrate_perform_restore($destination_id, $file, $settings = arra
   backup_migrate_include('files', 'filters');
   timer_start('backup_migrate_restore');
 
-  // If not in 'safe mode', increase the maximum execution time:
-  if (!ini_get('safe_mode') && ini_get('max_execution_time') < variable_get('backup_migrate_backup_max_time', 1200)) {
-    drupal_set_time_limit(variable_get('backup_migrate_restore_max_time', 1200));
-  }
+  _backup_migrate_set_timeout();
 
   // Make the settings into a default profile.
   if (!is_object($settings)) {
@@ -1879,6 +1873,26 @@ function _backup_migrate_message_callback($callback = NULL) {
 }
 
 /**
+ * Increase the execution timeout, and also the database connection timeout.
+ */
+function _backup_migrate_set_timeout() {
+  // If not in 'safe mode', increase the maximum execution time:
+  $backup_max_time = variable_get('backup_migrate_backup_max_time', 1200);
+  if (!ini_get('safe_mode') && ini_get('max_execution_time') < $backup_max_time) {
+    drupal_set_time_limit($backup_max_time);
+  }
+
+  // Also increase the time mysql keeps the connection open.
+  if (Database::getConnection() instanceof DatabaseConnection_mysql) {
+    $mysql_wait_timeout = db_query('SELECT @@session.wait_timeout')->fetchField();
+    if ($mysql_wait_timeout < $backup_max_time) {
+      // This does not work with placeholders, so sanitize by casting to int.
+      db_query('SET SESSION wait_timeout = ' . (int) $backup_max_time);
+    }
+  }
+}
+
+/**
  * Determines if time for a page execution has run out.
  */
 function _backup_migrate_check_timeout() {
@@ -1888,10 +1902,13 @@ function _backup_migrate_check_timeout() {
   if (ini_get('max_execution_time') == 0) {
     return FALSE;
   }
+
   // Figure out when we should stop execution.
   if (!$timeout) {
-    $timeout = (!empty($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time()) + ini_get('max_execution_time') - variable_get('backup_migrate_timeout_buffer', 5);
+    $backup_max_time = max(ini_get('max_execution_time'), variable_get('backup_migrate_backup_max_time', 1200));
+    $timeout = (!empty($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time()) + $backup_max_time - variable_get('backup_migrate_timeout_buffer', 5);
   }
+
   return (time() > $timeout);
 }
 
