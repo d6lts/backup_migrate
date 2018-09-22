@@ -1479,6 +1479,25 @@ function backup_migrate_get_saved_backups($refresh = FALSE) {
 }
 
 /**
+ * Helper function for byte conversion
+ */
+function backup_migrate_to_bytes($from) {
+  $number = substr($from, 0, -1);
+  switch (strtoupper(substr($from, -1))) {
+    case "M":
+      return $number * pow(1024, 2);
+      break;
+
+    case "G":
+      return $number * pow(1024, 3);
+      break;
+
+    default:
+      return $number * pow(1024, 2);
+  }
+}
+
+/**
  * Perform a backup with the given settings.
  */
 function backup_migrate_perform_backup(&$settings) {
@@ -1488,6 +1507,35 @@ function backup_migrate_perform_backup(&$settings) {
   // If not in 'safe mode', increase the maximum execution time:
   if (!ini_get('safe_mode') && ini_get('max_execution_time') < variable_get('backup_migrate_backup_max_time', 1200)) {
     drupal_set_time_limit(variable_get('backup_migrate_backup_max_time', 1200));
+  }
+
+  // Conditionally increase the memory limit
+  // Get the current php memory limit
+  $php_memory_limit = ini_get('memory_limit');
+
+  // Convert the php memory limit to bytes
+  $php_memory_limit_bytes = backup_migrate_to_bytes($php_memory_limit);
+
+  // Get the current Backup Migrate memory limit.
+  // Hint: To further increase the memory limit used by Backup Migrate add one
+  // of the following line to the settings.php file:
+  // * $conf['backup_migrate_backup_memory_limit'] = '512M';
+  // * $conf['backup_migrate_backup_memory_limit'] = '1G';
+  $backup_migrate_memory_limit = variable_get('backup_migrate_backup_memory_limit', '256M');
+
+  // Convert the Backup Migrate memory limit to bytes.
+  $backup_migrate_memory_limit_bytes = backup_migrate_to_bytes($backup_migrate_memory_limit);
+
+  // If not in 'safe mode', increase the memory limit.
+  if (!ini_get('safe_mode') && $php_memory_limit_bytes < $backup_migrate_memory_limit_bytes) {
+    // Ensure ini_set() is not disabled.
+    if (!strpos(ini_get('disable_functions'), 'ini_set')) {
+      // Convert bytes to megabytes, add the 'M' unit.
+      $backup_migrate_memory_limit = round($backup_migrate_memory_limit_bytes / 1024 / 1024) . 'M';
+
+      // Update the php memory limit.
+      ini_set('memory_limit', $backup_migrate_memory_limit);
+    }
   }
 
   // Confirm the destinations are valid.

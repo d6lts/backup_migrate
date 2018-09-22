@@ -93,4 +93,15 @@ Don't panic, the restore file should work with phpMyAdmin's import function, or
 with the mysql command line tool. If it does not, then it is likely corrupt; you
 may panic now. MAKE SURE THAT THIS MODULE IS NOT YOUR ONLY FORM OF BACKUP.
 
+
+Known problems
 -------------------------------------------------------------------------------
+If backups fail due to an out-of-memory, try adjusting the memory limit using
+the "backup_migrate_backup_memory_limit" variable by adding one of these lines
+to the site's settings.php file:
+
+// Backup & Migrate: Use 512MB when generating backups.
+$conf['backup_migrate_backup_memory_limit'] = '512M';
+
+// Backup & Migrate: Use 1GB when generating backups.
+$conf['backup_migrate_backup_memory_limit'] = '1G';
