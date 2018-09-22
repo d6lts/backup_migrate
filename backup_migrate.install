@@ -807,25 +807,40 @@ function backup_migrate_update_7304() {
  * Fix schema mismatch after upgrade.
  */
 function backup_migrate_update_7305() {
+  // Fix the 'machine_name' table fields.
+  $field_spec = array(
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '0',
+  );
   foreach (array(
     'backup_migrate_profiles',
     'backup_migrate_destinations',
     'backup_migrate_sources',
     'backup_migrate_schedules',
   ) as $table) {
-    db_change_field($table, 'machine_name', 'machine_name', array(
-      'type' => 'varchar',
-      'length' => 255,
-      'not null' => TRUE,
-      'default' => '0',
-    ));
+    if (db_field_exists($table, $machine_name)) {
+      db_change_field($table, 'machine_name', 'machine_name', $field_spec);
+    }
+    else {
+      db_add_field($table, 'machine_name', $field_spec);
+    }
   }
-  db_change_field('backup_migrate_schedules', 'cron', 'cron', array(
+
+  // Fix the 'cron' table field.
+  $field_spec = array(
     'type' => 'varchar',
     'length' => 32,
     'not null' => TRUE,
     'default' => 'builtin',
-  ));
+  );
+  if (db_field_exists('backup_migrate_schedules', 'cron')) {
+    db_change_field('backup_migrate_schedules', 'cron', 'cron', $field_spec);
+  }
+  else {
+    db_add_field('backup_migrate_schedules', 'cron', $field_spec);
+  }
 }
 
 /**
