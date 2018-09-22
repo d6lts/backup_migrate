@@ -55,6 +55,17 @@ function backup_migrate_drush_command() {
       'destination'   => "Optional. The id of destination to list backups from. Use 'drush bam-destinations' to get a list of destinations.",
     ),
   );
+  $items['bam-schedule'] = array(
+    'callback' => 'backup_migrate_drush_schedule',
+    'description' => dt('Backup using a specific schedule.'),
+    'arguments' => array(
+      'schedule_id' => dt('The ID of the schedule to run.'),
+    ),
+  );
+  $items['bam-schedules'] = array(
+    'callback' => 'backup_migrate_drush_schedules',
+    'description' => dt('Get a list of available schedules.'),
+  );
   return $items;
 }
 
@@ -107,6 +118,45 @@ function backup_migrate_drush_backup($source_id = 'db', $destination_id = 'manua
   $settings->destination_id = $destination_id;
   $settings->source_id = $source_id;
   backup_migrate_perform_backup($settings);
+}
+
+/**
+ * Backup using schedule.
+ */
+function backup_migrate_drush_schedule($schedule_id = '') {
+  backup_migrate_include('schedules');
+
+  // Set the message mode to drush output.
+  _backup_migrate_message_callback('_backup_migrate_message_drush');
+
+  if (!($schedule = backup_migrate_get_schedule($schedule_id))) {
+    _backup_migrate_message("Could not find the schedule '@schedule'. Try using 'drush bam-schedules' to get a list of available schedules.", array('@schedule' => $schedule_id), 'error');
+    return;
+  }
+
+  if (!$schedule->enabled) {
+    _backup_migrate_message("Nothing to do, the schedule '@schedule' is disabled.", array('@schedule' => $schedule_id), 'warning');
+    return;
+  }
+
+  _backup_migrate_message("Starting schedule '$schedule_id'...");
+
+  backup_migrate_schedule_run($schedule_id);
+}
+
+/**
+ * Get a list of available destinations.
+ */
+function backup_migrate_drush_schedules() {
+  backup_migrate_include('schedules');
+  $rows = array(array(dt('ID'), dt('Name')));
+  foreach (backup_migrate_get_schedules() as $schedule) {
+    $rows[] = array(
+      $schedule->get_id(),
+      $schedule->get_name(),
+    );
+  }
+  drush_print_table($rows, TRUE, array(32, 32));
 }
 
 /**
