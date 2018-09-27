@@ -11,7 +11,7 @@
  * @ingroup backup_migrate_destinations
  */
 class backup_migrate_destination_email extends backup_migrate_destination {
-  var $supported_ops = array('scheduled backup', 'manual backup', 'remote backup', 'configure');
+  public $supported_ops = array('scheduled backup', 'manual backup', 'remote backup', 'configure');
 
   /**
    * Save to (ie. email the file) to the email destination.
@@ -88,12 +88,12 @@ function _backup_migrate_destination_email_mail_backup($attachment, $to) {
  *
  */
 class mime_mail {
-  var $parts;
-  var $to;
-  var $from;
-  var $headers;
-  var $subject;
-  var $body;
+  public $parts;
+  public $to;
+  public $from;
+  public $headers;
+  public $subject;
+  public $body;
 
   public function __construct() {
     $this->parts   = array();

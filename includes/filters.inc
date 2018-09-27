@@ -205,8 +205,8 @@ function backup_migrate_filters_file_types() {
  * A base class for basing filters on.
  */
 class backup_migrate_filter {
-  var $weight = 0;
-  var $op_weights = array();
+  public $weight = 0;
+  public $op_weights = array();
 
   /**
    * Get the weight of the filter for the given op.

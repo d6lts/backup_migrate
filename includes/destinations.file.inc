@@ -11,7 +11,7 @@
  * @ingroup backup_migrate_destinations
  */
 class backup_migrate_destination_files extends backup_migrate_destination {
-  var $supported_ops = array('scheduled backup', 'manual backup', 'local backup', 'restore', 'list files', 'configure', 'delete');
+  public $supported_ops = array('scheduled backup', 'manual backup', 'local backup', 'restore', 'list files', 'configure', 'delete');
 
   public function type_name() {
     return t("Server Directory");
@@ -301,7 +301,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
  * The manual files directory.
  */
 class backup_migrate_destination_files_manual extends backup_migrate_destination_files {
-  var $supported_ops = array('manual backup', 'restore', 'list files', 'configure', 'delete');
+  public $supported_ops = array('manual backup', 'restore', 'list files', 'configure', 'delete');
   public function __construct($params = array()) {
     $dir = 'private://backup_migrate/manual';
     parent::__construct($params + array('location' => $dir, 'name' => t('Manual Backups Directory')));
@@ -313,7 +313,7 @@ class backup_migrate_destination_files_manual extends backup_migrate_destination
  * The scheduled files directory.
  */
 class backup_migrate_destination_files_scheduled extends backup_migrate_destination_files {
-  var $supported_ops = array('scheduled backup', 'restore', 'list files', 'configure', 'delete');
+  public $supported_ops = array('scheduled backup', 'restore', 'list files', 'configure', 'delete');
   public function __construct($params = array()) {
     $dir = 'private://backup_migrate/scheduled';
     parent::__construct($params + array('location' => $dir, 'name' => t('Scheduled Backups Directory')));

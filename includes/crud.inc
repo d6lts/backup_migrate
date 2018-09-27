@@ -397,16 +397,16 @@ function backup_migrate_crud_create_item($type, $params) {
  * A base class for items which can be stored in the database.
  */
 class backup_migrate_item {
-  var $show_in_list = TRUE;
-  var $settings_path = '/settings/';
-  var $db_table = '';
-  var $type_name = '';
-  var $storage = FALSE;
-  var $default_values = array();
-  var $singular = 'item';
-  var $plural = 'items';
-  var $title_plural = 'Items';
-  var $title_singular = 'Item';
+  public $show_in_list = TRUE;
+  public $settings_path = '/settings/';
+  public $db_table = '';
+  public $type_name = '';
+  public $storage = FALSE;
+  public $default_values = array();
+  public $singular = 'item';
+  public $plural = 'items';
+  public $title_plural = 'Items';
+  public $title_singular = 'Item';
 
   /**
    * This function is not supposed to be called.
@@ -895,7 +895,6 @@ class backup_migrate_item {
     );
     return $items;
   }
-
 
   /**
    * Create a new items with the given input.

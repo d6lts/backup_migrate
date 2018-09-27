@@ -206,12 +206,12 @@ function _backup_migrate_profile_saved_default_profile($profile_id = NULL) {
  * A profile class for crud operations.
  */
 class backup_migrate_profile extends backup_migrate_item {
-  var $db_table = "backup_migrate_profiles";
-  var $type_name = "profile";
-  var $singular = 'settings profile';
-  var $plural = 'settings profiles';
-  var $title_plural = 'Settings Profiles';
-  var $title_singular = 'Settings Profile';
+  public $db_table = "backup_migrate_profiles";
+  public $type_name = "profile";
+  public $singular = 'settings profile';
+  public $plural = 'settings profiles';
+  public $title_plural = 'Settings Profiles';
+  public $title_singular = 'Settings Profile';
 
   /**
    * Perform a shallow merge of the defaults and the parameters.

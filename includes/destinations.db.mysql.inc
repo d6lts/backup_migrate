@@ -107,7 +107,6 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
     return $form;
   }
 
-
   /**
    * Backup the databases to a file.
    *
@@ -157,7 +156,6 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
       return FALSE;
     }
   }
-
 
   /**
    * Backup the databases to a file using the mysqldump command.
@@ -233,7 +231,6 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
     }
     return $num;
   }
-
 
   /**
    * Read a multiline sql command from a file.

@@ -11,8 +11,8 @@
  * @ingroup backup_migrate_destinations
  */
 class backup_migrate_destination_ftp extends backup_migrate_destination_remote {
-  var $supported_ops = array('scheduled backup', 'manual backup', 'remote backup', 'restore', 'list files', 'configure', 'delete');
-  var $ftp = NULL;
+  public $supported_ops = array('scheduled backup', 'manual backup', 'remote backup', 'restore', 'list files', 'configure', 'delete');
+  public $ftp = NULL;
 
   /**
    * Save to the ftp destination.

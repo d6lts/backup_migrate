@@ -41,7 +41,6 @@ class BmTestBasics extends BmTestBase {
 
     // @todo Confirm each of the tabs are present.
     // @todo Confirm each of the local tasks are present.
-
     // Confirm the form has the expected fields.
     $this->assertFieldByName('source_id');
     $this->assertFieldByName('destination_id');

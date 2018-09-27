@@ -339,7 +339,7 @@ function backup_migrate_nodesquirrel_settings_form($form_state) {
  * @ingroup backup_migrate_destinations
  */
 class backup_migrate_destination_nodesquirrel extends backup_migrate_destination {
-  var $supported_ops = array(
+  public $supported_ops = array(
     'scheduled backup',
     'manual backup',
     'remote backup',
@@ -348,11 +348,11 @@ class backup_migrate_destination_nodesquirrel extends backup_migrate_destination
     'configure',
     'delete',
   );
-  var $cache_files = TRUE;
+  public $cache_files = TRUE;
   /**
    * Don't generate a metadata file as NodeSquirrel can save metadata natively.
    */
-  var $save_metadata = FALSE;
+  public $save_metadata = FALSE;
   public function __construct($params = array()) {
     parent::__construct($params + array('name' => t('NodeSquirrel')));
   }

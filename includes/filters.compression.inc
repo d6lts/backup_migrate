@@ -11,7 +11,7 @@
  * @ingroup backup_migrate_filters
  */
 class backup_migrate_filter_compression extends backup_migrate_filter {
-  var $op_weights = array('backup' => 100, 'restore' => -100);
+  public $op_weights = array('backup' => 100, 'restore' => -100);
 
   /**
    * This function is called on a backup file after the backup has been completed.

@@ -11,7 +11,7 @@
  * @ingroup backup_migrate_filters
  */
 class backup_migrate_filter_encryption extends backup_migrate_filter {
-  var $op_weights = array('backup' => 170, 'restore' => -170);
+  public $op_weights = array('backup' => 170, 'restore' => -170);
 
   /**
    * Called on a backup file after the backup has been completed.

@@ -13,7 +13,7 @@
  * @ingroup backup_migrate_filters
  */
 class backup_migrate_filter_backup_restore extends backup_migrate_filter {
-  var $op_weights = array('backup' => 0, 'restore' => 0);
+  public $op_weights = array('backup' => 0, 'restore' => 0);
 
   /**
    * Get the default destinations for this filter.

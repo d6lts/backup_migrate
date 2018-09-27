@@ -48,7 +48,6 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
     return 'mysql';
   }
 
-
   /**
    * Declare any mysql databases defined in the settings.php file as a possible source.
    */
@@ -148,7 +147,6 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
     }
   }
 
-
   /**
    * Backup the databases to a file using the mysqldump command.
    */
@@ -221,7 +219,6 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
     }
     return $num;
   }
-
 
   /**
    * Read a multiline sql command from a file.

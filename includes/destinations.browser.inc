@@ -32,7 +32,7 @@ class backup_migrate_destination_browser_upload extends backup_migrate_destinati
   /**
    * {@inheritdoc}
    */
-  var $supported_ops = array('restore');
+  public $supported_ops = array('restore');
 
   /**
    * Constructor.
@@ -68,13 +68,13 @@ class backup_migrate_destination_browser_download extends backup_migrate_destina
   /**
    * {@inheritdoc}
    */
-  var $supported_ops = array('manual backup');
+  public $supported_ops = array('manual backup');
 
   /**
    * Browser downloads must always be the last destination as they must end the
    * current process when they are done.
    */
-  var $weight = 1000;
+  public $weight = 1000;
 
   /**
    * Constructor.

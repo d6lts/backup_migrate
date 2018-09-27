@@ -17,7 +17,7 @@ backup_migrate_include('sources.filesource');
  * @ingroup backup_migrate_destinations
  */
 class backup_migrate_files_destination_archivesource extends backup_migrate_destination_filesource {
-  var $supported_ops = array('source');
+  public $supported_ops = array('source');
 
   public function type_name() {
     return t("Site Archive Source");

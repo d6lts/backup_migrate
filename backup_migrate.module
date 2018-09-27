@@ -3,16 +3,11 @@
 /**
  * @file
  * Backup and restore databases for Drupal.
- *
- * Create (manually or scheduled) and restore backups of the Drupal database
- * with an option to exclude table data (e.g. cache_*).
  */
 
 define('BACKUP_MIGRATE_VERSION', '7.x-3.x');
 define('BACKUP_MIGRATE_MENU_PATH', 'admin/config/system/backup_migrate');
 define('BACKUP_MIGRATE_MENU_DEPTH', 4);
-
-/* Drupal Hooks */
 
 /**
  * Implements hook_help().
@@ -20,11 +15,10 @@ define('BACKUP_MIGRATE_MENU_DEPTH', 4);
 function backup_migrate_help($section, $arg) {
   $help = array(
     array(
-      'body' =>
-      t('Backup and Migrate makes the task of backing up your Drupal database and migrating data from one Drupal install to another easier. It provides a function to backup the entire database to file or download, and to restore from a previous backup. You can also schedule the backup operation. Compression of backup files is also supported.  The database backup files created with this module can be imported into this or any other Drupal installation with the !restorelink, or you can use a database tool such as <a href="!phpmyadminurl">phpMyAdmin</a> or the mysql command line command.', array(
-        '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
-        '!phpmyadminurl' => 'http://www.phpmyadmin.net',
-      )),
+      'body' => t('Backup and Migrate makes the task of backing up your Drupal database and migrating data from one Drupal install to another easier. It provides a function to backup the entire database to file or download, and to restore from a previous backup. You can also schedule the backup operation. Compression of backup files is also supported.  The database backup files created with this module can be imported into this or any other Drupal installation with the !restorelink, or you can use a database tool such as <a href="!phpmyadminurl">phpMyAdmin</a> or the mysql command line command.', array(
+          '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
+          '!phpmyadminurl' => 'http://www.phpmyadmin.net',
+        )),
     ),
     BACKUP_MIGRATE_MENU_PATH => array(
       'title' => t('Quick Backup Tab'),
@@ -34,10 +28,10 @@ function backup_migrate_help($section, $arg) {
     BACKUP_MIGRATE_MENU_PATH . '/export/advanced' => array(
       'title' => t('Advanced Backup Tab'),
       'body' => t('Use this form to run manual backups of your database and files with more advanced options. If you have any !profilelink saved you can load those settings. You can save any of the changes you make to these settings as a new settings profile.', array(
-        "!profilelink" => user_access('administer backup and migrate') ? l(t('settings profiles'), BACKUP_MIGRATE_MENU_PATH . '/profile') : t('settings profiles'),
-        '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
-        '!phpmyadminurl' => 'http://www.phpmyadmin.net',
-      )),
+          "!profilelink" => user_access('administer backup and migrate') ? l(t('settings profiles'), BACKUP_MIGRATE_MENU_PATH . '/profile') : t('settings profiles'),
+          '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
+          '!phpmyadminurl' => 'http://www.phpmyadmin.net',
+        )),
       'access arguments' => array('perform backup'),
     ),
     BACKUP_MIGRATE_MENU_PATH . '/restore' => array(
@@ -59,25 +53,25 @@ function backup_migrate_help($section, $arg) {
     BACKUP_MIGRATE_MENU_PATH . '/settings/profile' => array(
       'title' => t('Profiles'),
       'body' => t('Profiles are saved backup settings. Profiles store your table exclusion settings as well as your backup file name, compression and timestamp settings. You can use profiles in !schedulelink and for !manuallink.', array(
-        '!schedulelink' => user_access('administer backup and migrate') ? l(t('schedules'), BACKUP_MIGRATE_MENU_PATH . '/schedule') : t('settings profiles'),
-        '!manuallink' => user_access('perform backups') ? l(t('manual backups'), BACKUP_MIGRATE_MENU_PATH) : t('manual backups'),
-      )),
+          '!schedulelink' => user_access('administer backup and migrate') ? l(t('schedules'), BACKUP_MIGRATE_MENU_PATH . '/schedule') : t('settings profiles'),
+          '!manuallink' => user_access('perform backups') ? l(t('manual backups'), BACKUP_MIGRATE_MENU_PATH) : t('manual backups'),
+        )),
       'more' => t('You can create new profiles using the add profiles tab or by checking the "Save these settings" button on the advanced backup page.'),
       'access arguments' => array('administer backup and migrate'),
     ),
     BACKUP_MIGRATE_MENU_PATH . '/schedule' => array(
       'title' => t('Scheduling'),
       'body' => t('Automatically backup up your database and files on a regular schedule using <a href="!cronurl">cron</a>.', array(
-        '!cronurl' => 'http://drupal.org/cron',
-      )),
+          '!cronurl' => 'http://drupal.org/cron',
+        )),
       'more' => t("Each schedule will run a maximum of once per cron run, so they will not run more frequently than your cron is configured to run. If you specify a number of backups to keep for a schedule, old backups will be deleted as new ones created. <strong>If specifiy a number of files to keep other backup files in that schedule's destination will get deleted</strong>."),
       'access arguments' => array('administer backup and migrate'),
     ),
     BACKUP_MIGRATE_MENU_PATH . '/settings/import' => array(
       'title' => t('Importing Settings'),
       'body' => t('Import a settings profile, backup schedule, source or destination by pasting the export code into the textarea.', array(
-        '!cronurl' => 'http://drupal.org/cron',
-      )),
+          '!cronurl' => 'http://drupal.org/cron',
+        )),
     ),
   );
   if (module_exists('help')) {
@@ -89,7 +83,7 @@ function backup_migrate_help($section, $arg) {
   }
 
   if ($section == 'admin/help#backup_migrate') {
-    $out = "";
+    $out = '';
     foreach ($help as $key => $section) {
       if (isset($section['access arguments'])) {
         foreach ($section['access arguments'] as $access) {
@@ -624,7 +618,6 @@ function backup_migrate_ui_schedule_form($form, &$form_state, $sources, $schedul
       // '#title' => t('Backup Source'),
       // '#value' => $source->get('name'),
       // );
-
       $form['quickschedule'][$key]['settings'] = array(
         '#type' => 'backup_migrate_dependent',
         '#dependencies' => array(
@@ -1479,18 +1472,20 @@ function backup_migrate_get_saved_backups($refresh = FALSE) {
 }
 
 /**
- * Helper function for byte conversion
+ * Helper function for byte conversion.
  */
 function backup_migrate_to_bytes($from) {
   $number = substr($from, 0, -1);
   switch (strtoupper(substr($from, -1))) {
     case "M":
       return $number * pow(1024, 2);
-      break;
+
+    break;
 
     case "G":
       return $number * pow(1024, 3);
-      break;
+
+    break;
 
     default:
       return $number * pow(1024, 2);
@@ -1507,10 +1502,10 @@ function backup_migrate_perform_backup(&$settings) {
   _backup_migrate_set_timeout();
 
   // Conditionally increase the memory limit
-  // Get the current php memory limit
+  // Get the current php memory limit.
   $php_memory_limit = ini_get('memory_limit');
 
-  // Convert the php memory limit to bytes
+  // Convert the php memory limit to bytes.
   $php_memory_limit_bytes = backup_migrate_to_bytes($php_memory_limit);
 
   // Get the current Backup Migrate memory limit.
@@ -1781,7 +1776,6 @@ function backup_migrate_shutdown($settings) {
 //     ),
 //   );
 // }
-
 /**
  * Action callback.
  */
@@ -1916,7 +1910,7 @@ function _backup_migrate_check_timeout() {
  * Converts an associated array to an ini format string.
  */
 function _backup_migrate_array_to_ini($data, $prefix = '') {
-  $content = "";
+  $content = '';
   foreach ($data as $key => $val) {
     if ($prefix) {
       $key = $prefix . '[' . $key . ']';
@@ -1925,7 +1919,7 @@ function _backup_migrate_array_to_ini($data, $prefix = '') {
       $content .= _backup_migrate_array_to_ini($val, $key);
     }
     else {
-      $content .= $key . " = \"" . $val . "\"\n";
+      $content .= $key . ' = "' . $val . "\"\n";
     }
   }
   return $content;

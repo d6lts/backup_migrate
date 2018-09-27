@@ -11,8 +11,8 @@
  * @ingroup backup_migrate_filters
  */
 class backup_migrate_filter_utils extends backup_migrate_filter {
-  var $op_weights = array('pre_backup' => -1000, 'post_backup' => 1000);
-  var $saved_devel_query = NULL;
+  public $op_weights = array('pre_backup' => -1000, 'post_backup' => 1000);
+  public $saved_devel_query = NULL;
 
   /**
    * Get the default backup settings for this filter.

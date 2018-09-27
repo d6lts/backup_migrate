@@ -301,7 +301,7 @@ function backup_migrate_drush_destination_files($destination_id = NULL) {
       dt('Date'),
       dt('Age'),
       dt('Size'),
-    )
+    ),
   );
 
   if (count($rows)) {

@@ -205,12 +205,12 @@ function _backup_migrate_file_dispose_buffer($buffer) {
  * A backup file which allows for saving to and reading from the server.
  */
 class backup_file {
-  var $file_info = array();
-  var $type = array();
-  var $ext = array();
-  var $path = "";
-  var $name = "";
-  var $handle = NULL;
+  public $file_info = array();
+  public $type = array();
+  public $ext = array();
+  public $path = "";
+  public $name = "";
+  public $handle = NULL;
 
   /**
    * Construct a file object given a file path, or create a temp file for writing.
@@ -277,7 +277,6 @@ class backup_file {
     }
     return $this->file_info;
   }
-
 
   /**
    * Get one or all pieces of info for the file.
