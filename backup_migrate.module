@@ -149,6 +149,9 @@ function backup_migrate_backup_migrate_service_object_alter(BackupMigrateInterfa
   // Add a compression filter.
   $plugins->add('compressor', new \BackupMigrate\Core\Filter\CompressionFilter());
 
+  // Add the Encrypt utilities filter.
+  $plugins->add('encrypt', new \BackupMigrate\Drupal\Filter\DrupalEncrypt());
+
   // Add the Drupal utilities filter.
   $plugins->add('utils', new \BackupMigrate\Drupal\Filter\DrupalUtils());
 
