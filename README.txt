@@ -94,26 +94,29 @@ with the mysql command line tool. If it does not, then it is likely corrupt; you
 may panic now. MAKE SURE THAT THIS MODULE IS NOT YOUR ONLY FORM OF BACKUP.
 
 
-Known problems
+Known problems and workarounds
 -------------------------------------------------------------------------------
-If backups fail due to an out-of-memory, try adjusting the memory limit using
-the "backup_migrate_backup_memory_limit" variable by adding one of these lines
-to the site's settings.php file:
+* If backups fail due to an out-of-memory, try adjusting the memory limit using
+  the "backup_migrate_backup_memory_limit" variable by adding one of these lines
+  to the site's settings.php file:
 
-// Backup & Migrate: Use 512MB when generating backups.
-$conf['backup_migrate_backup_memory_limit'] = '512M';
+  // Backup & Migrate: Use 512MB when generating backups.
+  $conf['backup_migrate_backup_memory_limit'] = '512M';
 
-// Backup & Migrate: Use 1GB when generating backups.
-$conf['backup_migrate_backup_memory_limit'] = '1G';
+  // Backup & Migrate: Use 1GB when generating backups.
+  $conf['backup_migrate_backup_memory_limit'] = '1G';
 
+* If backups fail due to a timeout error, especially an error saying "MySQL
+  server has gone away", use the "backup_migrate_backup_max_time" variable to
+  adjust the timeout. Before doing this, check to see what PHP's
+  "max_execution_time" is set to, then set the "backup_migrate_backup_max_time"
+  variale to a higher number, e.g. if max_execution_time is 180 (seconds) try
+  setting backup_migrate_backup_max_time to 240 seconds / 4 minutes, or 300
+  seconds / 5 minutes
 
-If backups fail due to a timeout error, especially an error saying "MySQL server
-has gone away", use the "backup_migrate_backup_max_time" variable to adjust the
-timeout. Before doing this, check to see what PHP's "max_execution_time" is set
-to, then set the "backup_migrate_backup_max_time" variale to a higher number,
-e.g. if max_execution_time is 180 (seconds) try setting
-backup_migrate_backup_max_time to 240 seconds / 4 minutes, or 300 seconds / 5
-minutes
+  // Backup & Migrate: Adjust the PHP timeout to 5 minutes / 300 seconds.
+  $conf['backup_migrate_backup_max_time'] = 300;
 
-// Backup & Migrate: Adjust the PHP timeout to 5 minutes / 300 seconds.
-$conf['backup_migrate_backup_max_time'] = 300;
+* A variable has been added which may help with problems. Setting the variable
+  'backup_migrate_verbose' to TRUE will make the module log additional messages
+  to watchdog as the module performs certain actions.
