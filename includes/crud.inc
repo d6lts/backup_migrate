@@ -462,7 +462,9 @@ class backup_migrate_item {
     if (!$this->get_id()) {
       $this->unique_id();
     }
-    drupal_write_record($this->db_table, $this->to_array(), !empty($this->storage) ? $this->get_primary_key() : array());
+	$table = $this->db_table;
+	$data = $this->to_array();
+    drupal_write_record($table, $data, !empty($this->storage) ? $this->get_primary_key() : array());
   }
 
   /**
