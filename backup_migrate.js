@@ -10,9 +10,10 @@
     attach: function(context, settings) {
       if (Drupal.settings.backup_migrate !== undefined) {
         if (Drupal.settings.backup_migrate.dependents !== undefined) {
+          var key;
           for (key in Drupal.settings.backup_migrate.dependents) {
             info = Drupal.settings.backup_migrate.dependents[key];
-            dependent = $('#edit-' + info['dependent']);
+            var dependent = $('#edit-' + info['dependent']);
             for (key in info['dependencies']) {
               $('[name="' + key + '"]').each(function() {
                 var dependentval = info['dependencies'][key];
@@ -104,7 +105,7 @@
                               else {
                                 $(this).parent().removeClass('checked');
                               }
-                            }).load();
+                            }).load()
                         )
                       )
                     );
