@@ -89,7 +89,7 @@ class backup_migrate_destination_filesource extends backup_migrate_source {
       "#type" => "textarea",
       "#multiple" => TRUE,
       "#title" => t("Exclude the following files or directories"),
-      "#default_value" => $settings['exclude_filepaths'],
+      "#default_value" => isset($settings['exclude_filepaths']) ? $settings['exclude_filepaths'] : '',
       "#description" => t("A list of files or directories to be excluded from backups. Add one path per line relative to the directory being backed up."),
     );
     return $form;
