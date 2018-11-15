@@ -237,7 +237,10 @@ class backup_file {
    * Get the current filepath.
    */
   public function filepath() {
-    return drupal_realpath($this->path);
+    if ($filepath = drupal_realpath($this->path)) {
+      return $filepath;
+    }
+    return $this->path;
   }
 
   /**

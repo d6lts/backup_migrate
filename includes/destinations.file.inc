@@ -21,7 +21,10 @@ class backup_migrate_destination_files extends backup_migrate_destination {
    * Get the file location.
    */
   public function get_realpath() {
-    return drupal_realpath($this->get_location());
+    if ($realpath = drupal_realpath($this->get_location())) {
+      return $realpath;
+    }
+    return $this->get_location();
   }
 
   /**
