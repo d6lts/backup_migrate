@@ -264,18 +264,38 @@ function backup_migrate_form_update_script_selection_form_alter(&$form, $form_st
  * Implements hook_cron().
  */
 function backup_migrate_cron() {
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', 'Cron starting.');
+  }
+
   // Takes care of scheduled backups and deletes abandoned temp files.
   // Set the message mode to logging.
   _backup_migrate_message_callback('_backup_migrate_message_log');
 
   // Clean up any previous abandoned tmp files before we attempt to back up.
   backup_migrate_include('files');
+
+  // Clean up any temporary files that were already present.
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', 'Deleting temp files.');
+  }
   _backup_migrate_temp_files_delete();
+
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', 'Processing schedule(s) backups.');
+  }
   backup_migrate_include('schedules');
   backup_migrate_schedules_cron();
 
-  // Clean up any tmp files from this run.
+  // Clean up any temporary files from this run.
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', 'Deleting temp files.');
+  }
   _backup_migrate_temp_files_delete();
+
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', 'Cron finished.');
+  }
 }
 
 /**
@@ -1548,6 +1568,9 @@ function backup_migrate_perform_backup(&$settings) {
   // Register shutdown callback to deal with timeouts.
   register_shutdown_function('backup_migrate_shutdown', $settings);
 
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', "Starting backup: %file", array('%file' => $file->filename()));
+  }
   $file = backup_migrate_filters_backup($file, $settings);
   if (!$file) {
     if (_backup_migrate_check_timeout()) {
@@ -1559,10 +1582,16 @@ function backup_migrate_perform_backup(&$settings) {
     return FALSE;
   }
 
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', "Preparing to save backup: %file", array('%file' => $file->filename()));
+  }
   $file = backup_migrate_destination_save_file($file, $settings);
   if (!$file) {
     backup_migrate_backup_fail("Could not run backup because the file could not be saved to the destination.", array(), $settings);
     return FALSE;
+  }
+  if (variable_get('backup_migrate_verbose')) {
+    watchdog('backup_migrate', "Backup succeeded: %file", array('%file' => $file->filename()));
   }
 
   // Backup succeeded.
