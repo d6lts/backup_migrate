@@ -264,6 +264,14 @@ function backup_migrate_form_update_script_selection_form_alter(&$form, $form_st
  * Implements hook_cron().
  */
 function backup_migrate_cron() {
+  // Optionally disable hook_cron().
+  if (variable_get('backup_migrate_disable_cron', FALSE)) {
+    if (variable_get('backup_migrate_verbose')) {
+      watchdog('backup_migrate', 'Cron disabled.');
+    }
+    return;
+  }
+
   if (variable_get('backup_migrate_verbose')) {
     watchdog('backup_migrate', 'Cron starting.');
   }
@@ -302,6 +310,14 @@ function backup_migrate_cron() {
  * Implements hook_cronapi().
  */
 function backup_migrate_cronapi($op, $job = NULL) {
+  // Optionally disable hook_cron().
+  if (variable_get('backup_migrate_disable_cron', FALSE)) {
+    if (variable_get('backup_migrate_verbose')) {
+      watchdog('backup_migrate', 'Cron disabled.');
+    }
+    return;
+  }
+
   $items = array();
   backup_migrate_include('schedules');
   foreach (backup_migrate_get_schedules() as $schedule) {

@@ -120,3 +120,11 @@ Known problems and workarounds
 * A variable has been added which may help with problems. Setting the variable
   'backup_migrate_verbose' to TRUE will make the module log additional messages
   to watchdog as the module performs certain actions.
+
+* It can be frustrating working from a production database backup on non-prod
+  servers as schduled backups will automatically run via cron the same as they
+  run on production. The custom cron tasks may be disabled using the
+  "backup_migrate_disable_cron" variable.
+
+  // Backup & Migrate: Disable the cron scripts to disable scheduled backups.
+  $conf['backup_migrate_disable_cron'] = TRUE;

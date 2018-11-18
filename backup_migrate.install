@@ -117,6 +117,15 @@ function backup_migrate_requirements($phase) {
     //   );
     // }
     // @endcode
+
+    if (variable_get('backup_migrate_disable_cron', FALSE)) {
+      $requirements['bm_disable_cron'] = array(
+        'severity' => REQUIREMENT_INFO,
+        'title' => 'Backup Migrate',
+        'value' => $t('Cron tasks are disabled'),
+        'description' => $t('The cron tasks have been disabled, so scheduled backups will not run. See the Backup & Migrate module\'s README.txt file for further details.'),
+      );
+    }
   }
 
   return $requirements;
@@ -435,6 +444,7 @@ function backup_migrate_uninstall() {
   variable_del('backup_migrate_backup_max_time');
   variable_del('backup_migrate_copy_destination_id');
   variable_del('backup_migrate_destination_id');
+  variable_del('backup_migrate_disable_cron');
   variable_del('backup_migrate_memory_limit');
   variable_del('backup_migrate_profile_id');
   variable_del('backup_migrate_schedule_last_run_');
