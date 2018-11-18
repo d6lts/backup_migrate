@@ -34,7 +34,7 @@ class BmTestProfiles extends BmTestBase {
   /**
    * Verify the profile page has the expected functionality available.
    */
-  public function _testProfilePage() {
+  public function testProfilePage() {
     // Load the main B&M page.
     $this->drupalGet(BACKUP_MIGRATE_MENU_PATH . '/settings');
     $this->assertResponse(200);
@@ -48,12 +48,12 @@ class BmTestProfiles extends BmTestBase {
   /**
    * Confirm adding a new backup process works.
    */
-  public function _testAddDefaultProfile() {
+  public function testAddDefaultProfile() {
     // Load the main B&M page.
     $this->drupalGet(BACKUP_MIGRATE_MENU_PATH . '/settings/profile/add');
     $this->assertResponse(200);
 
-    backup_migrate_include('file', 'profiles');
+    backup_migrate_include('files', 'profiles');
     $filename = _backup_migrate_default_filename();
     $defaults = _backup_migrate_profile_default_profile();
 
