@@ -968,21 +968,33 @@ class backup_migrate_destination_nodesquirrel extends backup_migrate_destination
     $request .= "\r\n\r\n";
     $result->request = $request;
 
-    // Write the headers and start of the headers.
-    fwrite($fp, $request);
-    fwrite($fp, $data_header);
+    $out = FALSE;
+    // Write the headers and start of the headers
+    if (($fp_in = fopen($file->filepath(), 'rb')) && fwrite($fp, $request) && fwrite($fp, $data_header)) {
+      // Copy the file 1M at a time.
+      do {
+        $data = fread($fp_in, 1024 * 1024);
+        $size = strlen($data);
+        $sent = 0;
+        while ($sent < $size && ($out = fwrite($fp, substr($data, $sent)))) {
+          $sent += $out;
+        }
+      } while ($out && !feof($fp_in));
 
-    // Copy the file 512k at a time to prevent memory issues.
-    if ($fp_in = fopen($file->filepath(), 'rb')) {
-      while (!feof($fp_in)) {
-        fwrite($fp, fread($fp_in, 1024 * 512));
+      // Finish the write.
+      if ($out) {
+        $out = fwrite($fp, $data_footer);
       }
-      $success = TRUE;
     }
     @fclose($fp_in);
 
-    // Finish the write.
-    fwrite($fp, $data_footer);
+    // Check for errors.
+    if (!$out) {
+      watchdog('backup_migrate', 'NodeSquirrel: network write failed', NULL, WATCHDOG_ERROR);
+      $result->code = -$errno;
+      $result->error = trim($errstr);
+      return $result;
+    }
 
     // Fetch response.
     $response = '';
