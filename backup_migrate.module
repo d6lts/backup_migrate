@@ -1531,9 +1531,9 @@ function backup_migrate_perform_backup(&$settings) {
   // Get the current Backup Migrate memory limit.
   // Hint: To further increase the memory limit used by Backup Migrate add one
   // of the following line to the settings.php file:
-  // * $conf['backup_migrate_backup_memory_limit'] = '512M';
-  // * $conf['backup_migrate_backup_memory_limit'] = '1G';
-  $backup_migrate_memory_limit = variable_get('backup_migrate_backup_memory_limit', '256M');
+  // * $conf['backup_migrate_memory_limit'] = '512M';
+  // * $conf['backup_migrate_memory_limit'] = '1G';
+  $backup_migrate_memory_limit = variable_get('backup_migrate_memory_limit', '256M');
 
   // Convert the Backup Migrate memory limit to bytes.
   $backup_migrate_memory_limit_bytes = backup_migrate_to_bytes($backup_migrate_memory_limit);

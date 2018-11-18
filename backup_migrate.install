@@ -432,14 +432,20 @@ function backup_migrate_schema() {
  * Implements hook_uninstall().
  */
 function backup_migrate_uninstall() {
-  variable_del('backup_migrate_profile_id');
-  variable_del('backup_migrate_source_id');
-  variable_del('backup_migrate_destination_id');
+  variable_del('backup_migrate_backup_max_time');
   variable_del('backup_migrate_copy_destination_id');
+  variable_del('backup_migrate_destination_id');
+  variable_del('backup_migrate_memory_limit');
+  variable_del('backup_migrate_profile_id');
   variable_del('backup_migrate_schedule_last_run_');
+  variable_del('backup_migrate_source_id');
+  variable_del('backup_migrate_timeout_buffer');
   variable_del('backup_migrate_verbose');
-  variable_del('nodesquirrel_secret_key');
   variable_del('nodesquirrel_endpoint_urls');
+  variable_del('nodesquirrel_schedule');
+  variable_del('nodesquirrel_schedule_enabled');
+  variable_del('nodesquirrel_schedule_source_id');
+  variable_del('nodesquirrel_secret_key');
 }
 
 /**
@@ -853,4 +859,15 @@ function backup_migrate_update_7305() {
  */
 function backup_migrate_update_7306() {
   drupal_set_message(t('Please note that release 7.x-3.4 had a bug which caused all backups to be overwritten instead of having a timestamp added. Please review all backup settings to ensure they work as intended.'), 'warning');
+}
+
+/**
+ * 'backup_migrate_backup_memory_limit' vs 'backup_migrate_memory_limit'.
+ */
+function backup_migrate_update_7307() {
+  $limit = variable_get('backup_migrate_backup_memory_limit');
+  if (!empty($limit)) {
+    variable_set('backup_migrate_memory_limit', $limit);
+    variable_del('backup_migrate_backup_memory_limit');
+  }
 }
