@@ -37,6 +37,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #3014601 by DamienMcKenna: Re-enable all tests.
 #3014143 by DamienMcKenna: Add master switch to turn off hook_cron.
 #3014603 by DamienMcKenna: Add a CHANGELOG.txt file.
+#3014596 by DamienMcKenna: Require PHP 5.4.
 
 
 Backup and Migrate 7.x-3.5, 2018-02-05
