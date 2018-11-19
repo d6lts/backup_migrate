@@ -53,7 +53,7 @@ function backup_migrate_backup_migrate_destination_subtypes() {
       'class' => 'backup_migrate_destination_browser_upload',
     ),
     'nodesquirrel' => array(
-      'description' => t('Save the backup files to the NodeSquirrel.com backup service.'),
+      'description' => t('Save the backup files to the <a href="@link" target="_blank">NodeSquirrel</a> backup service.', array('@link' => url('http://nodesquirrel.com'))),
       'file' => drupal_get_path('module', 'backup_migrate') . '/includes/destinations.nodesquirrel.inc',
       'class' => 'backup_migrate_destination_nodesquirrel',
       'type_name' => t('NodeSquirrel.com'),
@@ -69,7 +69,7 @@ function backup_migrate_backup_migrate_destination_subtypes() {
       'remote' => TRUE,
     ),
     's3' => array(
-      'description' => t('Save the backup files to a bucket on your !link.', array('!link' => l(t('Amazon S3 account'), 'http://aws.amazon.com/s3/'))),
+      'description' => t('Save the backup files to a bucket on your <a href="@link" target="_blank">Amazon S3 account</a>.', array('@link' => url('http://aws.amazon.com/s3/'))),
       'file' => drupal_get_path('module', 'backup_migrate') . '/includes/destinations.s3.inc',
       'class' => 'backup_migrate_destination_s3',
       'type_name' => t('Amazon S3 Bucket'),

@@ -39,6 +39,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #3014603 by DamienMcKenna: Add a CHANGELOG.txt file.
 #3014596 by DamienMcKenna: Require PHP 5.4.
 #2943719 by DamienMcKenna: Reduce memory usage during MySQL database generation.
+#2338841 by catch, dasha_v, DamienMcKenna: Incorrect translated string +
+  menu_rebuild() performance issue.
 
 
 Backup and Migrate 7.x-3.5, 2018-02-05
