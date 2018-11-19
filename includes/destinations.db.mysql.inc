@@ -377,56 +377,74 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
    * Get the sql to insert the data for a given table.
    */
   public function _dump_table_data_sql_to_file($file, $table) {
+    $rows_per_query = variable_get('backup_migrate_data_rows_per_query', 1000);
     $rows_per_line = variable_get('backup_migrate_data_rows_per_line', 30);
     $bytes_per_line = variable_get('backup_migrate_data_bytes_per_line', 2000);
 
-    $lines = 0;
-    $data = $this->query("SELECT * FROM `" . $table['name'] . "`", array(), array('fetch' => PDO::FETCH_ASSOC));
-    $rows = $bytes = 0;
+    if (variable_get('backup_migrate_verbose')) {
+      _backup_migrate_message('Table: %table', array('%table' => $table['name']), 'success');
+      _backup_migrate_message('Peak memory usage: %mem', array('%mem' => backup_migrate_get_peak_memory_usage() . 'MB'), 'success');
+    }
 
     // Escape backslashes, PHP code, special chars.
     $search = array('\\', "'", "\x00", "\x0a", "\x0d", "\x1a");
     $replace = array('\\\\', "''", '\0', '\n', '\r', '\Z');
 
-    $line = array();
-    foreach ($data as $row) {
-      // DB Escape the values.
-      $items = array();
-      foreach ($row as $key => $value) {
-        $items[] = is_null($value) ? "null" : "'" . str_replace($search, $replace, $value) . "'";
+    $lines = 0;
+    $from = 0;
+    $args = array('fetch' => PDO::FETCH_ASSOC);
+    while ($data = $this->query("SELECT * FROM `" . $table['name'] . "`", array(), $args, $from, $rows_per_query)) {
+      if ($data->rowCount() == 0) {
+        break;
       }
 
-      // If there is a row to be added.
-      if ($items) {
-        // Start a new line if we need to.
-        if ($rows == 0) {
-          $file->write("INSERT INTO `" . $table['name'] . "` VALUES ");
-          $bytes = $rows = 0;
-        }
-        // Otherwise add a comma to end the previous entry.
-        else {
-          $file->write(",");
+      $rows = $bytes = 0;
+
+      $line = array();
+      foreach ($data as $row) {
+        $from++;
+
+        // DB Escape the values.
+        $items = array();
+        foreach ($row as $key => $value) {
+          $items[] = is_null($value) ? "null" : "'" . str_replace($search, $replace, $value) . "'";
         }
 
-        // Write the data itself.
-        $sql = implode(',', $items);
-        $file->write('(' . $sql . ')');
-        $bytes += strlen($sql);
-        $rows++;
+        // If there is a row to be added.
+        if ($items) {
+          // Start a new line if we need to.
+          if ($rows == 0) {
+            $file->write("INSERT INTO `" . $table['name'] . "` VALUES ");
+            $bytes = $rows = 0;
+          }
+          // Otherwise add a comma to end the previous entry.
+          else {
+            $file->write(",");
+          }
 
-        // Finish the last line if we've added enough items.
-        if ($rows >= $rows_per_line || $bytes >= $bytes_per_line) {
-          $file->write(";\n");
-          $lines++;
-          $bytes = $rows = 0;
+          // Write the data itself.
+          $sql = implode(',', $items);
+          $file->write('(' . $sql . ')');
+          $bytes += strlen($sql);
+          $rows++;
+
+          // Finish the last line if we've added enough items.
+          if ($rows >= $rows_per_line || $bytes >= $bytes_per_line) {
+            $file->write(";\n");
+            $lines++;
+            $bytes = $rows = 0;
+          }
         }
       }
+
+      // Finish any unfinished insert statements.
+      if ($rows > 0) {
+        $file->write(";\n");
+        $lines++;
+      }
     }
-    // Finish any unfinished insert statements.
-    if ($rows > 0) {
-      $file->write(";\n");
-      $lines++;
-    }
+
+    _backup_migrate_message('Peak memory usage: %mem', array('%mem' => backup_migrate_get_peak_memory_usage() . 'MB'), 'success');
 
     return $lines;
   }
@@ -444,11 +462,34 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
   }
 
   /**
-   * Run a db query on this destination's db.
+   * Run a query on this destination's database using Drupal's MySQL engine.
+   *
+   * @param string $query
+   *   The query string.
+   * @param array $args
+   *   Arguments for the query.
+   * @param array $options
+   *   Options to pass to the query.
+   * @param int|null $from
+   *   The starting point for the query; when passed will perform a queryRange()
+   *   method instead of a regular query().
+   * @param int|null $count
+   *   The number of records to obtain from this query. Will be ignored if the
+   *   $from argument is empty.
+   *
+   * @see DatabaseConnection_mysql::query()
+   * @see DatabaseConnection_mysql::queryRange()
    */
-  public function query($query, $args = array(), $options = array()) {
+  public function query($query, array $args = array(), array $options = array(), $from = NULL, $count = NULL) {
     if ($conn = $this->_get_db_connection()) {
-      return $conn->query($query, $args, $options);
+      // If no $from is passed in, just do a basic query.
+      if (is_null($from)) {
+        return $conn->query($query, $args, $options);
+      }
+      // The $from variable was passed in, so do a ranged query.
+      else {
+        return $conn->queryRange($query, $from, $count, $args, $options);
+      }
     }
   }
 

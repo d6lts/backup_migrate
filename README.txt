@@ -106,7 +106,7 @@ Known problems and workarounds
   // Backup & Migrate: Use 1GB when generating backups.
   $conf['backup_migrate_memory_limit'] = '1G';
 
-* If backups fail due to a timeout error, especially an error saying "MySQL
+* If backups fail due to a PHP timeout error, especially an error saying "MySQL
   server has gone away", use the "backup_migrate_backup_max_time" variable to
   adjust the timeout. Before doing this, check to see what PHP's
   "max_execution_time" is set to, then set the "backup_migrate_backup_max_time"

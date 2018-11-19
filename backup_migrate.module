@@ -1565,6 +1565,9 @@ function backup_migrate_perform_backup(&$settings) {
       ini_set('memory_limit', $backup_migrate_memory_limit);
     }
   }
+  if (variable_get('backup_migrate_verbose')) {
+    _backup_migrate_message("Memory limit: %limit", array('%limit' => ini_get('memory_limit')), 'success');
+  }
 
   // Confirm the destinations are valid.
   $valid = backup_migrate_destination_confirm_destination($settings);
@@ -2043,4 +2046,16 @@ function backup_migrate_mail($key, &$message, $params) {
     $message['subject'] = t('!site backup failed', array('!site' => variable_get('site_name', 'Drupal site')));
     $message['body'][] = $params['body'];
   }
+}
+
+/**
+ * Identify the current memory usage.
+ *
+ * Uses the same formula as the Devel module.
+ *
+ * @return int
+ *   The current memory usage, in megabytes.
+ */
+function backup_migrate_get_peak_memory_usage() {
+  return round(memory_get_peak_usage(TRUE) / 1024 / 1024, 2);
 }
