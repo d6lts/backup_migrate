@@ -119,6 +119,12 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
       '#default_value' => !empty($settings['utils_site_offline_message']) ? $settings['utils_site_offline_message'] : variable_get('site_offline_message', t('@site is currently under maintenance. We should be back shortly. Thank you for your patience.', array('@site' => variable_get('site_name', 'Drupal')))),
       '#description' => t('Message to show visitors when the site is in off-line mode.'),
     );
+    $form['advanced']['utils_drop_all_tables'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Drop all tables before import (MySQL only)'),
+      '#default_value' => !empty($settings['utils_drop_all_tables']) ? $settings['utils_drop_all_tables'] : NULL,
+      '#description' => t('Drop all existing database tables before restoring the backup. This option is currently available on MySQL servers only.'),
+    );
     $form['advanced']['use_cli'] = array(
       "#type" => "checkbox",
       "#title" => t("Use cli commands"),

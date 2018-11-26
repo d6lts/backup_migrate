@@ -198,6 +198,15 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
     $num = 0;
 
     if ($file->open() && $conn = $this->_get_db_connection()) {
+      // Optionally drop all existing tables.
+      if (!empty($settings->filters['utils_drop_all_tables'])) {
+        $all_tables = $this->_get_tables();
+        $table_names = array_map('backup_migrate_array_name_value', $all_tables);
+        $table_list = join(', ', $table_names);
+        $stmt = $conn->prepare("DROP TABLE IF EXISTS $table_list;\n");
+        $stmt->execute();
+      }
+
       // Read one line at a time and run the query.
       while ($line = $this->_read_sql_command_from_file($file)) {
         if (_backup_migrate_check_timeout()) {

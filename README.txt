@@ -23,6 +23,8 @@ INSTALLATION:
 * Configure and use the module at admin/config/system/backup_migrate.
 
 OPTIONAL:
+* To drop all tables before import, expand "Advanced options" panel under the
+  "Restore" and "Saved backups" tabs and tick the option.
 * Enable token.module to allow token replacement in backup file names.
 * To Backup to Amazon S3:
     - Download the S3 library from

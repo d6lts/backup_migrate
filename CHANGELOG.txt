@@ -41,6 +41,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #2943719 by DamienMcKenna: Reduce memory usage during MySQL database generation.
 #2338841 by catch, dasha_v, DamienMcKenna: Incorrect translated string +
   menu_rebuild() performance issue.
+#1104012 by DamienMcKenna, axel.rutz, EmanueleQuinto, gisle, jacob.embree, Pere
+  Orga, frenkx: On restore, provide option to drop all tables.
 
 
 Backup and Migrate 7.x-3.5, 2018-02-05

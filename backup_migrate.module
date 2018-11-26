@@ -2059,3 +2059,14 @@ function backup_migrate_mail($key, &$message, $params) {
 function backup_migrate_get_peak_memory_usage() {
   return round(memory_get_peak_usage(TRUE) / 1024 / 1024, 2);
 }
+
+/**
+ * Returns the "name" element from an array.
+ *
+ * Callback for array_map() within
+ * backup_migrate_destination_db_mysql::_restore_db_from_file() and
+ * backup_migrate_source_db_mysql::_restore_db_from_file().
+ */
+function backup_migrate_array_name_value($a) {
+  return $a["name"];
+}
