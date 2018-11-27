@@ -47,6 +47,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   \backup_migrate_destination_nodesquirrel::__xmlrpc\" is discouraged; PHP has
   reserved all method names with a double underscore prefix for future use. 
 #3014597 by DamienMcKenna: Document the advanced backup options.
+#2382541 by sano, DamienMcKenna, couturier, dman, modulist: Updated
+  instructions for installing the S3 library.
 
 
 Backup and Migrate 7.x-3.5, 2018-02-05
