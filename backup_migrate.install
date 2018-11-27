@@ -844,11 +844,16 @@ function backup_migrate_update_7305() {
     'backup_migrate_sources',
     'backup_migrate_schedules',
   ) as $table) {
-    if (db_field_exists($table, $machine_name)) {
-      db_change_field($table, 'machine_name', 'machine_name', $field_spec);
+    if (!db_field_exists($table, $machine_name)) {
+      try {
+        db_add_field($table, 'machine_name', $field_spec);
+      }
+      catch (\Exception $e) {
+        db_change_field($table, 'machine_name', 'machine_name', $field_spec);
+      }
     }
     else {
-      db_add_field($table, 'machine_name', $field_spec);
+      db_change_field($table, 'machine_name', 'machine_name', $field_spec);
     }
   }
 
@@ -859,11 +864,16 @@ function backup_migrate_update_7305() {
     'not null' => TRUE,
     'default' => 'builtin',
   );
-  if (db_field_exists('backup_migrate_schedules', 'cron')) {
-    db_change_field('backup_migrate_schedules', 'cron', 'cron', $field_spec);
+  if (!db_field_exists('backup_migrate_schedules', 'cron')) {
+    try {
+      db_add_field('backup_migrate_schedules', 'cron', $field_spec);
+    }
+    catch (\Exception $e) {
+      db_change_field('backup_migrate_schedules', 'cron', 'cron', $field_spec);
+    }
   }
   else {
-    db_add_field('backup_migrate_schedules', 'cron', $field_spec);
+    db_change_field('backup_migrate_schedules', 'cron', 'cron', $field_spec);
   }
 }
 
