@@ -128,5 +128,15 @@ Known problems and workarounds
   run on production. The custom cron tasks may be disabled using the
   "backup_migrate_disable_cron" variable.
 
-  // Backup & Migrate: Disable the cron scripts to disable scheduled backups.
-  $conf['backup_migrate_disable_cron'] = TRUE;
+* There are three different variables that control how MySQL data is processed.
+  - backup_migrate_data_rows_per_query
+    Controls how many records are loaded from the database at once. Defaults to
+    1000 rows.
+  - backup_migrate_data_rows_per_line
+    Controls how many records are included in a single INSERT statement.
+    Defaults to 30 records.
+  - backup_migrate_data_bytes_per_line
+    Controls how much data will be inserted at once using a single INSERT
+    statement. This works with the "backup_migrate_data_rows_per_line" variable
+    to ensure that each INSERT statement doesn't end up being too large.
+    Defaults to 2000 bytes.
