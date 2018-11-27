@@ -701,13 +701,13 @@ class backup_migrate_destination_nodesquirrel extends backup_migrate_destination
     $servers = $this->_get_endpoints();
 
     // Do the actual call.
-    return $this->__xmlrpc($method, $args, $servers);
+    return $this->_xmlrpc_request($method, $args, $servers);
   }
 
   /**
    * Gets the form for the settings for this destination.
    */
-  public function __xmlrpc($method, $args, $servers, $retry = 3) {
+  public function _xmlrpc_request($method, $args, $servers, $retry = 3) {
     if ($servers && --$retry > 0) {
       // Add the key authentication arguments if we can.
       if ($this->_sign_request($args)) {
@@ -749,7 +749,7 @@ class backup_migrate_destination_nodesquirrel extends backup_migrate_destination
                 // If we're at the end of the line then try refetching the urls.
                 if (!$url) {
                   $servers = $this->_get_endpoints(TRUE, $retry);
-                  return $this->__xmlrpc($method, $args, $servers, $retry);
+                  return $this->_xmlrpc_request($method, $args, $servers, $retry);
                 }
                 break;
 
@@ -757,7 +757,7 @@ class backup_migrate_destination_nodesquirrel extends backup_migrate_destination
                 // 'Multiple Choices' means that the existing server list needs
                 // to be refreshed.
                 $servers = $this->_get_endpoints(TRUE, $retry);
-                return $this->__xmlrpc($method, $args, $servers, $retry);
+                return $this->_xmlrpc_request($method, $args, $servers, $retry);
 
               case '401':
               case '403':
@@ -828,7 +828,7 @@ class backup_migrate_destination_nodesquirrel extends backup_migrate_destination
       $servers = array_unique(array_merge($servers, variable_get('nodesquirrel_default_endpoint_urls', array('api.nodesquirrel.com/services/xmlrpc'))));
       // Call the get endpoints method but use the default or previous servers
       // to avoid infinite loops.
-      $new_servers = $this->__xmlrpc('backups.getEndpoints', array($this->_get_destination(), 'xmlrpc'), $servers, $retry);
+      $new_servers = $this->_xmlrpc_request('backups.getEndpoints', array($this->_get_destination(), 'xmlrpc'), $servers, $retry);
       if ($new_servers) {
         variable_set('nodesquirrel_endpoint_urls', $new_servers);
         $servers = $new_servers;

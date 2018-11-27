@@ -43,6 +43,9 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   menu_rebuild() performance issue.
 #1104012 by DamienMcKenna, axel.rutz, EmanueleQuinto, gisle, jacob.embree, Pere
   Orga, frenkx: On restore, provide option to drop all tables.
+#2891272 by DamienMcKenna, webservant316: phpsnif 7.1 says Method name
+  \backup_migrate_destination_nodesquirrel::__xmlrpc\" is discouraged; PHP has
+  reserved all method names with a double underscore prefix for future use. 
 
 
 Backup and Migrate 7.x-3.5, 2018-02-05
