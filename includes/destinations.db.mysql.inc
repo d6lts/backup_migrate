@@ -392,7 +392,6 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
 
     if (variable_get('backup_migrate_verbose')) {
       _backup_migrate_message('Table: %table', array('%table' => $table['name']), 'success');
-      _backup_migrate_message('Peak memory usage: %mem', array('%mem' => backup_migrate_get_peak_memory_usage() . 'MB'), 'success');
     }
 
     // Escape backslashes, PHP code, special chars.
@@ -453,7 +452,9 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
       }
     }
 
-    _backup_migrate_message('Peak memory usage: %mem', array('%mem' => backup_migrate_get_peak_memory_usage() . 'MB'), 'success');
+    if (variable_get('backup_migrate_verbose')) {
+      _backup_migrate_message('Peak memory usage: %mem', array('%mem' => backup_migrate_get_peak_memory_usage() . 'MB'), 'success');
+    }
 
     return $lines;
   }
