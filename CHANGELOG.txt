@@ -55,6 +55,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   backup_migrate_profiles.machine_name: field already exists" error.
 #3017042 by DamienMcKenna, freelylw, gisle: Settings form field dependency
   broken.
+#3018002 by DamienMcKenna: Improve the module's documentation.
 
 
 Backup and Migrate 7.x-3.5, 2018-02-05
