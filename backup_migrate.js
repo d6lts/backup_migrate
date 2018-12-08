@@ -20,15 +20,17 @@
                 var dependency = $(this);
                 (function(dependent, dependency) {
                   var checkval = function(inval) {
+                    // Do loose comparisons to support things like "true", "1",
+                    // etc.
                     if (dependency.attr('type') === 'radio') {
                       var val = $('[name="' + dependency.attr('name') + '"]:checked').val();
-                      return val === inval;
+                      return val == inval;
                     }
                     else if (dependency.attr('type') === 'checkbox') {
-                      return dependency.is(':checked') && inval === dependency.val();
+                      return dependency.is(':checked') && inval == dependency.val();
                     }
                     else {
-                      return dependency.val() === inval;
+                      return dependency.val() == inval;
                     }
                     return false;
                   };
