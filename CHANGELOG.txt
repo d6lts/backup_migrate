@@ -58,6 +58,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #3018002 by DamienMcKenna: Improve the module's documentation.
 By DamienMcKenna: "server" not "sever" :-)
 #3018853 by RickJ: Temporary files not deleted.
+#2735337 by RickJ: Settings objects only offer Revert, not Delete.
 
 
 Backup and Migrate 7.x-3.5, 2018-02-05
