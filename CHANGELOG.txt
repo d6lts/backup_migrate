@@ -1,5 +1,6 @@
 Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 ------------------------------------------
+#3032453 by DamienMcKenna: Ignore Advanced Aggregator CSS & JS directories.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
