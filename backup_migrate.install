@@ -662,7 +662,11 @@ function backup_migrate_update_7203() {
 }
 
 /**
- * Uninstall backup migrate files if it's installed.
+ * Upgrade from Backup & Migrate 7.x-2.x.
+ *
+ * - Uninstall the Backup Migrate Files module if it's installed.
+ * - Uninstall the Nodesquirrel module if it's installed.
+ * - Upgrade the configurations.
  */
 function backup_migrate_update_7300() {
   if (module_exists('backup_migrate_files')) {
@@ -737,6 +741,9 @@ function backup_migrate_update_7300() {
     unset($item['filters']['destinations']);
     drupal_write_record('backup_migrate_profiles', $item, array('profile_id'));
   }
+
+  // Clear the plugins caches.
+  cache_clear_all('*', 'cache', TRUE);
 }
 
 /**
