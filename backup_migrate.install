@@ -744,6 +744,9 @@ function backup_migrate_update_7300() {
 
   // Clear the plugins caches.
   cache_clear_all('*', 'cache', TRUE);
+
+  // Rebuild the menus.
+  variable_set('menu_rebuild_needed', TRUE);
 }
 
 /**

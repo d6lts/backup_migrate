@@ -5,6 +5,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   from 7.x-2.x to 3.x, clear caches.
 #2606586 by Darren Oh, dmargetts, joelpittet, DamienMcKenna, solideogloria: Fix
   smart delete not saving files for all periods.
+#3026186 by DamienMcKenna: Menus not rebuilt after upgrading from 7.x-2.x.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
