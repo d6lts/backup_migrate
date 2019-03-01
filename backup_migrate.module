@@ -170,7 +170,7 @@ function backup_migrate_menu() {
     'weight' => 2,
     'type' => MENU_LOCAL_TASK,
   );
-  // @TODO: This was removed because it was getting far too complicated for an
+  // @todo This was removed because it was getting far too complicated for an
   // abstraction. Exposing the actual schedules is more direct.
   // @code
   // $items[BACKUP_MIGRATE_MENU_PATH . '/schedule'] = array(
@@ -458,7 +458,7 @@ function backup_migrate_backup_migrate_schedules() {
   $schedules = array();
 
   // Declare a default backup for each source that can be enabled.
-  // @TODO: This makes setting up scheduled easier, but only when combined with
+  // @todo This makes setting up scheduled easier, but only when combined with
   // the now disabled quick-schedule feature.
   // @code
   // $sources = backup_migrate_get_sources();
@@ -2045,6 +2045,12 @@ function backup_migrate_mail($key, &$message, $params) {
     $message['id'] = 'backup_migrate_backup_fail';
     $message['subject'] = t('!site backup failed', array('!site' => variable_get('site_name', 'Drupal site')));
     $message['body'][] = $params['body'];
+  }
+  elseif ($key == 'destination_mail') {
+    // @todo translate subject and parts of the body?
+    $message['subject'] = $params['subject'];
+    $message['body'][] = $params['body'];
+    $message['headers'] = array_merge($message['headers'], $params['headers']);
   }
 }
 

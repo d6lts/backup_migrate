@@ -6,6 +6,12 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #2606586 by Darren Oh, dmargetts, joelpittet, DamienMcKenna, solideogloria: Fix
   smart delete not saving files for all periods.
 #3026186 by DamienMcKenna: Menus not rebuilt after upgrading from 7.x-2.x.
+#2507495 by brankoc, DamienMcKenna, nicorac, lorisbel, crantok, jakeru,
+  NickWilde, DD 85, rothlive, Oleg Ko, mgstables, szczesuil, Web.Pergamonteam,
+  Lemontonix, Tranko, aotus, knalstaaf, drugan, lesliewagner1165, Pascal.s,
+  HansKuiters, mato, lgough, Frosty29, sdowney2002, dhalbert, toomanypets, ckng,
+  havanablackcu1, myDrupal2014_846824658246, felixmf: Warning: mail(): Multiple
+  or malformed newlines found in additional_header in mime_mail->send().
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
