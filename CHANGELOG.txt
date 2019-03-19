@@ -11,6 +11,7 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
   compliance.
 #2935402 by DamienMcKenna: Further improve coding standards compliance.
 #3028984 by i-trokhanenko, Roman Dyn: Replace deprecated REQUEST_TIME.
+#2925371 by tibezh: Usable menu items in Administration menu.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
