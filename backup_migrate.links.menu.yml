@@ -1,6 +1,6 @@
 backup_migrate.quick_backup:
   title: Backup and Migrate
-  description: ''
+  description: 'Create or import backups of your project database or files'
   parent: system.admin_config_development
   route_name: backup_migrate.quick_backup
 
