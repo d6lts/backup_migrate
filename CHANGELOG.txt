@@ -13,6 +13,8 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #3028984 by i-trokhanenko, Roman Dyn: Replace deprecated REQUEST_TIME.
 #2925371 by tibezh: Usable menu items in Administration menu.
 #2950887 by liliancatanoi90: Admin menu item is missing a description.
+#3013182 by RoshniPatel.addweb: 'label' key defined twice for
+  backup_migrate.profile.* config_entity schema in backup_migrate.schema.yml.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
