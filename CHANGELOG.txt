@@ -10,6 +10,7 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #2935402 by DamienMcKenna, ikit-claw: Further improve coding standards
   compliance.
 #2935402 by DamienMcKenna: Further improve coding standards compliance.
+#3028984 by i-trokhanenko, Roman Dyn: Replace deprecated REQUEST_TIME.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
