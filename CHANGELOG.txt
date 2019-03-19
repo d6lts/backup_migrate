@@ -2,6 +2,8 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 ------------------------------------------
 #2975065 by Dinu Rodnitchi, Alex Andrascu: Add encryption support.
 #3041404 by DamienMcKenna: Add CHANGELOG.txt.
+#2947276 by liliancatanoi90, rajeshwari10, minakshiPh, Elaman, emartoni,
+  DamienMcKenna, alonaoneill: Missing module help.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
