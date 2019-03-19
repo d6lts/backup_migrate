@@ -4,3 +4,6 @@ package: Other
 type: module
 core: 8.x
 configure: backup_migrate.quick_backup
+
+dependenies:
+  - drupal:entity

@@ -5,6 +5,7 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #2947276 by liliancatanoi90, rajeshwari10, minakshiPh, Elaman, emartoni,
   DamienMcKenna, alonaoneill: Missing module help.
 #2947219 by bryrock, PhilY, Alex Andrascu: Timestamp no more uses site timezone.
+#2962548 by mattshoaf, Alex Andrascu: Depends on Core Entity module.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
