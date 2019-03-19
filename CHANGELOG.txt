@@ -12,6 +12,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   HansKuiters, mato, lgough, Frosty29, sdowney2002, dhalbert, toomanypets, ckng,
   havanablackcu1, myDrupal2014_846824658246, felixmf: Warning: mail(): Multiple
   or malformed newlines found in additional_header in mime_mail->send().
+#2135813 by RickJ, rlhawk: Support for the Encrypt module.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
