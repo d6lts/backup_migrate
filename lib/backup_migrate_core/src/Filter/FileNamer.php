@@ -1,12 +1,6 @@
 <?php
-/**
- * @file
- * Contains BackupMigrate\Core\Filter\FileNamer.
- */
-
 
 namespace BackupMigrate\Core\Filter;
-
 
 use BackupMigrate\Core\Config\Config;
 use BackupMigrate\Core\Config\ValidationError;

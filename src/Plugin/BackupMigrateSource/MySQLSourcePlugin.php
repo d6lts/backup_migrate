@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\backup_migrate\Plugin\BackupMigrateSource;
 
 use BackupMigrate\Drupal\EntityPlugins\SourcePluginBase;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Drupal\Source;
 
 use BackupMigrate\Core\Plugin\FileProcessorTrait;

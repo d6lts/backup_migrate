@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Core\Destination;
 
 use BackupMigrate\Core\Config\ConfigurableInterface;
@@ -27,12 +23,10 @@ class NodeSquirrelDestination extends DestinationBase implements RemoteDestinati
    */
   protected $api_endpoint = [];
 
-
   /**
    * @var HttpClientInterface
    */
   protected $http_client = NULL;
-
 
   /**
    * Get a definition for user-configurable settings.

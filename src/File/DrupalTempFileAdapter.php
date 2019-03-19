@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Drupal\File;
 
 use \BackupMigrate\Core\File\TempFileAdapter;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\backup_migrate\Controller;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;

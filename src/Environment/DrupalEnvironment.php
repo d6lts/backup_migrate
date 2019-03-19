@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Drupal\Environment;
 
 use BackupMigrate\Core\Environment\EnvironmentBase;

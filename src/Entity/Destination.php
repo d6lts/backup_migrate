@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\backup_migrate\Entity;
 
 use Drupal\backup_migrate\DestinationInterface;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\Tests\backup_migrate\Functional;
 
 use Drupal\Tests\BrowserTestBase;

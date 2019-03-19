@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Drupal\Filter;
 
 use BackupMigrate\Core\Exception\BackupMigrateException;

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Drupal\Destination;
 
 use BackupMigrate\Core\Destination\DirectoryDestination;
@@ -12,7 +8,6 @@ use BackupMigrate\Core\File\BackupFileReadableInterface;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\StreamWrapper\PrivateStream;
 use BackupMigrate\Core\File\ReadableStreamBackupFile;
-
 
 /**
  * Class DrupalDirectoryDestination.

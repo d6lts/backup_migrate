@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Drupal\EntityPlugins\Annotation;
 
 use Drupal\Component\Annotation\Plugin;

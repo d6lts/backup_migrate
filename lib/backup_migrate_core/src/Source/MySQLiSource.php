@@ -1,12 +1,6 @@
 <?php
-/**
- * @file
- * Contains BackupMigrate\Core\Source\MySQLiSource.
- */
-
 
 namespace BackupMigrate\Core\Source;
-
 
 use BackupMigrate\Core\Exception\BackupMigrateException;
 use BackupMigrate\Core\File\BackupFileReadableInterface;

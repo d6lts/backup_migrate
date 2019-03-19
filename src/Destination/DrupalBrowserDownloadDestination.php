@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- */
-
 namespace BackupMigrate\Drupal\Destination;
 
 use \BackupMigrate\Core\Destination\BrowserDownloadDestination;

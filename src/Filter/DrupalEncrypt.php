@@ -30,7 +30,7 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
     // Backup configuration.
     if ($params['operation'] == 'backup' || $params['operation'] == 'restore') {
 
-      if(class_exists('\Defuse\Crypto\File')) {
+      if (class_exists('\Defuse\Crypto\File')) {
         $schema['groups']['encrypt'] = [
           'title' => 'Backup Encryption',
         ];
@@ -45,7 +45,8 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
           'type' => 'password',
           'title' => $params['operation'] == 'backup' ? $this->t('Encryption Password') : $this->t('Decryption Password'),
         ];
-      } else {
+      }
+      else {
         drupal_set_message($this->t('Please install the Defuse PHP-encryption library via Composer to be able to encrypt backup files.'), 'warning');
 
       }
@@ -77,7 +78,8 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
       $to->setMeta('filesize', $fileszc);
       return TRUE;
 
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
 
       return FALSE;
 
@@ -96,7 +98,8 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
 
       return TRUE;
 
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
 
       return FALSE;
 
@@ -105,10 +108,10 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
 
   public function beforeRestore(BackupFileReadableInterface $file) {
     $type = $file->getExtLast();
-    if($type == 'ssl' && $this->confGet('encrypt')) {
+    if ($type == 'ssl' && $this->confGet('encrypt')) {
       $out = $this->getTempFileManager()->popExt($file);
       $success = $this->_decryptFile($file, $out);
-      if($out && $success) {
+      if ($out && $success) {
         return $out;
       }
     }
@@ -126,11 +129,11 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
   }
 
 
- public function afterBackup(BackupFileReadableInterface $file) {
+  public function afterBackup(BackupFileReadableInterface $file) {
     if ($this->confGet('encrypt')) {
       $out = $this->getTempFileManager()->pushExt($file, 'ssl');
       $success = $this->_encryptFile($file, $out);
-      if($out && $success) {
+      if ($out && $success) {
         return $out;
       }
     }
