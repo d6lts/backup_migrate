@@ -4,6 +4,7 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #3041404 by DamienMcKenna: Add CHANGELOG.txt.
 #2947276 by liliancatanoi90, rajeshwari10, minakshiPh, Elaman, emartoni,
   DamienMcKenna, alonaoneill: Missing module help.
+#2947219 by bryrock, PhilY, Alex Andrascu: Timestamp no more uses site timezone.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
