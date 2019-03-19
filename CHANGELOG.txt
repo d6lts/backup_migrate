@@ -7,6 +7,8 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #2947219 by bryrock, PhilY, Alex Andrascu: Timestamp no more uses site timezone.
 #2962548 by mattshoaf, Alex Andrascu: Depends on Core Entity module.
 #2992448 by Pasqualle, riddhi.addweb: Warning after install.
+#2935402 by DamienMcKenna, ikit-claw: Further improve coding standards
+  compliance.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29

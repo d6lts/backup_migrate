@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\backup_migrate\Entity;
 
 use BackupMigrate\Core\Config\Config;

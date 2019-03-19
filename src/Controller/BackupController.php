@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\backup_migrate\Controller;
 
 use BackupMigrate\Core\Destination\DestinationInterface;

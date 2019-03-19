@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\backup_migrate\Controller;
 
 use Drupal\backup_migrate\Entity\Schedule;

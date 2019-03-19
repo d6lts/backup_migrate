@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace BackupMigrate\Drupal\EntityPlugins;
 
 use Drupal\Core\Cache\CacheBackendInterface;

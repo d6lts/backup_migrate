@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\backup_migrate\Form;
 
 use Drupal\Core\Form\FormStateInterface;

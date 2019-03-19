@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace BackupMigrate\Drupal\Config;
 
 use BackupMigrate\Core\Config\ConfigInterface;

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace BackupMigrate\Drupal\Environment;
 
 use Psr\Log\AbstractLogger;

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\backup_migrate\Plugin\BackupMigrateDestination;
 
 use BackupMigrate\Drupal\EntityPlugins\DestinationPluginBase;
