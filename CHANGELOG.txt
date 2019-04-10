@@ -15,6 +15,7 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #2950887 by liliancatanoi90: Admin menu item is missing a description.
 #3013182 by RoshniPatel.addweb: 'label' key defined twice for
   backup_migrate.profile.* config_entity schema in backup_migrate.schema.yml.
+#3047223 by DamienMcKenna: Temporarily remove NodeSquirrel integration.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
