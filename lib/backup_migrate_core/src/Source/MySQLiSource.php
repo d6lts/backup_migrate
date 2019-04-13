@@ -119,7 +119,7 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
   protected function _getConnection() {
     if (!$this->connection) {
       if (!function_exists('mysqli_init') && !extension_loaded('mysqli')) {
-        throw new BackupMigrateException('Cannot connect to the database becuase the MySQLi extension is missing.');
+        throw new BackupMigrateException('Cannot connect to the database because the MySQLi extension is missing.');
       }
       $this->connection = new \mysqli(
           $this->confGet('host'),

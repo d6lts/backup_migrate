@@ -16,6 +16,8 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #3013182 by RoshniPatel.addweb: 'label' key defined twice for
   backup_migrate.profile.* config_entity schema in backup_migrate.schema.yml.
 #3047223 by DamienMcKenna: Temporarily remove NodeSquirrel integration.
+#3047798 by trustypelletgun, cosmicdreams: Corrected typo in MySQLi extension
+  error message.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
