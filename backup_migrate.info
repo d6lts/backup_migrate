@@ -35,6 +35,9 @@ files[] = includes/sources.db.inc
 files[] = includes/sources.db.mysql.inc
 files[] = includes/sources.filesource.inc
 
+; Test dependencies.
+test_dependencies[] = ctools
+
 ; Test suite.
 files[] = tests/BmTestBase.test
 files[] = tests/BmTestBasics.test

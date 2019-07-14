@@ -13,6 +13,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   havanablackcu1, myDrupal2014_846824658246, felixmf: Warning: mail(): Multiple
   or malformed newlines found in additional_header in mime_mail->send().
 #2135813 by RickJ, rlhawk: Support for the Encrypt module.
+#3033583 by BrankoC: Add CTools as a test dependency.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
