@@ -14,6 +14,9 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   or malformed newlines found in additional_header in mime_mail->send().
 #2135813 by RickJ, rlhawk: Support for the Encrypt module.
 #3033583 by BrankoC: Add CTools as a test dependency.
+#2946311 by DamienMcKenna, k.elizabeth, couturier, jackalope, nelslynn,
+  rrirower, bmango, Cyberflyer, sharonknieper: Too many connections in
+  backup_migrate_source_db->_get_db_connection().
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15

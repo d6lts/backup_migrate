@@ -633,8 +633,8 @@ class backup_migrate_schedule extends backup_migrate_item {
    * Run the actual schedule.
    */
   public function run() {
-    // Clear cached profile data which could have been altered by previous
-    // schedule run; see #2672478
+    // Clear cached profile data as it could have been altered by a previous
+    // schedule run.
     drupal_static_reset('backup_migrate_get_profiles');
 
     if ($settings = $this->get_profile()) {
