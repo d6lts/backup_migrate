@@ -17,6 +17,9 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #2946311 by DamienMcKenna, k.elizabeth, couturier, jackalope, nelslynn,
   rrirower, bmango, Cyberflyer, sharonknieper: Too many connections in
   backup_migrate_source_db->_get_db_connection().
+#3023804 by DamienMcKenna, solideogloria, adam1, jazzitup, MaxMendez, jprj,
+  Louis Delacretaz, eloiv, oliverpolden, drupal_jon, mato, VirtualMitra: Error:
+  Call to undefined function _backup_migrate_temp_files_delete().
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15

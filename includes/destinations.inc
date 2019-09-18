@@ -843,6 +843,8 @@ class backup_migrate_destination extends backup_migrate_location {
       if ($this->cache_files) {
         $this->file_cache_set($files);
       }
+      // Clean up any previous abandoned tmp files before going further.
+      backup_migrate_include('files');
       _backup_migrate_temp_files_delete();
     }
 
