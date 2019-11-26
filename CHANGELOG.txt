@@ -20,6 +20,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #3023804 by DamienMcKenna, solideogloria, adam1, jazzitup, MaxMendez, jprj,
   Louis Delacretaz, eloiv, oliverpolden, drupal_jon, mato, VirtualMitra: Error:
   Call to undefined function _backup_migrate_temp_files_delete().
+#2663066 by BrankoC, DamienMcKenna, bsains, izmeez: Profile Filter field -
+  hitting 64Kb limit.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15

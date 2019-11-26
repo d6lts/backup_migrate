@@ -198,6 +198,7 @@ function backup_migrate_schema() {
       'filters' => array(
         'description' => 'The filter settings for the profile.',
         'type' => 'text',
+        'size' => 'medium',
         'not null' => TRUE,
         'serialize' => TRUE,
         'serialized default' => 'a:0:{}',
@@ -903,4 +904,18 @@ function backup_migrate_update_7307() {
     variable_set('backup_migrate_memory_limit', $limit);
     variable_del('backup_migrate_backup_memory_limit');
   }
+}
+
+/**
+ * Update profiles table filter field to accommodate larger serialized strings.
+ */
+function backup_migrate_update_7308() {
+  db_change_field('backup_migrate_profiles', 'filters', 'filters', array(
+    'description' => 'The filter settings for the profile.',
+    'type' => 'text',
+    'size' => 'medium',
+    'not null' => TRUE,
+    'serialize' => TRUE,
+    'serialized default' => 'a:0:{}',
+  ));
 }
