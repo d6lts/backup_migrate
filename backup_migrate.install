@@ -464,6 +464,16 @@ function backup_migrate_uninstall() {
   variable_del('nodesquirrel_schedule_enabled');
   variable_del('nodesquirrel_schedule_source_id');
   variable_del('nodesquirrel_secret_key');
+
+  // Remove the dynamic generated 'last run' variables.
+  $last_ran_schedules = db_select('variable', 'var')
+    ->fields('var', array('name'))
+    ->condition('name', 'backup\_migrate\_schedule\_last\_run\_%', 'LIKE')
+    ->execute()
+    ->fetchAllAssoc('name', PDO::FETCH_ASSOC);
+  foreach ($last_ran_schedules as $key => $schedule) {
+    variable_del($key);
+  }
 }
 
 /**
