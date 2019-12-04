@@ -788,10 +788,10 @@ class backup_migrate_schedule extends backup_migrate_item {
       // Set time from which we start saving files.
       $period_start_time = $now - (($period['keep'] + 1) * $period['delta']);
 
-      // Increment time till we get within one period time span of the period
-      // start time. This keeps all the different period starts aligned.
-      while ($time < $period_start_time) {
-        $time += $period['delta'];
+      // Increase time to within one period time span of the period start
+      // time. This keeps all the different period starts aligned.
+      if ($time < $period_start_time) {
+        $time += ((int) ceil(($period_start_time - $time) / $period['delta'])) * $period['delta'];
       }
 
       $file_id = $this->find_nearest_file($sorted, $time);

@@ -26,6 +26,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   variables.
 #1042672 by fietserwin, BrankoC: hook_help: do not translate texts if not
   necessary.
+#3060997 by solideogloria, BrankoC: Improve Performance of Schedule Calculation.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
