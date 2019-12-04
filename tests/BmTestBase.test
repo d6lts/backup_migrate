@@ -149,7 +149,7 @@ abstract class BmTestBase extends DrupalWebTestCase {
    *
    * @param string $destination_id
    *   The ID of the destination to check. Defaults to the manual file path.
-   * 
+   *
    * @param string $source_id
    *   The ID of the source to check. Defaults to the database.
    */
@@ -255,15 +255,15 @@ abstract class BmTestBase extends DrupalWebTestCase {
   }
 
   /**
-   * Asserts that the most recently sent e-mail messages contain the 
+   * Asserts that the most recently sent e-mail messages contain the
    * string the expected number of times.
    *
    * @param string $field_name
    *   Name of field or message property to assert: subject, body, id, etc.
    * @param string $string
    *   String to search for.
-   * @param int $expected 
-   *   Number of times $string should occur in the field.   
+   * @param int $expected
+   *   Number of times $string should occur in the field.
    * @param int $email_depth
    *   Number of emails to search for string, starting with most recent.
    *

@@ -379,9 +379,9 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
    * Get the sql to insert the data for a given table.
    */
   public function _dump_table_data_sql_to_file($file, $table) {
-    $rows_per_query = variable_get('backup_migrate_data_rows_per_query', 1000);
-    $rows_per_line = variable_get('backup_migrate_data_rows_per_line', 30);
-    $bytes_per_line = variable_get('backup_migrate_data_bytes_per_line', 2000);
+    $rows_per_query = variable_get('backup_migrate_data_rows_per_query', BACKUP_MIGRATE_DATA_ROWS_PER_QUERY);
+    $rows_per_line = variable_get('backup_migrate_data_rows_per_line', BACKUP_MIGRATE_DATA_ROWS_PER_LINE);
+    $bytes_per_line = variable_get('backup_migrate_data_bytes_per_line', BACKUP_MIGRATE_DATA_BYTES_PER_LINE);
 
     if (variable_get('backup_migrate_verbose')) {
       _backup_migrate_message('Table: %table', array('%table' => $table['name']), 'success');
@@ -532,7 +532,7 @@ SET NAMES utf8;
    */
   public function _get_sql_file_footer() {
     return "
-  
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

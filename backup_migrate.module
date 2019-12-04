@@ -9,6 +9,19 @@ define('BACKUP_MIGRATE_VERSION', '7.x-3.x');
 define('BACKUP_MIGRATE_MENU_PATH', 'admin/config/system/backup_migrate');
 define('BACKUP_MIGRATE_MENU_DEPTH', 4);
 
+// Default settings.
+define('BACKUP_MIGRATE_MEMORY_LIMIT', '256M');
+define('BACKUP_MIGRATE_BACKUP_MAX_TIME', 1200);
+define('BACKUP_MIGRATE_VERBOSE', NULL);
+define('BACKUP_MIGRATE_DISABLE_CRON', FALSE);
+define('BACKUP_MIGRATE_DATA_ROWS_PER_QUERY', 1000);
+define('BACKUP_MIGRATE_DATA_ROWS_PER_LINE', 30);
+define('BACKUP_MIGRATE_DATA_BYTES_PER_LINE', 2000);
+define('BACKUP_MIGRATE_MAX_EMAIL_SIZE', 20971520);
+define('BACKUP_MIGRATE_CLEANUP_TEMP_FILES', TRUE);
+define('BACKUP_MIGRATE_CLEANUP_TIME', 21600);
+define('BACKUP_MIGRATE_SCHEDULE_BUFFER', 0.01);
+
 /**
  * Implements hook_help().
  */
@@ -201,6 +214,16 @@ function backup_migrate_menu() {
     'weight' => 10,
     'type' => MENU_LOCAL_TASK,
   );
+  $items[BACKUP_MIGRATE_MENU_PATH . '/settings-advanced'] = array(
+    'title' => 'Advanced settings',
+    'description' => 'Optional settings for Backup and Migrate module.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('backup_migrate_ui_advanced_settings_form'),
+    'file' => 'backup_migrate.advanced_settings.inc',
+    'access arguments' => array('administer backup and migrate'),
+    'weight' => 50,
+    'type' => MENU_LOCAL_TASK,
+  );
 
   backup_migrate_include('crud');
   $items += backup_migrate_crud_menu();
@@ -265,7 +288,7 @@ function backup_migrate_form_update_script_selection_form_alter(&$form, $form_st
  */
 function backup_migrate_cron() {
   // Optionally disable hook_cron().
-  if (variable_get('backup_migrate_disable_cron', FALSE)) {
+  if (variable_get('backup_migrate_disable_cron', BACKUP_MIGRATE_DISABLE_CRON)) {
     if (variable_get('backup_migrate_verbose')) {
       watchdog('backup_migrate', 'Cron disabled.');
     }
@@ -311,7 +334,7 @@ function backup_migrate_cron() {
  */
 function backup_migrate_cronapi($op, $job = NULL) {
   // Optionally disable hook_cron().
-  if (variable_get('backup_migrate_disable_cron', FALSE)) {
+  if (variable_get('backup_migrate_disable_cron', BACKUP_MIGRATE_DISABLE_CRON)) {
     if (variable_get('backup_migrate_verbose')) {
       watchdog('backup_migrate', 'Cron disabled.');
     }
@@ -1549,7 +1572,7 @@ function backup_migrate_perform_backup(&$settings) {
   // of the following line to the settings.php file:
   // * $conf['backup_migrate_memory_limit'] = '512M';
   // * $conf['backup_migrate_memory_limit'] = '1G';
-  $backup_migrate_memory_limit = variable_get('backup_migrate_memory_limit', '256M');
+  $backup_migrate_memory_limit = variable_get('backup_migrate_memory_limit', BACKUP_MIGRATE_MEMORY_LIMIT);
 
   // Convert the Backup Migrate memory limit to bytes.
   $backup_migrate_memory_limit_bytes = backup_migrate_to_bytes($backup_migrate_memory_limit);
@@ -1919,7 +1942,7 @@ function _backup_migrate_message_callback($callback = NULL) {
  */
 function _backup_migrate_set_timeout() {
   // If not in 'safe mode', increase the maximum execution time:
-  $backup_max_time = variable_get('backup_migrate_backup_max_time', 1200);
+  $backup_max_time = variable_get('backup_migrate_backup_max_time', BACKUP_MIGRATE_BACKUP_MAX_TIME);
   if (!ini_get('safe_mode') && ini_get('max_execution_time') < $backup_max_time) {
     drupal_set_time_limit($backup_max_time);
   }
@@ -1947,7 +1970,7 @@ function _backup_migrate_check_timeout() {
 
   // Figure out when we should stop execution.
   if (!$timeout) {
-    $backup_max_time = max(ini_get('max_execution_time'), variable_get('backup_migrate_backup_max_time', 1200));
+    $backup_max_time = max(ini_get('max_execution_time'), variable_get('backup_migrate_backup_max_time', BACKUP_MIGRATE_BACKUP_MAX_TIME));
     $timeout = (!empty($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time()) + $backup_max_time - variable_get('backup_migrate_timeout_buffer', 5);
   }
 
@@ -2075,4 +2098,16 @@ function backup_migrate_get_peak_memory_usage() {
  */
 function backup_migrate_array_name_value($a) {
   return $a["name"];
+}
+
+/**
+ * Checks if a php.ini 'memory_limit' style value is valid.
+ *
+ * See http://php.net/manual/en/ini.core.php#ini.memory-limit for what are
+ * valid values.
+ */
+function _backup_migrate_is_valid_memory_limit($value) {
+  $test = preg_match('/^(-1|[0-9]+|[0-9]*(\.[0-9]+)?[mg])$/i', $value);
+  $out = $test ? TRUE : FALSE; // preg_match() returns truthy or falsy values, this makes it explicit.
+  return $test;
 }

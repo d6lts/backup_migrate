@@ -18,7 +18,7 @@ class backup_migrate_destination_email extends backup_migrate_destination {
    */
   public function save_file($file, $settings) {
     $size = filesize($file->filepath());
-    $max = variable_get('backup_migrate_max_email_size', 20971520);
+    $max = variable_get('backup_migrate_max_email_size', BACKUP_MIGRATE_MAX_EMAIL_SIZE);
     if ($size > $max) {
       _backup_migrate_message('Could not email the file @file because it is @size and Backup and Migrate only supports emailing files smaller than @max.', array('@file' => $file->filename(), '@size' => format_size($size), '@max' => format_size($max)), 'error');
       return FALSE;
@@ -118,12 +118,12 @@ class mime_mail {
     $name = $part['name'];
     $len = strlen($name);
 
-    // RFC 5322 recommends lines of no longer than 78 chars, which in 
+    // RFC 5322 recommends lines of no longer than 78 chars, which in
     // this case comes down to filenames of no longer than 64 chars.
     if ($len > 64) {
       // We want to preserve the time stamp and extension and such.
-      $head = substr($name, 0, 28); 
-      $tail = substr($name, ($len - 32)); 
+      $head = substr($name, 0, 28);
+      $tail = substr($name, ($len - 32));
       $name = $head . '___' . $tail;
     }
     $message  = chunk_split(base64_encode($part["message"]), 70, $crlf);
@@ -150,7 +150,7 @@ class mime_mail {
     $headers['Content-Type'] =  "multipart/mixed; boundary=\"$boundary\"";
     $message = $this->build_multipart($boundary);
     $params = array();
-    $params['body'] = $message; 
+    $params['body'] = $message;
     $params['headers'] = $headers;
     $params['subject'] = $this->subject;
 

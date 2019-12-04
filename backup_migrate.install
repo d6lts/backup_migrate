@@ -443,14 +443,18 @@ function backup_migrate_schema() {
  */
 function backup_migrate_uninstall() {
   variable_del('backup_migrate_backup_max_time');
+  variable_del('backup_migrate_cleanup_temp_files');
+  variable_del('backup_migrate_cleanup_time');
   variable_del('backup_migrate_copy_destination_id');
   variable_del('backup_migrate_data_bytes_per_line');
   variable_del('backup_migrate_data_rows_per_line');
   variable_del('backup_migrate_data_rows_per_query');
   variable_del('backup_migrate_destination_id');
   variable_del('backup_migrate_disable_cron');
+  variable_del('backup_migrate_max_email_size');
   variable_del('backup_migrate_memory_limit');
   variable_del('backup_migrate_profile_id');
+  variable_del('backup_migrate_schedule_buffer');
   variable_del('backup_migrate_schedule_last_run_');
   variable_del('backup_migrate_source_id');
   variable_del('backup_migrate_timeout_buffer');

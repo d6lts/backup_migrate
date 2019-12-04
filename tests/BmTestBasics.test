@@ -105,6 +105,114 @@ class BmTestBasics extends BmTestBase {
     $this->assertResponse(200);
   }
 
+  /**
+   * Test the custom validators.
+   */
+  public function testFieldValidators() {
+    // Need this file loaded for the custom validators.
+    module_load_include('advanced_settings.inc', 'backup_migrate');
+
+    $field = 'mock_field';
+
+    $element = array(
+      '#value' => 'a',
+      '#title' => '',
+      '#parents' => array($field),
+    );
+
+    // Test the memory limit validator.
+    $element['#title'] = 'Mock Field (Memory Limit)';
+    $test_values = array(
+      // Value to be tested => validity.
+      '-1' => TRUE, // Special meaning: no limit.
+      '50' => TRUE,
+      '5M' => TRUE, // 5 megabytes.
+      '.5M' => TRUE, // 500 kilobytes.
+      '5G' => TRUE, // 5 gigabytes.
+      '.5G' => TRUE,
+      '1.5G' => TRUE,
+      '0' => TRUE,
+      'a' => FALSE,
+      '-2' => FALSE,
+      '1.5' => FALSE, // You cannot have half a byte.
+      '5T' => FALSE,
+      '5 G' => FALSE,
+      '.5.5G' => FALSE,
+    );
+    foreach ($test_values as $value => $valid) {
+      $this->assertValidFieldValue('backup_migrate_memory_limit_validate', $element, $value, $valid, 'memory limit value');
+    }
+
+    // Test the positive non-zero integer validator.
+    $element['#title'] = 'Mock Field (Unsigned Integer)';
+    $test_values = array(
+      '0' => TRUE,
+      '1' => TRUE,
+      '10000' => TRUE,
+      'a' => FALSE, // NaN.
+      '.5' => FALSE, // Not an integer.
+      '-1' => FALSE, // Not positive.
+      // PHP_INT_MAX => TRUE, // Largest integer.
+      // (PHP_INT_MAX + 1) => FALSE, // Resolves to a decimal.
+    );
+    foreach ($test_values as $value => $valid) {
+      $this->assertValidFieldValue('backup_migrate_unsigned_integer_validate', $element, $value, $valid, 'zero or a positive integer');
+    }
+
+    // Test the validator for decimals ranging from 0 to 1.
+    $element['#title'] = 'Mock Field (Decimal between 0 and 1)';
+    $test_values = array(
+      '0' => TRUE,
+      '1' => TRUE,
+      '0.1' => TRUE,
+      '.1' => TRUE,
+      '1.1' => FALSE,
+      '-1' => FALSE,
+      '-1.1' => FALSE,
+      '2' => FALSE,
+      'a' => FALSE,
+    );
+    foreach ($test_values as $value => $valid) {
+      $this->assertValidFieldValue('backup_migrate_fraction_validate', $element, $value, $valid, 'decimal between 0 and 1');
+    }
+  }
+
+  /**
+   * Asserts that the content of a field passes its associated validation.
+   *
+   * @param string $validator
+   *   Drupal validator function callback.
+   * @param array $element
+   *   Input for error setter.
+   * @param string $value
+   *   Field value to be tested.
+   * @param bool $value_is_valid
+   *   Expected outcome.
+   * @param string $type
+   *   Description of value sub-type.
+   */
+  protected function assertValidFieldValue($validator, $element, $value, $value_is_valid, $type) {
+    $form = array();
+    $form_state = array();
+    $field = 'mock_field';
+    $element['#value'] = $value;
+
+    form_clear_error();
+    call_user_func_array($validator, array($element, &$form_state, $form));
+    $errors = form_get_errors();
+
+    if ($value_is_valid) {
+      $msg = t('%value is a valid %type.', array('%value' => $value, '%type' => $type));
+      $result = $this->assertTrue(empty($errors[$field]), $msg);
+    }
+    else {
+      $msg = t('%value is not a valid %type. Error message: "%msg".', array('%value' => $value, '%type' => $type, '%msg' => strip_tags($errors[$field])));
+      $result = $this->assertFalse(empty($errors[$field]), $msg);
+    }
+
+    return $result;
+  }
+
 }
 
 // @todo Test permissions.

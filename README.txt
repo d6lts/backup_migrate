@@ -32,6 +32,15 @@ OPTIONAL:
 The most recent version of the library known to work is 0.5.1.
 
 
+Advanced settings
+-------------------------------------------------------------------------------
+Several advanced options are available from the Advanced Settings page:
+* admin/config/system/backup_migrate/settings-advanced
+
+These settings should be handled with care, it is recommended to leave them at
+their defaults unless there is a specific need to modify them.
+
+
 Additional requirements for LigHTTPd
 -------------------------------------------------------------------------------
 Add the following code to the lighttp.conf to secure the backup directories:

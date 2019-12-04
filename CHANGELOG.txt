@@ -22,6 +22,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   Call to undefined function _backup_migrate_temp_files_delete().
 #2663066 by BrankoC, DamienMcKenna, bsains, izmeez: Profile Filter field -
   hitting 64Kb limit.
+#3023414 by BrankoC, DamienMcKenna, wylbur: Provide settings page for the hidden
+  variables.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
