@@ -18,6 +18,8 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #3047223 by DamienMcKenna: Temporarily remove NodeSquirrel integration.
 #3047798 by trustypelletgun, cosmicdreams: Corrected typo in MySQLi extension
   error message.
+#3053127 by DamienMcKenna, JonMcL: Added README.md note about the new B&M
+  Flysystem module.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
