@@ -54,7 +54,7 @@ class BmTestBasics extends BmTestBase {
     $this->assertSelectOptions('edit-source-id', $items);
     $this->assertNoOptionsSelected('edit-source-id');
     // This item should have a value "selected", not just the first item.
-    $items = array('manual', 'download', 'nodesquirrel');
+    $items = array('manual', 'download');
     $this->assertSelectOptions('edit-destination-id', $items);
     $this->assertOptionSelected('edit-destination-id', 'download');
     // This item should not have a value "selected", it just defaults to the
@@ -64,7 +64,7 @@ class BmTestBasics extends BmTestBase {
     $this->assertNoOptionsSelected('edit-profile-id');
     // This item should not have a value "selected", it just defaults to the
     // first item being the active item.
-    $items = array('manual', 'download', 'nodesquirrel');
+    $items = array('manual', 'download');
     $this->assertSelectOptions('edit-copy-destination-id', $items);
     $this->assertNoOptionsSelected('edit-copy-destination-id');
   }

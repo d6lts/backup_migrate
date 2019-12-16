@@ -29,6 +29,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #3060997 by solideogloria, BrankoC: Improve Performance of Schedule Calculation.
 #3064783 by BrankoC, DamienMcKenna: Uninstalling this module leaves variable
   backup_migrate_schedule_last_run_* intact.
+#3051821 by DamienMcKenna, BrankoC, solideogloria, wylbur: Remove NodeSquirrel
+  integration.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15

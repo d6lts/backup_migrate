@@ -17,7 +17,6 @@ files[] = includes/destinations.db.mysql.inc
 files[] = includes/destinations.email.inc
 files[] = includes/destinations.file.inc
 files[] = includes/destinations.ftp.inc
-files[] = includes/destinations.nodesquirrel.inc
 files[] = includes/destinations.s3.inc
 files[] = includes/files.inc
 files[] = includes/filters.inc
