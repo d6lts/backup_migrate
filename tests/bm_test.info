@@ -1,0 +1,7 @@
+name = "Backup and Migrate Mock Module"
+description = "Mock module for testing the Backup and Migrate module."
+package = Other
+core = 7.x
+hidden = TRUE
+dependencies[] = simpletest
+dependencies[] = backup_migrate
