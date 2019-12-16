@@ -17,6 +17,28 @@ backup_migrate_include('sources.db');
  * @ingroup backup_migrate_destinations
  */
 class backup_migrate_source_db_mysql extends backup_migrate_source_db {
+
+  /**
+   * The table's data keyed by table name.
+   *
+   * @var array
+   */
+  protected static $tableData = array();
+
+  /**
+   * The tables keyed by name.
+   *
+   * @var array
+   */
+  protected static $tableNames = array();
+
+  /**
+   * The views keyed by name.
+   *
+   * @var array
+   */
+  protected static $viewNames = array();
+
   public function type_name() {
     return t("MySQL Database");
   }
@@ -256,22 +278,24 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
    * Get a list of tables in the database.
    */
   public function _get_table_names() {
-    $out = array();
-    foreach ($this->_get_tables() as $table) {
-      $out[$table['name']] = $table['name'];
+    if (empty(static::$tableNames)) {
+      static::$tableNames = $this->query("SHOW FULL TABLES WHERE Table_Type = 'BASE TABLE'")
+        ->fetchAllKeyed(0, 0);
     }
-    return $out;
+
+    return static::$tableNames;
   }
 
   /**
    * Get a list of views in the database.
    */
   public function _get_view_names() {
-    $out = array();
-    foreach ($this->_get_views() as $view) {
-      $out[$view['name']] = $view['name'];
+    if (empty(static::$viewNames)) {
+      static::$viewNames = $this->query("SHOW FULL TABLES WHERE Table_Type = 'VIEW'")
+        ->fetchAllKeyed(0, 0);
     }
-    return $out;
+
+    return static::$viewNames;
   }
 
   /**
@@ -295,20 +319,35 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
   }
 
   /**
+   * Get a list of table and view data in the db.
+   */
+  protected function get_table_data() {
+    if (empty(static::$tableData)) {
+      $tables = $this->query('SHOW TABLE STATUS')->fetchAll(PDO::FETCH_ASSOC);
+
+      foreach ($tables as $table) {
+        // Lowercase the keys because between Drupal 7.12 and 7.13/14 the
+        // default query behavior was changed.
+        // See: http://drupal.org/node/1171866
+        $table = array_change_key_case($table);
+        static::$tableData[$table['name']] = $table;
+      }
+    }
+
+    return static::$tableData;
+  }
+
+  /**
    * Get a list of tables in the db.
    */
   public function _get_tables() {
     $out = array();
-    // get auto_increment values and names of all tables.
-    $tables = $this->query("show table status", array(), array('fetch' => PDO::FETCH_ASSOC));
-    foreach ($tables as $table) {
-      // Lowercase the keys because between Drupal 7.12 and 7.13/14 the default query behavior was changed.
-      // See: http://drupal.org/node/1171866
-      $table = array_change_key_case($table);
+    foreach ($this->get_table_data() as $table) {
       if (!empty($table['engine'])) {
         $out[$table['name']] = $table;
       }
     }
+
     return $out;
   }
 
@@ -317,12 +356,7 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
    */
   public function _get_views() {
     $out = array();
-    // get auto_increment values and names of all tables.
-    $tables = $this->query("show table status", array(), array('fetch' => PDO::FETCH_ASSOC));
-    foreach ($tables as $table) {
-      // Lowercase the keys because between Drupal 7.12 and 7.13/14 the default query behavior was changed.
-      // See: http://drupal.org/node/1171866
-      $table = array_change_key_case($table);
+    foreach ($this->get_table_data() as $table) {
       if (empty($table['engine'])) {
         $out[$table['name']] = $table;
       }
