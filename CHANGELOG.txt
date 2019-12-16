@@ -33,6 +33,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   integration.
 #3033583 by BrankoC, DamienMcKenna, m.stenta, RickJ, wylbur: CTools exportables
   code no longer loading.
+#2507495 by BrankoC, DamienMcKenna: Update script to disable destinations
+  affected by the email delivery change.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15

@@ -910,7 +910,7 @@ function backup_migrate_update_7306() {
 }
 
 /**
- * 'backup_migrate_backup_memory_limit' vs 'backup_migrate_memory_limit'.
+ * - 'backup_migrate_backup_memory_limit' vs 'backup_migrate_memory_limit'.
  */
 function backup_migrate_update_7307() {
   $limit = variable_get('backup_migrate_backup_memory_limit');
@@ -979,4 +979,41 @@ function backup_migrate_update_7309() {
 
   // @todo Remove the configuration later.
   drupal_set_message(t('<a href="!url">NodeSquirel stopped being usable as a backup destination</a> on October 1st, 2019 and ceased operations entirely on November 1st, 2019. Because of this, the Nodesquirrel functonality as been disabled. Please switch to an alternate destination if necessary. Please note that the NodeSquirrel configuration itself has not been removed.', array('!url' => 'https://pantheon.io/nodesquirrel-service-end-life')));
+}
+
+/**
+ * Disable e-mail destinations.
+ */
+function backup_migrate_update_7310() {
+  $out = '';
+
+  // Disable scheduled e-mail back-ups to allow users to review their
+  // destinations first.
+  //
+  // Which e-mail destinations exist?
+  $destinations = db_select('backup_migrate_destinations', 'bmd')->fields('bmd', array('machine_name'))->condition('subtype', 'email', '=')->execute()->fetchAllAssoc('machine_name', PDO::FETCH_ASSOC);
+  $destinations = array_keys($destinations);
+
+  // Which schedules contain enabled e-mail destinations?
+  $or = db_or();
+  $or->condition('destination_id', $destinations, 'IN');
+  $or->condition('copy_destination_id', $destinations, 'IN');
+  $schedules_query = db_select('backup_migrate_schedules', 'bms')->fields('bms', array('schedule_id', 'name'))->condition($or)->condition('enabled', 1, '=');
+  $schedules = $schedules_query->execute()->fetchAllAssoc('schedule_id', PDO::FETCH_ASSOC);
+
+  // Disable the relevant schedules.
+  if (count($schedules) > 0) {
+    $email_schedules = array_keys($schedules);
+    $names = array_column($schedules, 'name');
+    $replacements = array('@schedules' => '<ul><li>' . implode('</li><li>', $names) . '</li></ul>');
+    db_update('backup_migrate_schedules')->fields(['enabled' => '0'])->condition('schedule_id', $email_schedules, 'IN')->execute();
+    $out .= t('Schedules that back up to e-mail destinations have been disabled. Check that you are using the correct e-mail addresses, then re-enable manually. The following schedules have been disabled: @schedules', $replacements);
+  }
+
+  if (!empty($out)) {
+    return $out;
+  }
+  else {
+    return t('No destinations were affected by this change.');
+  }
 }
