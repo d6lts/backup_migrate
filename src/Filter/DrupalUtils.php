@@ -91,18 +91,17 @@ class DrupalUtils extends PluginBase {
   }
 
   /**
-   * Perform actions before restoring the backup.
-   *
-   * This used to perform a file size check but it occurred *after* the file
-   * was uploaded and uncompressed, which was a complete waste of time.
-   *
-   * @todo Remove this.
+   * Ensure, that the restore file does not exceed the server's upload_limit.
    *
    * @param BackupFileReadableInterface $file
    *
    * @return BackupFileReadableInterface
    */
   public function beforeRestore(BackupFileReadableInterface $file) {
+    if ($file->getMeta('filesize') > file_upload_max_size()) {
+      throw new BackupMigrateException('The input file exceeds the servers upload_max_filesize or post_max_size limit.', ['!id' => $file->getMeta('id')]);
+    }
+
     return $file;
   }
 

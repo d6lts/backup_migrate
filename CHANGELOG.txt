@@ -20,8 +20,6 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
   error message.
 #3053127 by DamienMcKenna, JonMcL: Added README.md note about the new B&M
   Flysystem module.
-#2998626 by frob, DamienMcKenna, JonMcL: Bad logic halts functionality if the
-  uncompressed file is too large.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
