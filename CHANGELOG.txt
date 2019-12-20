@@ -22,6 +22,8 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
   Flysystem module.
 #2998626 by frob, DamienMcKenna, JonMcL: Bad logic halts functionality if the
   uncompressed file is too large.
+#3006542 by ashlewis, DamienMcKenna, cl.choong, jacklee0410, maki3000, TedWS:
+  Failed to connect to MySQL server.
 
 
 Backup and Migrate 8.x-4.0, 2018-03-29
