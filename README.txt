@@ -69,7 +69,7 @@ server in a directory normally accessible by the public. This could lead to a
 very serious security vulnerability. Backup and Migrate attempts to protect
 backup files using a .htaccess file, but this is not guaranteed to work on all
 environments (and is guaranteed to fail on web servers that are not Apache). It
-is imperitive to test to see if the site's backup files are publicly
+is imperative to test to see if the site's backup files are publicly
 accessible, and if in doubt do not save backups to the server, or use the
 destinations feature to save to a folder outside of the site's webroot.
 
@@ -111,7 +111,8 @@ Don't panic!
 The restore file should still work with phpMyAdmin's import function or with
 the mysql command line tool.
 
-If the backup does not restore using either a graphical tool or the command line tools, then it is likely corrupt; you may panic now.
+If the backup does not restore using either a graphical tool or the command line
+tools, then it is likely corrupt; you may panic now.
 
 MAKE SURE THAT THIS MODULE IS NOT THE ONLY FORM OF BACKUP.
 
@@ -132,7 +133,7 @@ Known problems and workarounds
   server has gone away", use the "backup_migrate_backup_max_time" variable to
   adjust the timeout. Before doing this, check to see what PHP's
   "max_execution_time" is set to, then set the "backup_migrate_backup_max_time"
-  variale to a higher number, e.g. if max_execution_time is 180 (seconds) try
+  variable to a higher number, e.g. if max_execution_time is 180 (seconds) try
   setting backup_migrate_backup_max_time to 240 seconds / 4 minutes, or 300
   seconds / 5 minutes
 
@@ -189,8 +190,9 @@ Known problems and workarounds
 
 Credits / contact
 --------------------------------------------------------------------------------
-Currently maintained by Alex Andrascu [1], Damien McKenna [1] and Daniel Pickering [3]. All original development up through 2015 was by Ronan Dowling [4]
-with help by Drew Gorton [5].
+Currently maintained by Alex Andrascu [1], Damien McKenna [2] and
+Daniel Pickering [3]. All original development up through 2015 was by
+Ronan Dowling [4] with help by Drew Gorton [5].
 
 The best way to contact the authors is to submit an issue, be it a support
 request, a feature request or a bug report, in the project issue queue:
@@ -199,8 +201,8 @@ request, a feature request or a bug report, in the project issue queue:
 
 References
 --------------------------------------------------------------------------------
-1: https://www.drupal.org/u/damienmckenna
-2: https://www.drupal.org/u/alex-andrascu
+1: https://www.drupal.org/u/alex-andrascu
+2: https://www.drupal.org/u/damienmckenna
 3: https://www.drupal.org/u/ikit-claw
 4: https://www.drupal.org/u/ronan
 5: https://www.drupal.org/u/dgorton

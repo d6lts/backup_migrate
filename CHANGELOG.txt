@@ -36,6 +36,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #2507495 by BrankoC, DamienMcKenna: Update script to disable destinations
   affected by the email delivery change.
 #3046235 by joelpittet: Slow query 'show table status' on menu rebuild.
+#3102427 by izmeez: Readme.txt minor typo and formatting fixes.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
