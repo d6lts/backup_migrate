@@ -188,6 +188,14 @@ Known problems and workarounds
     $conf['backup_migrate_data_bytes_per_line'] = 1000;
 
 
+Development notes
+--------------------------------------------------------------------------------
+It is worth noting that some of the tests will fail when ran against nginx,
+which is the default web server for some local development systems. As a result,
+it is recommended to run tests on a server that uses Apache HTTPd Server instead
+of nginx.
+
+
 Credits / contact
 --------------------------------------------------------------------------------
 Currently maintained by Alex Andrascu [1], Damien McKenna [2] and

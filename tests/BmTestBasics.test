@@ -32,9 +32,17 @@ class BmTestBasics extends BmTestBase {
   }
 
   /**
-   * Verify the main page has the expected functionality available.
+   * Verify the main page has the expected form, then run a basic backup.
    */
-  public function testMainPage() {
+  public function testQuickBackup() {
+    // Ensure that the private file system is working correctly.
+    $this->drupalGet('admin/config/media/file-system');
+    $this->assertResponse(200);
+    $edit = array();
+    $this->drupalPost(NULL, $edit, 'Save configuration');
+    $this->assertResponse(200);
+    $this->assertText('The configuration options have been saved.');
+
     // Load the main B&M page.
     $this->drupalGet(BACKUP_MIGRATE_MENU_PATH);
     $this->assertResponse(200);
@@ -53,7 +61,9 @@ class BmTestBasics extends BmTestBase {
     $items = array('db', 'files', 'archive');
     $this->assertSelectOptions('edit-source-id', $items);
     $this->assertNoOptionsSelected('edit-source-id');
-    // This item should have a value "selected", not just the first item.
+    // This item should have a value "selected", not just the first item. Note:
+    // if the 'manual' backup option isn't available then the private directory
+    // path is not set correctly.
     $items = array('manual', 'download');
     $this->assertSelectOptions('edit-destination-id', $items);
     $this->assertOptionSelected('edit-destination-id', 'download');
@@ -67,15 +77,6 @@ class BmTestBasics extends BmTestBase {
     $items = array('manual', 'download');
     $this->assertSelectOptions('edit-copy-destination-id', $items);
     $this->assertNoOptionsSelected('edit-copy-destination-id');
-  }
-
-  /**
-   * Confirm the initial backup process works.
-   */
-  public function testFirstBackup() {
-    // Load the main B&M page.
-    $this->drupalGet(BACKUP_MIGRATE_MENU_PATH);
-    $this->assertResponse(200);
 
     // Generate a backup and confirm it was created correctly.
     $edit = array(

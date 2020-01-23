@@ -37,6 +37,9 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   affected by the email delivery change.
 #3046235 by joelpittet: Slow query 'show table status' on menu rebuild.
 #3102427 by izmeez: Readme.txt minor typo and formatting fixes.
+#3102506 by DamienMcKenna, BrankoC: Verify destinations work before listing them
+  in the Quick Backup form; save the file system form before beginning backup
+  tests to ensure the private file system is configured correctly.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15

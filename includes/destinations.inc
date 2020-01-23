@@ -725,11 +725,14 @@ function _backup_migrate_destination_pulldown_set_value(&$values, $parents, $val
 function _backup_migrate_get_destination_form_item_options($op) {
   $remote = $local = array();
   foreach (backup_migrate_get_destinations($op) as $key => $destination) {
-    if ($destination->op('remote backup')) {
-      $remote[$key] = $destination->get_name();
-    }
-    else {
-      $local[$key] = $destination->get_name();
+    // Only work with destinations that are currently configured and will work.
+    if ($destination->confirm_destination()) {
+      if ($destination->op('remote backup')) {
+        $remote[$key] = $destination->get_name();
+      }
+      else {
+        $local[$key] = $destination->get_name();
+      }
     }
   }
   $out = array();
