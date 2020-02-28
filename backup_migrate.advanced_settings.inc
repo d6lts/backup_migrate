@@ -102,7 +102,7 @@ function backup_migrate_ui_advanced_settings_form($form, &$form_state) {
 
   // Check for overrides and report them to the user.
   $keys = array_keys($form);
-  $query = db_query('SELECT name, value FROM variable WHERE name IN (:keys)', array(':keys' => $keys));
+  $query = db_query('SELECT name, value FROM {variable} WHERE name IN (:keys)', array(':keys' => $keys));
   $result = $query->fetchAllKeyed();
   foreach($form as $key => $field) {
     if (isset($result[$key])) {
