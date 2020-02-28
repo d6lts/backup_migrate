@@ -47,6 +47,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   in backup_migrate_to_bytes().
 #3116733 by DamienMcKenna, fietserwin: PDOException: SQLSTATE[42S02]: Base table
   or view not found: 1146 Table 'variable' doesn't exist.
+#2885094 by pdcarto, avergara, couturier: CLI option dumps the ENTIRE database,
+  ignores 'nodata_tables' setting.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
