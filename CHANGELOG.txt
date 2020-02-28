@@ -1,5 +1,5 @@
-Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
-------------------------------------------
+Backup and Migrate 7.x-3.7, 2020-02-28
+--------------------------------------
 #3032453 by DamienMcKenna: Ignore Advanced Aggregator CSS & JS directories.
 #3026187 by DamienMcKenna: Configurations don't load correctly when upgrading
   from 7.x-2.x to 3.x, clear caches.
