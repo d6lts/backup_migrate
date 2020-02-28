@@ -43,6 +43,8 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #3102218 by DamienMcKenna, BrankoC, jacob.embree, izmeez, devad, joelpittet,
   fietserwin, wylbur: Update 7310 Disable e-mail destinations. Emits syntax
   error for MySQL and MariaDB.
+#3027709 by BrankoC, DamienMcKenna, ultrabob: "A non-numeric value encountered"
+  in backup_migrate_to_bytes().
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15

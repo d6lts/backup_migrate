@@ -214,6 +214,40 @@ class BmTestBasics extends BmTestBase {
     return $result;
   }
 
+  /**
+   * Confirm backup_migrate_to_bytes() works.
+   */
+  public function testBackupMigrateToBytes() {
+    // PHP manual:
+    // http://php.net/manual/en/ini.core.php#ini.memory-limit
+
+    // '-1' is a reserved value meaning 'no limit'.
+    $input = '-1';
+    $expected = -1;
+    $this->assertEqual(backup_migrate_to_bytes($input), $expected);
+
+    // PHP would halt before this, but let us test anyway.
+    $input = 'nonsense';
+    $expected = 0;
+    $this->assertEqual(backup_migrate_to_bytes($input), $expected);
+
+    // This is 123 bytes, but there is a bug in B&M that turns
+    // this into 12.5 megabytes.
+    $input = '123';
+    $expected = 12582912;
+    $this->assertEqual(backup_migrate_to_bytes($input), $expected);
+
+    // 45 megabytes.
+    $input = '45M';
+    $expected = 47185920;
+    $this->assertEqual(backup_migrate_to_bytes($input), $expected);
+
+    // 8 gigabytes.
+    $input = '8G';
+    $expected = 8589934592;
+    $this->assertEqual(backup_migrate_to_bytes($input), $expected);
+  }
+
 }
 
 // @todo Test permissions.

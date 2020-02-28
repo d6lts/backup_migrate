@@ -1512,19 +1512,30 @@ function backup_migrate_get_saved_backups($refresh = FALSE) {
 
 /**
  * Helper function for byte conversion.
+ *
+ * @see README.txt
+ * @see http://php.net/manual/en/ini.core.php#ini.memory-limit
  */
 function backup_migrate_to_bytes($from) {
-  $number = (float) substr($from, 0, -1);
-  switch (strtoupper(substr($from, -1))) {
+  $passes_sanity_check = preg_match('/^(-1|[0-9]+|[0-9]*(\.[0-9]+)?[mg])$/i', $from);
+  if (!$passes_sanity_check) {
+    return 0;
+  }
+
+  if ($from === '-1') {
+    return -1;
+  }
+
+  $number = substr($from, 0, -1);
+  $unit = strtoupper(substr($from, -1));
+  switch ($unit) {
     case "M":
       return $number * pow(1024, 2);
-
-    break;
+      break;
 
     case "G":
       return $number * pow(1024, 3);
-
-    break;
+      break;
 
     default:
       return $number * pow(1024, 2);
