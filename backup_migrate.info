@@ -43,3 +43,4 @@ files[] = tests/BmTestBasics.test
 files[] = tests/BmTestProfiles.test
 files[] = tests/BmTestEmail.test
 files[] = tests/BmTestCtools.test
+files[] = tests/BmTestUpdate7310.test

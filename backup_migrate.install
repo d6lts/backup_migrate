@@ -991,23 +991,35 @@ function backup_migrate_update_7310() {
   // destinations first.
   //
   // Which e-mail destinations exist?
-  $destinations = db_select('backup_migrate_destinations', 'bmd')->fields('bmd', array('machine_name'))->condition('subtype', 'email', '=')->execute()->fetchAllAssoc('machine_name', PDO::FETCH_ASSOC);
+  $destinations = db_select('backup_migrate_destinations', 'bmd')
+    ->fields('bmd', array('machine_name'))
+      ->condition('subtype', 'email', '=')
+      ->execute()
+      ->fetchAllAssoc('machine_name', PDO::FETCH_ASSOC);
   $destinations = array_keys($destinations);
 
-  // Which schedules contain enabled e-mail destinations?
-  $or = db_or();
-  $or->condition('destination_id', $destinations, 'IN');
-  $or->condition('copy_destination_id', $destinations, 'IN');
-  $schedules_query = db_select('backup_migrate_schedules', 'bms')->fields('bms', array('schedule_id', 'name'))->condition($or)->condition('enabled', 1, '=');
-  $schedules = $schedules_query->execute()->fetchAllAssoc('schedule_id', PDO::FETCH_ASSOC);
+  if (!empty($destinations)) {
+    // Which schedules contain enabled e-mail destinations?
+    $or = db_or();
+    $or->condition('destination_id', $destinations, 'IN');
+    $or->condition('copy_destination_id', $destinations, 'IN');
+    $schedules_query = db_select('backup_migrate_schedules', 'bms')
+      ->fields('bms', array('schedule_id', 'name'))
+      ->condition($or)
+      ->condition('enabled', 1, '=');
+    $schedules = $schedules_query->execute()->fetchAllAssoc('schedule_id', PDO::FETCH_ASSOC);
 
-  // Disable the relevant schedules.
-  if (count($schedules) > 0) {
-    $email_schedules = array_keys($schedules);
-    $names = array_column($schedules, 'name');
-    $replacements = array('@schedules' => '<ul><li>' . implode('</li><li>', $names) . '</li></ul>');
-    db_update('backup_migrate_schedules')->fields(['enabled' => '0'])->condition('schedule_id', $email_schedules, 'IN')->execute();
-    $out .= t('Schedules that back up to e-mail destinations have been disabled. Check that you are using the correct e-mail addresses, then re-enable manually. The following schedules have been disabled: @schedules', $replacements);
+    // Disable the relevant schedules.
+    if (count($schedules) > 0) {
+      $email_schedules = array_keys($schedules);
+      $names = array_column($schedules, 'name');
+      $replacements = array('@schedules' => '<ul><li>' . implode('</li><li>', $names) . '</li></ul>');
+      db_update('backup_migrate_schedules')
+        ->fields(['enabled' => '0'])
+        ->condition('schedule_id', $email_schedules, 'IN')
+        ->execute();
+      $out .= t('Schedules that back up to e-mail destinations have been disabled. Check that you are using the correct e-mail addresses, then re-enable manually. The following schedules have been disabled: @schedules', $replacements);
+    }
   }
 
   if (!empty($out)) {

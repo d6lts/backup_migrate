@@ -40,6 +40,9 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 #3102506 by DamienMcKenna, BrankoC: Verify destinations work before listing them
   in the Quick Backup form; save the file system form before beginning backup
   tests to ensure the private file system is configured correctly.
+#3102218 by DamienMcKenna, BrankoC, jacob.embree, izmeez, devad, joelpittet,
+  fietserwin, wylbur: Update 7310 Disable e-mail destinations. Emits syntax
+  error for MySQL and MariaDB.
 
 
 Backup and Migrate 7.x-3.6, 2018-12-15
