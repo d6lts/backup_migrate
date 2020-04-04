@@ -4,6 +4,7 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
   link in composer.json.
 #3104422 by peterkokot, DamienMcKenna: PHP 7.4 deprecated reverse order of glue
   and pieces in implode.
+#3121309 by DamienMcKenna, Neslee Canil Pinto: Compatibility with Drupal 9.
 
 
 Backup and Migrate 8.x-4.1, 2019-12-20
