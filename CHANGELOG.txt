@@ -1,5 +1,6 @@
 Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
 ------------------------------------------
+#3119038 by solideogloria, gisle: Spelling typo in update scripts.
 
 
 Backup and Migrate 7.x-3.7, 2020-02-28

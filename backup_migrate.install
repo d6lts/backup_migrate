@@ -680,7 +680,7 @@ function backup_migrate_update_7203() {
  * Upgrade from Backup & Migrate 7.x-2.x.
  *
  * - Uninstall the Backup Migrate Files module if it's installed.
- * - Uninstall the Nodesquirrel module if it's installed.
+ * - Uninstall the NodeSquirrel module if it's installed.
  * - Upgrade the configurations.
  */
 function backup_migrate_update_7300() {
@@ -935,7 +935,7 @@ function backup_migrate_update_7308() {
 }
 
 /**
- * NodeSquirel support has been removed.
+< * NodeSquirrel support has been removed.
  */
 function backup_migrate_update_7309() {
   backup_migrate_include('destinations');
@@ -978,7 +978,7 @@ function backup_migrate_update_7309() {
   variable_set('menu_rebuild_needed', TRUE);
 
   // @todo Remove the configuration later.
-  drupal_set_message(t('<a href="!url">NodeSquirel stopped being usable as a backup destination</a> on October 1st, 2019 and ceased operations entirely on November 1st, 2019. Because of this, the Nodesquirrel functonality as been disabled. Please switch to an alternate destination if necessary. Please note that the NodeSquirrel configuration itself has not been removed.', array('!url' => 'https://pantheon.io/nodesquirrel-service-end-life')));
+  drupal_set_message(t('<a href="!url">NodeSquirrel stopped being usable as a backup destination</a> on October 1st, 2019 and ceased operations entirely on November 1st, 2019. Because of this, the NodeSquirrel functionality has been disabled. Please switch to an alternate destination if necessary. Please note that the NodeSquirrel configuration itself has not been removed.', array('!url' => 'https://pantheon.io/nodesquirrel-service-end-life')));
 }
 
 /**
