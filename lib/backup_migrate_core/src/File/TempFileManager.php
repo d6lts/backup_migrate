@@ -57,7 +57,7 @@ class TempFileManager implements TempFileManagerInterface {
     // Push the new extension on to the new file.
     $parts = $file->getExtList();
     array_push($parts, $ext);
-    $new_ext = implode($parts, '.');
+    $new_ext = implode('.', $parts);
 
     // Copy the file metadata to a new TempFile.
     $out = new WritableStreamBackupFile($this->adapter->createTempFile($new_ext));
@@ -85,7 +85,7 @@ class TempFileManager implements TempFileManagerInterface {
     // Pop the last extension from the last of the file.
     $parts = $file->getExtList();
     array_pop($parts);
-    $new_ext = implode($parts, '.');
+    $new_ext = implode('.', $parts);
 
     // Create a new temp file with the new extension.
     $out = new WritableStreamBackupFile($this->adapter->createTempFile($new_ext));

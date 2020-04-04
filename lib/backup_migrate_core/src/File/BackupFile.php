@@ -108,7 +108,7 @@ class BackupFile implements BackupFileInterface {
    * {@inheritdoc}
    */
   public function getFullName() {
-    return rtrim($this->name . '.' . implode($this->getExtList(), '.'));
+    return rtrim($this->name . '.' . implode('.', $this->getExtList()));
   }
 
   /**
@@ -140,7 +140,7 @@ class BackupFile implements BackupFileInterface {
    * {@inheritdoc}
    */
   public function getExt() {
-    return implode($this->getExtList(), '.');
+    return implode('.', $this->getExtList());
   }
 
   /**
