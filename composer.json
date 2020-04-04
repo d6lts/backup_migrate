@@ -19,7 +19,7 @@
   ],
   "support": {
     "issues": "https://www.drupal.org/project/issues/backup_migrate",
-    "source": "http://cgit.drupalcode.org/backup_migrate",
+    "source": "https://git.drupalcode.org/project/backup_migrate",
     "slack": "https://drupal.slack.com/messages/C7C4M4QJV/details/"
   }
 }

@@ -1,5 +1,7 @@
 Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 ------------------------------------------
+#3121797 by paulocs, thalles, RenatoG, Neslee Canil Pinto: Update support.source
+  link in composer.json.
 
 
 Backup and Migrate 8.x-4.1, 2019-12-20
