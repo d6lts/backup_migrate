@@ -5,5 +5,5 @@ type: module
 core_version_requirement: ^8.7.7 || ^9
 configure: backup_migrate.quick_backup
 
-dependenies:
+dependencies:
   - drupal:entity
