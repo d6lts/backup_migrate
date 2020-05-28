@@ -3,6 +3,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3051092 by DamienMcKenna, vuil, rpayanm, waverate: Drupal 9 compatibility.
 #3065017 by DamienMcKenna, dercheffe, Promo-IL: Restore emoji unicode characters
   not possible.
+#3143651 by DamienMcKenna: Ignore cache_page by default.
 
 
 Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
