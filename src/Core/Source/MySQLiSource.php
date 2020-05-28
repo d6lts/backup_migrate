@@ -182,11 +182,9 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
       if ($this->connection->connect_errno || !$this->connection->ping()) {
         throw new BackupMigrateException("Failed to connect to MySQL server.");
       }
-      // Ensure, that the character set is UTF8.
+      // Ensure, that the character set is utf8mb4.
       if (!$this->connection->set_charset('utf8mb4')) {
-        if (!$this->connection->set_charset('utf8')) {
-          throw new BackupMigrateException('UTF8 is not supported by the MySQL server.');
-        }
+        throw new BackupMigrateException('UTF8 is not supported by the MySQL server.');
       }
     }
     return $this->connection;
@@ -228,7 +226,7 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
 SET AUTOCOMMIT = 0;
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET NAMES utf8;
+SET NAMES utf8mb4;
 
 HEADER;
   }
