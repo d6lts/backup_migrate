@@ -12,6 +12,8 @@ Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
 #3121309 by DamienMcKenna, Neslee Canil Pinto: Compatibility with Drupal 9.
 #3128371 by solideogloria: info.yml "dependencies" spelled wrong.
 #3130772 by DamienMcKenna: Remove dependencies from info.yml file.
+#3131711 by douggreen: 'label' key defined twice for backup_migrate.profile.*
+  config_entity schema in backup_migrate.schema.yml.
 
 
 Backup and Migrate 8.x-4.1, 2019-12-20
