@@ -50,7 +50,7 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
       $nodata = (array) $this->confGet('nodata_tables');
 
       $file->write($this->_getSqlHeader());
-      $tables = $this->_getTables();
+      $tables = $this->getRawTables();
 
       $lines = 0;
       foreach ($tables as $table) {
@@ -311,7 +311,7 @@ FOOTER;
   /**
    * Get a list of tables in the db.
    */
-  protected function _getTables() {
+  protected function getRawTables() {
     $out = [];
     // Get auto_increment values and names of all tables.
     $tables = $this->query("SHOW TABLE STATUS");

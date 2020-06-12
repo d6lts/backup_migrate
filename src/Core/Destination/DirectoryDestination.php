@@ -22,8 +22,8 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
    * {@inheritdoc}
    */
   public function saveFile(BackupFileReadableInterface $file) {
-    $this->_saveFile($file);
-    $this->_saveFileMetadata($file);
+    $this->saveTheFile($file);
+    $this->saveTheFileMetadata($file);
   }
 
   /**
@@ -64,7 +64,7 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
    *
    * @throws \Drupal\backup_migrate\Core\Exception\BackupMigrateException
    */
-  public function _saveFile(BackupFileReadableInterface $file) {
+  public function saveTheFile(BackupFileReadableInterface $file) {
     // Check if the directory exists.
     $this->checkDirectory();
 
@@ -206,7 +206,7 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
   /**
    * {@inheritdoc}
    */
-  public function _deleteFile($id) {
+  public function deleteTheFile($id) {
     if ($file = $this->getFile($id)) {
       if ($file = $this->loadFileForReading($file)) {
         return unlink($file->realpath());

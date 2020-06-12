@@ -40,7 +40,7 @@ class ReadableStreamBackupFile extends BackupFile implements BackupFileReadableI
 
     // Get the basic file stats since this is probably a read-only file option
     // and these won't change.
-    $this->_loadFileStats();
+    $this->loadFileStats();
   }
 
   /**
@@ -190,7 +190,7 @@ class ReadableStreamBackupFile extends BackupFile implements BackupFileReadableI
   /**
    * Get info about the file and load them as metadata.
    */
-  protected function _loadFileStats() {
+  protected function loadFileStats() {
     clearstatcache();
     $this->setMeta('filesize', filesize($this->realpath()));
     $this->setMeta('datestamp', filectime($this->realpath()));

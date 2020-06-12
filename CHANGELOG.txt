@@ -5,6 +5,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   not possible.
 #3143651 by DamienMcKenna: Ignore cache_page by default.
 #3143652 by DamienMcKenna: Coding standards improvements.
+#3143652 by DamienMcKenna: Rename class methods that start with an underscore.
 
 
 Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx

@@ -27,8 +27,8 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
    * {@inheritdoc}
    */
   public function saveFile(BackupFileReadableInterface $file) {
-    $this->_saveFile($file);
-    $this->_saveFileMetadata($file);
+    $this->saveTheFile($file);
+    $this->saveTheFileMetadata($file);
   }
 
   /**
@@ -38,7 +38,7 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
     // If this file is already loaded, simply return it.
     // @todo Fix this inappropriate use of file metadata.
     if (!$file->getMeta('metadata_loaded')) {
-      $metadata = $this->_loadFileMetadataArray($file);
+      $metadata = $this->loadFileMetadataArray($file);
       $file->setMetaMultiple($metadata);
       $file->setMeta('metadata_loaded', TRUE);
     }
@@ -49,7 +49,7 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
    * {@inheritdoc}
    */
   public function deleteFile($id) {
-    return $this->_deleteFile($id);
+    return $this->deleteTheFile($id);
   }
 
   /**
@@ -72,7 +72,7 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
    * @param string $id
    *   The id of the file to delete.
    */
-  abstract protected function _deleteFile($id);
+  abstract protected function deleteTheFile($id);
 
   /**
    * Do the actual file save.
@@ -82,7 +82,7 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
    */
-  abstract protected function _saveFile(BackupFileReadableInterface $file);
+  abstract protected function saveTheFile(BackupFileReadableInterface $file);
 
   /**
    * Do the metadata save.
@@ -92,13 +92,13 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileInterface $file
    */
-  abstract protected function _saveFileMetadata(BackupFileInterface $file);
+  abstract protected function saveTheFileMetadata(BackupFileInterface $file);
 
   /**
    * Load the actual metadata for the file.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileInterface $file
    */
-  abstract protected function _loadFileMetadataArray(BackupFileInterface $file);
+  abstract protected function loadFileMetadataArray(BackupFileInterface $file);
 
 }

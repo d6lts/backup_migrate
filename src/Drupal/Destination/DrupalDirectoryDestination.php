@@ -26,7 +26,7 @@ class DrupalDirectoryDestination extends DirectoryDestination {
    *
    * @throws \Drupal\backup_migrate\Core\Exception\BackupMigrateException
    */
-  public function _saveFile(BackupFileReadableInterface $file) {
+  public function saveTheFile(BackupFileReadableInterface $file) {
     // Check if the directory exists.
     $this->checkDirectory();
 

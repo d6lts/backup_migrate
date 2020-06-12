@@ -70,7 +70,7 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
    */
   public function getTableNames() {
     try {
-      return $this->_getTableNames();
+      return $this->getRawTableNames();
     }
     catch (\Exception $e) {
       // Todo: Log this exception.
@@ -87,7 +87,7 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
    */
   public function getTables() {
     try {
-      return $this->_getTables();
+      return $this->getRawTables();
     }
     catch (\Exception $e) {
       // Todo: Log this exception.
@@ -100,9 +100,9 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
    *
    * @return array
    */
-  protected function _getTableNames() {
+  protected function getRawTableNames() {
     $out = [];
-    foreach ($this->_getTables() as $table) {
+    foreach ($this->getRawTables() as $table) {
       $out[$table['name']] = $table['name'];
     }
     return $out;
@@ -113,6 +113,6 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
    *
    * @return array
    */
-  abstract protected function _getTables();
+  abstract protected function getRawTables();
 
 }

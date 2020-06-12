@@ -79,7 +79,7 @@ class WritableStreamBackupFile extends ReadableStreamBackupFile implements Backu
 
     // If the file has been modified, update the stats from disk.
     if ($this->dirty) {
-      $this->_loadFileStats();
+      $this->loadFileStats();
       $this->dirty = FALSE;
     }
   }
