@@ -7,7 +7,7 @@ use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class SettingsProfileForm.
+ *
  *
  * @package Drupal\backup_migrate\Form
  */

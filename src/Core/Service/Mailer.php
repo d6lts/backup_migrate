@@ -3,11 +3,10 @@
 namespace Drupal\backup_migrate\Core\Service;
 
 /**
- * Class Mailer.
+ * A very basic mailer that uses the php mail function.
  *
- * A very basic mailer that uses the php mail function. In most systems this
- * will be replaced by a wrapper around whatever mail library is used in that
- * system.
+ * In most systems this will be replaced by a wrapper around whatever mail
+ * library is used in that system.
  *
  * @package Drupal\backup_migrate\Core\Environment
  */

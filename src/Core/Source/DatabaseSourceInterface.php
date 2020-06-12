@@ -15,8 +15,9 @@ interface DatabaseSourceInterface extends SourceInterface {
   public function getTableNames();
 
   /**
-   * Get an array of tables with some info. Each entry must have at least a
-   * 'name' key containing the table name.
+   * Get an array of tables with some info.
+   *
+   * Each entry must have at least a 'name' key containing the table name.
    *
    * @return array
    */

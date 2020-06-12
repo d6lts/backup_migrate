@@ -2,11 +2,11 @@
 
 namespace Drupal\backup_migrate\Drupal\Destination;
 
-use \Drupal\backup_migrate\Core\Destination\BrowserDownloadDestination;
+use Drupal\backup_migrate\Core\Destination\BrowserDownloadDestination;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 
 /**
- * Class DrupalBrowserDownloadDestination.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Destination
  */
@@ -15,7 +15,7 @@ class DrupalBrowserDownloadDestination extends BrowserDownloadDestination {
   /**
    * {@inheritdoc}
    */
-  function saveFile(BackupFileReadableInterface $file) {
+  public function saveFile(BackupFileReadableInterface $file) {
     // @todo Replace the header/print calls with a Symfony response (if that
     // allows streaming).
     // Need to find some way to return new BinaryFileResponse($uri, 200

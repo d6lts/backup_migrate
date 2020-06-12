@@ -9,7 +9,7 @@ use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 use Drupal\backup_migrate\Core\Plugin\PluginBase;
 
 /**
- * Class StreamDestination.
+ *
  *
  * @package Drupal\backup_migrate\Core\Destination
  */
@@ -18,7 +18,7 @@ class StreamDestination extends PluginBase implements WritableDestinationInterfa
   /**
    * {@inheritdoc}
    */
-  function saveFile(BackupFileReadableInterface $file) {
+  public function saveFile(BackupFileReadableInterface $file) {
     $stream_uri = $this->confGet('streamuri');
     if ($fp_out = fopen($stream_uri, 'w')) {
       $file->openForRead();
@@ -49,6 +49,7 @@ class StreamDestination extends PluginBase implements WritableDestinationInterfa
       throw new DestinationNotWritableException('The file stream !uri cannot be written to.', ['%uri' => $stream_uri]);
     }
   }
+
   /**
    * {@inheritdoc}
    */

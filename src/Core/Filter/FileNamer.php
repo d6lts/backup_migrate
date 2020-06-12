@@ -3,15 +3,13 @@
 namespace Drupal\backup_migrate\Core\Filter;
 
 use Drupal\backup_migrate\Core\Config\Config;
-use Drupal\backup_migrate\Core\Config\ValidationError;
 use Drupal\backup_migrate\Core\Plugin\FileProcessorInterface;
 use Drupal\backup_migrate\Core\Plugin\FileProcessorTrait;
 use Drupal\backup_migrate\Core\Plugin\PluginBase;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
-use Drupal\backup_migrate\Core\Translation\TranslatableTrait;
 
 /**
- * Class FileNamer.
+ *
  *
  * @package Drupal\backup_migrate\Core\Filter
  */

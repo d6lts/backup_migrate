@@ -4,10 +4,9 @@ namespace Drupal\backup_migrate\Core\Destination;
 
 use Drupal\backup_migrate\Core\Config\Config;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
-use Drupal\backup_migrate\Core\Plugin\PluginCallerInterface;
 
 /**
- * Class DebugDestination.
+ *
  *
  * @package Drupal\backup_migrate\Core\Destination
  */
@@ -16,7 +15,7 @@ class DebugDestination extends StreamDestination implements WritableDestinationI
   /**
    * {@inheritdoc}
    */
-  function saveFile(BackupFileReadableInterface $file) {
+  public function saveFile(BackupFileReadableInterface $file) {
 
     // Quick and dirty way to html format this output.
     if ($this->confGet('format') == 'html') {

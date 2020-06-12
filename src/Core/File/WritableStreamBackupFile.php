@@ -1,40 +1,32 @@
 <?php
 
-// Must be injected:
-// Temp directory.
 namespace Drupal\backup_migrate\Core\File;
 
 use Drupal\backup_migrate\Core\Exception\BackupMigrateException;
 
 /**
- * Class TempFile.
+ * A file object which represents an existing PHP stream with read/write.
  *
  * @package Drupal\backup_migrate\Core\File
- *
- * A file object which represents an existing PHP stream that can be written to and read from.
  */
 class WritableStreamBackupFile extends ReadableStreamBackupFile implements BackupFileReadableInterface, BackupFileWritableInterface {
 
   /**
-   * @var bool Dirty bit. Has the file been written to since it was opened?
+   * Dirty bit - has the file been written to since it was opened?
+   *
+   * @var bool
    */
   protected $dirty = FALSE;
 
   /**
-   * Constructor. Create a new file object from .
-   */
-  function __construct($filepath) {
-    parent::__construct($filepath);
-  }
-
-  /**
    * Open a file for reading or writing.
    *
-   * @param bool $binary Is the file binary
+   * @param bool $binary
+   *   Is the file binary.
    *
    * @throws \Exception
    */
-  function openForWrite($binary = FALSE) {
+  public function openForWrite($binary = FALSE) {
     if (!$this->isOpen()) {
       $path = $this->realpath();
 
@@ -56,11 +48,12 @@ class WritableStreamBackupFile extends ReadableStreamBackupFile implements Backu
   /**
    * Write a line to the file.
    *
-   * @param string $data A string to write to the file.
+   * @param string $data
+   *   A string to write to the file.
    *
    * @throws \Exception
    */
-  function write($data) {
+  public function write($data) {
     if (!$this->isOpen()) {
       $this->openForWrite();
     }
@@ -78,11 +71,10 @@ class WritableStreamBackupFile extends ReadableStreamBackupFile implements Backu
     }
   }
 
-
   /**
    * Update the file time and size when the file is closed.
    */
-  function close() {
+  public function close() {
     parent::close();
 
     // If the file has been modified, update the stats from disk.
@@ -93,8 +85,9 @@ class WritableStreamBackupFile extends ReadableStreamBackupFile implements Backu
   }
 
   /**
-   * A shorthand function to open the file, write the given contents and close
-   * the file. Used for small amounts of data that can fit in memory.
+   * Open the file, writes the given contents and closes it.
+   *
+   * Used for small amounts of data that can fit in memory.
    *
    * @param $data
    */

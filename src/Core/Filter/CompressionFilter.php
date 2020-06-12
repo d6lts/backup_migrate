@@ -10,7 +10,7 @@ use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 use Drupal\backup_migrate\Core\File\BackupFileWritableInterface;
 
 /**
- * Class CompressionFilter.
+ *
  */
 class CompressionFilter extends PluginBase implements FileProcessorInterface {
 
@@ -19,14 +19,9 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
   /**
    * Get a list of supported operations and their weight.
    *
-   * An array of operations should take the form:
-   *
-   * [
-   *  'backup' => ['weight' => 100],
-   *  'restore' => ['weight' => -100],
-   * ];
-   *
    * @return array
+   *   A list of operations keyed by the operation's name with a list of
+   *   attributes as a nested array.
    */
   public function supportedOps() {
     return [
@@ -79,7 +74,6 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
     ];
   }
 
-
   /**
    * Get a definition for user-configurable settings.
    *
@@ -92,19 +86,18 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
       $schema['groups']['file'] = [
         'title' => 'Backup File',
       ];
-      $compression_options = $this->_availableCompressionAlgorithms();
+      $compression_options = $this->availableCompressionAlgorithms();
       $schema['fields']['compression'] = [
         'group' => 'file',
         'type' => 'enum',
         'title' => 'Compression',
         'options' => $compression_options,
-        'actions' => ['backup']
+        'actions' => ['backup'],
       ];
     }
 
     return $schema;
   }
-
 
   /**
    * Get the default values for the plugin.
@@ -113,10 +106,9 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
    */
   public function configDefaults() {
     return new Config([
-      'compression' => $this->_defaultCompressionAlgorithm(),
+      'compression' => $this->defaultCompressionAlgorithm(),
     ]);
   }
-
 
   /**
    * Run on a backup.
@@ -169,7 +161,7 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
       case "gz":
       case "gzip":
         $out = $this->getTempFileManager()->popExt($file);
-        $this->_gzipDecode($file, $out);
+        $this->gzipDecode($file, $out);
         break;
 
       case "bz":
@@ -177,17 +169,16 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
       case "bzip":
       case "bzip2":
         $out = $this->getTempFileManager()->popExt($file);
-        $this->_bzipDecode($file, $out);
+        $this->bzipDecode($file, $out);
         break;
 
       case "zip":
         $out = $this->getTempFileManager()->popExt($file);
-        $this->_ZipDecode($file, $out);
+        $this->zipDecode($file, $out);
         break;
     }
     return $out;
   }
-
 
   /**
    * Gzip encode a file.
@@ -226,7 +217,7 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
    *
    * @return bool
    */
-  protected function _gzipDecode(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
+  protected function gzipDecode(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
     $success = FALSE;
 
     if (!$success && function_exists("gzopen")) {
@@ -279,7 +270,7 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
    *
    * @return bool
    */
-  protected function _bzipDecode(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
+  protected function bzipDecode(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
     $success = FALSE;
 
     if (!$success && function_exists("bzopen")) {
@@ -331,7 +322,7 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
    *
    * @return bool
    */
-  protected function _ZipDecode(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
+  protected function zipDecode(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
     $success = FALSE;
     if (class_exists('ZipArchive')) {
       $zip = new \ZipArchive();
@@ -354,7 +345,7 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
    *
    * @return array
    */
-  protected function _availableCompressionAlgorithms() {
+  protected function availableCompressionAlgorithms() {
     $compression_options = ["none" => ("No Compression")];
     if (function_exists("gzencode")) {
       $compression_options['gzip'] = ("GZip");
@@ -374,8 +365,8 @@ class CompressionFilter extends PluginBase implements FileProcessorInterface {
    * @return string
    *   The machine name of the algorithm.
    */
-  protected function _defaultCompressionAlgorithm() {
-    $available = array_keys($this->_availableCompressionAlgorithms());
+  protected function defaultCompressionAlgorithm() {
+    $available = array_keys($this->availableCompressionAlgorithms());
     // Remove the 'none' option.
     array_shift($available);
     $out = array_shift($available);

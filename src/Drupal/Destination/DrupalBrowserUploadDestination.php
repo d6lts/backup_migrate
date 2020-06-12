@@ -8,7 +8,7 @@ use Drupal\backup_migrate\Core\File\ReadableStreamBackupFile;
 use Drupal\backup_migrate\Core\Plugin\PluginBase;
 
 /**
- * Class BrowserUploadDestination.
+ *
  *
  * @package Drupal\backup_migrate\Core\Destination
  */
@@ -49,13 +49,8 @@ class DrupalBrowserUploadDestination extends PluginBase implements ReadableDesti
     return $file;
   }
 
-
   /**
-   * Does the file with the given id (filename) exist in this destination.
-   *
-   * @param string $id The id (usually the filename) of the file.
-   *
-   * @return bool True if the file exists, false if it does not.
+   * {@inheritdoc}
    */
   public function fileExists($id) {
     return (boolean) \Drupal::request()->files->has("files[$id]");

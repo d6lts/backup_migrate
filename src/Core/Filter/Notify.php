@@ -9,8 +9,6 @@ use Drupal\backup_migrate\Core\Service\StashLogger;
 use Drupal\backup_migrate\Core\Service\TeeLogger;
 
 /**
- * Class Notify
- *
  * Notifies by email when a backup succeeds or fails.
  *
  * @package Drupal\backup_migrate\Core\Filter
@@ -19,8 +17,10 @@ class Notify extends PluginBase implements PluginCallerInterface {
   use PluginCallerTrait;
 
   /**
-   * Add a weight so that our before* operations run before any other plugin has
-   * a chance to write any log entries.
+   * Add a weight so that our before* operations run before any others.
+   *
+   * Primarily to ensure this one runs before other plugins have a chance to
+   * write any log entries.
    *
    * @return array
    */
@@ -32,29 +32,47 @@ class Notify extends PluginBase implements PluginCallerInterface {
   }
 
   /**
-   * @var StashLogger
+   * @var \Drupal\backup_migrate\Core\Service\StashLogger
    */
   protected $logstash;
 
+  /**
+   *
+   */
   public function beforeBackup() {
     $this->addLogger();
   }
 
+  /**
+   *
+   */
   public function beforeRestore() {
     $this->addLogger();
   }
 
+  /**
+   *
+   */
   public function backupSucceed() {
     $this->sendNotification('Backup finished sucessfully');
   }
 
+  /**
+   *
+   */
   public function backupFail(Exception $e) {
 
   }
 
+  /**
+   *
+   */
   public function restoreSucceed() {
   }
 
+  /**
+   *
+   */
   public function restoreFail() {
   }
 
@@ -69,11 +87,10 @@ class Notify extends PluginBase implements PluginCallerInterface {
     if (count($messages)) {
 
     }
-    // $body .=
   }
 
   /**
-   * add our stash logger to the service locator to capture all logged messages.
+   * Add the stash logger to the service locator to capture all logged messages.
    */
   protected function addLogger() {
     $services = $this->plugins()->services();
@@ -87,7 +104,8 @@ class Notify extends PluginBase implements PluginCallerInterface {
     // Add a tee to send logs to both the regular logger and our stash.
     $services->add('Logger', new TeeLogger([$logger, $this->logstash]));
 
-    // Add the services back into the plugin manager to re-inject existing plugins
+    // Add the services back into the plugin manager to re-inject existing
+    // plugins.
     $this->plugins()->setServiceLocator($services);
   }
 

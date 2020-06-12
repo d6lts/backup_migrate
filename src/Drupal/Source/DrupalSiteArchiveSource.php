@@ -2,44 +2,39 @@
 
 namespace Drupal\backup_migrate\Drupal\Source;
 
-use Drupal\backup_migrate\Core\Plugin\FileProcessorTrait;
-use Drupal\backup_migrate\Core\Plugin\PluginBase;
-use Drupal\backup_migrate\Core\Service\ArchiverInterface;
 use Drupal\backup_migrate\Core\Source\FileDirectorySource;
 use Drupal\backup_migrate\Core\Source\SourceInterface;
-use Drupal\backup_migrate\Core\Translation\TranslatableTrait;
-use Drupal\backup_migrate\Core\Config\ConfigInterface;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 
-
 /**
- * Class DrupalSiteArchiveSource.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Source
  */
 class DrupalSiteArchiveSource extends FileDirectorySource {
 
   /**
-   * @var SourceInterface
+   * @var \Drupal\backup_migrate\Core\Source\SourceInterface
    */
-  protected $db_source;
+  protected $dbSource;
 
   /**
-   * @param ConfigInterface|array $init
+   * @param \Drupal\backup_migrate\Core\Config\ConfigInterface|array $init
    * @param \Drupal\backup_migrate\Core\Source\SourceInterface $db
-   * @param \Drupal\backup_migrate\Core\Source\SourceInterface $code
    */
-  public function __construct($init = [], SourceInterface $db) {
+  public function __construct($init, SourceInterface $db) {
     parent::__construct($init);
 
-    $this->db_source = $db;
+    $this->dbSource = $db;
   }
 
   /**
-   * Get a list if files to be backed up from the given directory. Do not
-   * include files that match the 'exclude_filepaths' setting.
+   * Get a list if files to be backed up from the given directory.
    *
-   * @param string $dir The name of the directory to list.
+   * Do not include files that match the 'exclude_filepaths' setting.
+   *
+   * @param string $dir
+   *   The name of the directory to list.
    *
    * @return array
    *
@@ -70,16 +65,17 @@ class DrupalSiteArchiveSource extends FileDirectorySource {
   }
 
   /**
-   * Import to this source from the given backup file. This is the main restore
-   * function for this source.
+   * Import to this source from the given backup file.
    *
-   * @param BackupFileReadableInterface $file
-   *    The file to read the backup from. It will not be opened for reading
+   * This is the main restore function for this source.
+   *
+   * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
+   *   The file to read the backup from. It will not be opened for reading.
    *
    * @return bool|void
    */
   public function importFromFile(BackupFileReadableInterface $file) {
-    // TODO: Implement importFromFile() method.
+    // @todo Implement importFromFile() method.
   }
 
   /**
@@ -105,25 +101,25 @@ class DrupalSiteArchiveSource extends FileDirectorySource {
         'database-file-default' => "database.sql",
         'database-file-driver' => "mysql",
         'files-private' => "docroot/sites/default/private",
-        'files-public' => "docroot/sites/default/files"
-      ]
+        'files-public' => "docroot/sites/default/files",
+      ],
     ];
 
-    $out->writeAll($this->arrayToINI($info));
+    $out->writeAll($this->arrayToIni($info));
     return $out;
   }
-
 
   /**
    * Translate a 2d array to an INI string which can be written to a file.
    *
    * @param array $info
-   *    The array to convert. Must be an array of sections each of which is an array of field/value pairs.
+   *   The array to convert. Must be an array of sections each of which is an
+   *   array of field/value pairs.
    *
    * @return string
-   *    The data in INI format.
+   *   The data in INI format.
    */
-  private function arrayToINI($info) {
+  private function arrayToIni(array $info) {
     $content = "";
     foreach ($info as $section => $data) {
       $content .= '[' . $section . ']' . "\n";
@@ -137,10 +133,10 @@ class DrupalSiteArchiveSource extends FileDirectorySource {
   }
 
   /**
-   * @return SourceInterface
+   * @return \Drupal\backup_migrate\Core\Source\SourceInterface
    */
   public function getDbSource() {
-    return $this->db_source;
+    return $this->dbSource;
   }
 
 }

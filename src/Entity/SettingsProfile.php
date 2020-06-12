@@ -2,7 +2,6 @@
 
 namespace Drupal\backup_migrate\Entity;
 
-use Drupal\backup_migrate\Core\Config\Config;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\backup_migrate\SettingsProfileInterface;
 

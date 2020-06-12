@@ -2,8 +2,6 @@
 
 namespace Drupal\backup_migrate\Entity;
 
-use Drupal\backup_migrate\DestinationInterface;
-
 /**
  * Defines the Backup Destination entity.
  *

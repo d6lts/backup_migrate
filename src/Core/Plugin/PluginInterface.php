@@ -39,7 +39,8 @@ interface PluginInterface {
   /**
    * Does this plugin implement the given operation.
    *
-   * @param $op string The name of the operation
+   * @param string $op
+   *   The name of the operation.
    *
    * @return bool
    */
@@ -47,7 +48,9 @@ interface PluginInterface {
 
   /**
    * What is the weight of the given operation for this plugin.
-   *    * @param $op string The name of the operation.
+   *
+   * @param string $op
+   *   The name of the operation.
    *
    * @return int
    */

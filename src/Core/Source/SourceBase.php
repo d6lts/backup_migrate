@@ -7,7 +7,7 @@ use Drupal\backup_migrate\Core\Plugin\FileProcessorTrait;
 use Drupal\backup_migrate\Core\Plugin\PluginBase;
 
 /**
- * Class SourceBase.
+ *
  *
  * @package Drupal\backup_migrate\Core\Source
  */
@@ -20,7 +20,7 @@ abstract class SourceBase extends PluginBase implements SourceInterface, FilePro
   public function supportedOps() {
     return [
       'exportToFile' => [],
-      'importFromFile' => []
+      'importFromFile' => [],
     ];
   }
 

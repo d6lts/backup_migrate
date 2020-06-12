@@ -2,10 +2,8 @@
 
 namespace Drupal\backup_migrate\Core\File;
 
-use Drupal\backup_migrate\Core\File\BackupFileInterface;
-
 /**
- * Class BackupFile.
+ *
  *
  * @package Drupal\backup_migrate\Core\File
  */
@@ -16,7 +14,7 @@ class BackupFile implements BackupFileInterface {
    *
    * @var array
    */
-  protected $file_info;
+  protected $fileInfo;
 
   /**
    * The file path.
@@ -42,17 +40,20 @@ class BackupFile implements BackupFileInterface {
   /**
    * The file's metadata.
    *
-   * @var array A key/value associative array of metadata.
+   * A key/value associative array of metadata.
+   *
+   * @var array
    */
   protected $metadata;
-
 
   /**
    * Get a metadata value.
    *
-   * @param string $key The key for the metadata item.
+   * @param string $key
+   *   The key for the metadata item.
    *
-   * @return mixed The value of the metadata for this file.
+   * @return mixed
+   *   The value of the metadata for this file.
    */
   public function getMeta($key) {
     return isset($this->metadata[$key]) ? $this->metadata[$key] : NULL;
@@ -61,8 +62,10 @@ class BackupFile implements BackupFileInterface {
   /**
    * Set a metadata value.
    *
-   * @param string $key The key for the metadata item.
-   * @param mixed $value The value for the metadata item.
+   * @param string $key
+   *   The key for the metadata item.
+   * @param mixed $value
+   *   The value for the metadata item.
    */
   public function setMeta($key, $value) {
     $this->metadata[$key] = $value;
@@ -71,9 +74,10 @@ class BackupFile implements BackupFileInterface {
   /**
    * Set a metadata value.
    *
-   * @param array $values An array of key-value pairs for the file metadata.
+   * @param array $values
+   *   An array of key-value pairs for the file metadata.
    */
-  public function setMetaMultiple($values) {
+  public function setMetaMultiple(array $values) {
     foreach ((array) $values as $key => $value) {
       $this->setMeta($key, $value);
     }
@@ -81,8 +85,6 @@ class BackupFile implements BackupFileInterface {
 
   /**
    * Get all metadata.
-   *
-   * @param array $values An array of key-value pairs for the file metadata.
    *
    * @return array
    */
@@ -121,7 +123,6 @@ class BackupFile implements BackupFileInterface {
     $this->setExtList($parts);
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -145,9 +146,9 @@ class BackupFile implements BackupFileInterface {
 
   /**
    * @param array $ext
-   *  The list of file extensions for the file*  The list of file extensions for the file
+   *   The list of file extensions for the file.
    */
-  public function setExtList($ext) {
+  public function setExtList(array $ext) {
     $this->ext = array_filter($ext);
   }
 

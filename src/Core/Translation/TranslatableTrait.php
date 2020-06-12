@@ -9,21 +9,19 @@ namespace Drupal\backup_migrate\Core\Translation;
  *  $this->t(...);
  * to translate a string (if a translator is available).
  *
- * Class TranslatableTrait
- *
  * @package Drupal\backup_migrate\Core\Translation
  */
 trait TranslatableTrait {
 
   /**
-   * @var TranslatorInterface;
+   * @var TranslatorInterface
    */
   protected $translator;
 
   /**
    * @param TranslatorInterface $translator
    */
-  public function setTranslator($translator) {
+  public function setTranslator(TranslatorInterface $translator) {
     $this->translator = $translator;
   }
 

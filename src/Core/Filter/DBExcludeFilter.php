@@ -10,26 +10,24 @@ use Drupal\backup_migrate\Core\Source\DatabaseSourceInterface;
 /**
  * Allows the exclusion of certain data from a database.
  *
- * Class DBExcludeFilter.
- *
  * @package Drupal\backup_migrate\Core\Filter
  */
 class DBExcludeFilter extends PluginBase {
 
   /**
-   * @var PluginManager
+   * @var \Drupal\backup_migrate\Core\Plugin\PluginManager
    */
-  protected $source_manager;
+  protected $sourceManager;
 
   /**
-   * The 'beforeDBTableBackup' plugin op.
+   * The 'beforeDbTableBackup' plugin op.
    *
    * @param array $table
    * @param array $params
    *
    * @return array $table
    */
-  public function beforeDBTableBackup($table, $params = []) {
+  public function beforeDbTableBackup(array $table, array $params = []) {
     $exclude = $this->confGet('exclude_tables');
     $nodata = $this->confGet('nodata_tables');
     if (in_array($table['name'], $exclude)) {
@@ -83,15 +81,15 @@ class DBExcludeFilter extends PluginBase {
             'multiple' => TRUE,
             'options' => $tables,
             'actions' => ['backup'],
-            'group' => 'default'
+            'group' => 'default',
           ];
           $schema['fields']['exclude_tables'] = $table_select + [
-              'title' => $this->t('Exclude these tables entirely'),
-            ];
+            'title' => $this->t('Exclude these tables entirely'),
+          ];
 
           $schema['fields']['nodata_tables'] = $table_select + [
-              'title' => $this->t('Exclude data from these tables'),
-            ];
+            'title' => $this->t('Exclude data from these tables'),
+          ];
 
         }
       }
@@ -100,17 +98,17 @@ class DBExcludeFilter extends PluginBase {
   }
 
   /**
-   * @return PluginManager
+   * @return \Drupal\backup_migrate\Core\Plugin\PluginManager
    */
   public function sources() {
-    return $this->source_manager ? $this->source_manager : new PluginManager();
+    return $this->sourceManager ? $this->sourceManager : new PluginManager();
   }
 
   /**
-   * @param PluginManager $source_manager
+   * @param \Drupal\backup_migrate\Core\Plugin\PluginManager $sourceManager
    */
-  public function setSourceManager($source_manager) {
-    $this->source_manager = $source_manager;
+  public function setSourceManager(PluginManager $sourceManager) {
+    $this->sourceManager = $sourceManager;
   }
 
 }

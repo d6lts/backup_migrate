@@ -7,9 +7,7 @@ use Drupal\backup_migrate\Core\Main\BackupMigrateInterface;
 use Drupal\Component\Plugin\PluginBase;
 
 /**
- * Class WrapperPluginBase.
- *
- * A base class for a drupal source or destination wrapper plugin.
+ * A base class for a Drupal source or destination wrapper plugin.
  *
  * @package Drupal\backup_migrate\Drupal\EntityPlugins
  */
@@ -26,7 +24,7 @@ abstract class WrapperPluginBase extends PluginBase implements WrapperPluginInte
   /**
    * Get the Backup and Migrate plugin object.
    *
-   * @return Drupal\backup_migrate\Core\Plugin\PluginInterface;
+   * @return Drupal\backup_migrate\Core\Plugin\PluginInterface
    */
   public function getObject() {
     // If the class to wrap was specified in the annotation then add that class.

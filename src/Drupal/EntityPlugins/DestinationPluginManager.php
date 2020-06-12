@@ -7,11 +7,12 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 
 /**
- * Class DestinationPluginManager.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Destination
  */
 class DestinationPluginManager extends DefaultPluginManager {
+
   /**
    * Constructs a DestinationPluginManager object.
    *

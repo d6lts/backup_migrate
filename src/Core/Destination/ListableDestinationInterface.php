@@ -2,8 +2,6 @@
 
 namespace Drupal\backup_migrate\Core\Destination;
 
-use Drupal\backup_migrate\Core\File\BackupFileInterface;
-
 /**
  * Interface ListableDestinationInterface.
  *
@@ -12,13 +10,14 @@ use Drupal\backup_migrate\Core\File\BackupFileInterface;
 interface ListableDestinationInterface extends DestinationInterface {
 
   /**
-   * Return a list of files from the destination. This list should be
-   * date ordered from newest to oldest.
+   * Return a list of files from the destination.
+   *
+   * This list should be date ordered from newest to oldest.
    *
    * @todo Decide if extended metadata should ALWAYS be loaded here. Is there
    * a use case for getting a list of files WITHOUT metadata?
    *
-   * @return BackupFileInterface[]
+   * @return \Drupal\backup_migrate\Core\File\BackupFileInterface[]
    *   An array of BackupFileInterface objects representing the files with
    *   the file ids as keys. The file ids are usually file names but that
    *   is up to the implementing destination to decide. The returned files
@@ -50,7 +49,13 @@ interface ListableDestinationInterface extends DestinationInterface {
   public function countFiles();
 
   /**
-   * @return boolean Whether the file exists in this destination
+   * Does the file with the given id (filename) exist in this destination.
+   *
+   * @param int $id
+   *   The id (usually the filename) of the file.
+   *
+   * @return bool
+   *   Whether the file exists in this destination.
    */
   public function fileExists($id);
 

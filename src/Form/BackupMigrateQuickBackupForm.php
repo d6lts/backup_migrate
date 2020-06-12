@@ -26,8 +26,10 @@ class BackupMigrateQuickBackupForm extends FormBase {
     $form = [];
 
     // Theme the form if we want it inline.
-    // @FIXME
-    // $form['#theme'] = 'backup_migrate_ui_manual_quick_backup_form_inline';.
+    // @todo Fix this.
+    // @code
+    // $form['#theme'] = 'backup_migrate_ui_manual_quick_backup_form_inline';
+    // @endcode
     $bam = backup_migrate_get_service_object();
 
     $form['quickbackup'] = [
@@ -42,12 +44,15 @@ class BackupMigrateQuickBackupForm extends FormBase {
     $form['quickbackup']['destination_id'] = DrupalConfigHelper::getDestinationSelector($bam, t('Backup Destination'));
     $form['quickbackup']['settings_profile_id'] = DrupalConfigHelper::getSettingsProfileSelector(t('Settings Profile'));
     unset($form['quickbackup']['destination_id']['#options']['upload']);
-    // Create the service
+    // @todo Is this needed?
+    // Create the service.
+    // @code
     // $bam = backup_migrate_get_service_object();
     // $bam->setConfig($config);
     // $bam->plugins()->get('namer')->confGet('filename');
     // $form['quickbackup']['source_id'] = _backup_migrate_get_source_pulldown(\Drupal::config('backup_migrate.settings')->get('backup_migrate_source_id'));.
-    // $form['quickbackup']['destination'] = _backup_migrate_get_destination_pulldown('manual backup', \Drupal::config('backup_migrate.settings')->get('backup_migrate_destination_id'), \Drupal::config('backup_migrate.settings')->get('backup_migrate_copy_destination_id'));.
+    // $form['quickbackup']['destination'] = _backup_migrate_get_destination_pulldown('manual backup', \Drupal::config('backup_migrate.settings')->get('backup_migrate_destination_id'), \Drupal::config('backup_migrate.settings')->get('backup_migrate_copy_destination_id'));
+    // @endcode
     $form['quickbackup']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Backup now'),
@@ -55,13 +60,6 @@ class BackupMigrateQuickBackupForm extends FormBase {
     ];
 
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
   }
 
   /**

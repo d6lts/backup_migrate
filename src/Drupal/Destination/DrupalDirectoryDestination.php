@@ -10,21 +10,23 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StreamWrapper\PrivateStream;
 
 /**
- * Class DrupalDirectoryDestination.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Destination
  */
 class DrupalDirectoryDestination extends DirectoryDestination {
 
   /**
-   * Do the actual file save. This function is called to save the data file AND
-   * the metadata sidecar file.
+   * Do the actual file save.
+   *
+   * This function is called to save the data file AND the metadata sidecar
+   * file.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
    *
    * @throws \Drupal\backup_migrate\Core\Exception\BackupMigrateException
    */
-  function _saveFile(BackupFileReadableInterface $file) {
+  public function _saveFile(BackupFileReadableInterface $file) {
     // Check if the directory exists.
     $this->checkDirectory();
 
@@ -35,7 +37,6 @@ class DrupalDirectoryDestination extends DirectoryDestination {
       return FALSE;
     }
   }
-
 
   /**
    * Check that the directory can be used for backup.
@@ -87,7 +88,6 @@ class DrupalDirectoryDestination extends DirectoryDestination {
     // @todo Warn if the realpath cannot be resolved (because we cannot
     // determine if the file is publicly accessible).
   }
-
 
   /**
    * {@inheritdoc}

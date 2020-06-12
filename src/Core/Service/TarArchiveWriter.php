@@ -5,20 +5,22 @@ namespace Drupal\backup_migrate\Core\Service;
 use Drupal\backup_migrate\Core\File\BackupFileWritableInterface;
 
 /**
- * Class TarArchiver.
+ *
  *
  * @package Drupal\backup_migrate\Core\Service
  */
 class TarArchiveWriter implements ArchiveWriterInterface {
 
   /**
-   * @var BackupFileWritableInterface
+   * @var \Drupal\backup_migrate\Core\File\BackupFileWritableInterface
    */
   protected $archive;
 
   /**
-   * Get the file extension for this archiver. For a tarball writer this would
-   * be 'tar'. For a Zip file writer this would be 'zip'.
+   * Get the file extension for this archiver.
+   *
+   * For a tarball writer this would be 'tar'. For a Zip file writer this would
+   * be 'zip'.
    *
    * @return string
    */
@@ -54,7 +56,6 @@ class TarArchiveWriter implements ArchiveWriterInterface {
   /**
    * @param $real_path
    * @param $new_path
-   * @return bool
    */
   protected function writeHeader($real_path, $new_path) {
     if (strlen($new_path) > 99) {
@@ -101,38 +102,37 @@ class TarArchiveWriter implements ArchiveWriterInterface {
       $v_version, $v_uname, $v_gname,
       $v_devmajor, $v_devminor, $v_prefix, '');
 
-    // ----- Calculate the checksum.
+    // Calculate the checksum.
     $v_checksum = 0;
-    // ..... First part of the header.
+    // First part of the header.
     for ($i = 0; $i < 148; $i++) {
       $v_checksum += ord(substr($v_binary_data_first, $i, 1));
     }
-    // ..... Ignore the checksum value and replace it by ' ' (space).
+    // Ignore the checksum value and replace it by ' ' (space).
     for ($i = 148; $i < 156; $i++) {
       $v_checksum += ord(' ');
     }
-    // ..... Last part of the header.
+    // Last part of the header.
     for ($i = 156, $j = 0; $i < 512; $i++, $j++) {
       $v_checksum += ord(substr($v_binary_data_last, $j, 1));
     }
 
-    // ----- Write the first 148 bytes of the header in the archive.
+    // Write the first 148 bytes of the header in the archive.
     $this->archive->write($v_binary_data_first, 148);
 
-    // ----- Write the calculated checksum.
+    // Write the calculated checksum.
     $v_checksum = sprintf("%6s ", decoct($v_checksum));
     $v_binary_data = pack("a8", $v_checksum);
     $this->archive->write($v_binary_data, 8);
 
-    // ----- Write the last 356 bytes of the header in the archive.
+    // Write the last 356 bytes of the header in the archive.
     $this->archive->write($v_binary_data_last, 356);
   }
 
   /**
    * @param $new_path
-   * @return bool
    */
-  function writeLongHeader($new_path) {
+  public function writeLongHeader($new_path) {
     $v_size = sprintf("%11s ", decoct(strlen($new_path)));
 
     $v_typeflag = 'L';
@@ -152,33 +152,33 @@ class TarArchiveWriter implements ArchiveWriterInterface {
       $v_version, $v_uname, $v_gname,
       $v_devmajor, $v_devminor, $v_prefix, '');
 
-    // ----- Calculate the checksum.
+    // Calculate the checksum.
     $v_checksum = 0;
-    // ..... First part of the header.
+    // First part of the header.
     for ($i = 0; $i < 148; $i++) {
       $v_checksum += ord(substr($v_binary_data_first, $i, 1));
     }
-    // ..... Ignore the checksum value and replace it by ' ' (space).
+    // Ignore the checksum value and replace it by ' ' (space).
     for ($i = 148; $i < 156; $i++) {
       $v_checksum += ord(' ');
     }
-    // ..... Last part of the header.
+    // Last part of the header.
     for ($i = 156, $j = 0; $i < 512; $i++, $j++) {
       $v_checksum += ord(substr($v_binary_data_last, $j, 1));
     }
 
-    // ----- Write the first 148 bytes of the header in the archive.
+    // Write the first 148 bytes of the header in the archive.
     $this->archive->write($v_binary_data_first, 148);
 
-    // ----- Write the calculated checksum.
+    // Write the calculated checksum.
     $v_checksum = sprintf("%6s ", decoct($v_checksum));
     $v_binary_data = pack("a8", $v_checksum);
     $this->archive->write($v_binary_data, 8);
 
-    // ----- Write the last 356 bytes of the header in the archive.
+    // Write the last 356 bytes of the header in the archive.
     $this->archive->write($v_binary_data_last, 356);
 
-    // ----- Write the filename as content of the block.
+    // Write the filename as content of the block.
     $i = 0;
     while (($v_buffer = substr($new_path, (($i++) * 512), 512)) != '') {
       $v_binary_data = pack("a512", "$v_buffer");
@@ -190,7 +190,7 @@ class TarArchiveWriter implements ArchiveWriterInterface {
    * Write a footer to mark the end of the archive.
    */
   private function writeFooter() {
-    // ----- Write the last 0 filled block for end of archive.
+    // Write the last 0 filled block for end of archive.
     $v_binary_data = pack('a1024', '');
     $this->archive->write($v_binary_data);
   }

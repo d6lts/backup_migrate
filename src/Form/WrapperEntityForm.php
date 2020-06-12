@@ -8,7 +8,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class WrapperEntityForm.
+ *
  *
  * @package Drupal\backup_migrate\Form
  */

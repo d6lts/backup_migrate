@@ -3,18 +3,19 @@
 namespace Drupal\backup_migrate\Core\Source;
 
 use Drupal\backup_migrate\Core\Config\Config;
-use Drupal\backup_migrate\Core\Plugin\PluginCallerInterface;
-use Drupal\backup_migrate\Core\Plugin\PluginCallerTrait;
 use Drupal\backup_migrate\Core\Exception\BackupMigrateException;
 use Drupal\backup_migrate\Core\Exception\IgnorableException;
+use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 use Drupal\backup_migrate\Core\Plugin\FileProcessorInterface;
 use Drupal\backup_migrate\Core\Plugin\FileProcessorTrait;
 use Drupal\backup_migrate\Core\Plugin\PluginBase;
-use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
+use Drupal\backup_migrate\Core\Plugin\PluginCallerInterface;
+use Drupal\backup_migrate\Core\Plugin\PluginCallerTrait;
+use Drupal\backup_migrate\Core\Service\ArchiveReaderInterface;
 use Drupal\backup_migrate\Core\Service\ArchiveWriterInterface;
 
 /**
- * Class FileDirectorySource.
+ *
  *
  * @package Drupal\backup_migrate\Core\Source
  */
@@ -25,12 +26,12 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
   /**
    * @var \Drupal\backup_migrate\Core\Service\ArchiveWriterInterface
    */
-  private $archive_writer;
+  private $archiveWriter;
 
   /**
    * @var \Drupal\backup_migrate\Core\Service\ArchiveReaderInterface
    */
-  private $archive_reader;
+  private $archiveReader;
 
   /**
    * {@inheritdoc}
@@ -38,7 +39,7 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
   public function supportedOps() {
     return [
       'exportToFile' => [],
-      'importFromFile' => []
+      'importFromFile' => [],
     ];
   }
 
@@ -69,6 +70,7 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
       throw new BackupMigrateException('The directory %dir does not not have any files to be backed up.',
         ['%dir' => $directory]);
     }
+
     return FALSE;
   }
 
@@ -96,7 +98,9 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
       }
       // Check that the file endings match.
       if ($reader->getFileExt() !== $file->getExtLast()) {
-        throw new BackupMigrateException('This source expects a .%ext file.', ['%ext' => $reader->getFileExt()]);
+        throw new BackupMigrateException('This source expects a .%ext file.', [
+          '%ext' => $reader->getFileExt(),
+        ]);
       }
 
       $reader->setArchive($file);
@@ -111,7 +115,8 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
   /**
    * Get a list if files to be backed up from the given directory.
    *
-   * @param string $dir The name of the directory to list.
+   * @param string $dir
+   *   The name of the directory to list.
    *
    * @return array
    *
@@ -140,7 +145,7 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
     }
 
     // Get a filtered list if files from the directory.
-    list($out, $errors) = $this->_getFilesFromDirectory($dir);
+    list($out, $errors) = $this->getFilesFromDirectory($dir);
 
     // Alert the user to any errors there might have been.
     if ($errors) {
@@ -155,7 +160,7 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
           ['!count' => $count, '!files' => $file_list]);
       }
       else {
-        // throw new IgnorableException('!count files could not be read: (!files).', ['!files' => $filesmsg]);
+        // Throw new IgnorableException('!count files could not be read: (!files).', ['!files' => $filesmsg]);.
         // @todo Log the ignored files.
       }
     }
@@ -165,12 +170,12 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
 
   /**
    * @param $base_path
-   *  The name of the directory to list. This must always end in '/'.
+   *   The name of the directory to list. This must always end in '/'.
    * @param string $subdir
    * @return array
    * @internal param string $dir
    */
-  protected function _getFilesFromDirectory($base_path, $subdir = '') {
+  protected function getFilesFromDirectory($base_path, $subdir = '') {
     $out = $errors = [];
 
     // Open the directory.
@@ -190,7 +195,7 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
           if ($path) {
             if (is_dir($path)) {
               list($sub_files, $sub_errors) =
-                $this->_getFilesFromDirectory($base_path, $subdir . $file . '/');
+                $this->getFilesFromDirectory($base_path, $subdir . $file . '/');
 
               // Add the directory if it is empty.
               if (empty($sub_files)) {
@@ -222,28 +227,28 @@ class FileDirectorySource extends PluginBase implements SourceInterface, FilePro
    * @param \Drupal\backup_migrate\Core\Service\ArchiveWriterInterface $writer
    */
   public function setArchiveWriter(ArchiveWriterInterface $writer) {
-    $this->archive_writer = $writer;
+    $this->archiveWriter = $writer;
   }
 
   /**
    * @return \Drupal\backup_migrate\Core\Service\ArchiveWriterInterface
    */
   public function getArchiveWriter() {
-    return $this->archive_writer;
+    return $this->archiveWriter;
   }
 
   /**
    * @return \Drupal\backup_migrate\Core\Service\ArchiveReaderInterface
    */
   public function getArchiveReader() {
-    return $this->archive_reader;
+    return $this->archiveReader;
   }
 
   /**
-   * @param \Drupal\backup_migrate\Core\Service\ArchiveReaderInterface $archive_reader
+   * @param \Drupal\backup_migrate\Core\Service\ArchiveReaderInterface $reader
    */
-  public function setArchiveReader($archive_reader) {
-    $this->archive_reader = $archive_reader;
+  public function setArchiveReader(ArchiveReaderInterface $reader) {
+    $this->archiveReader = $reader;
   }
 
   /**

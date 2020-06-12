@@ -2,12 +2,12 @@
 
 namespace Drupal\backup_migrate\Drupal\File;
 
-use \Drupal\backup_migrate\Core\File\TempFileAdapter;
-use \Drupal\backup_migrate\Core\File\TempFileAdapterInterface;
-use \Drupal\Core\File\FileSystem;
+use Drupal\backup_migrate\Core\File\TempFileAdapter;
+use Drupal\backup_migrate\Core\File\TempFileAdapterInterface;
+use Drupal\Core\File\FileSystem;
 
 /**
- * Class DrupalTempFileAdapter.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\File
  */

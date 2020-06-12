@@ -2,24 +2,23 @@
 
 namespace Drupal\backup_migrate\Drupal\Filter;
 
-use Drupal\backup_migrate\Core\Exception\BackupMigrateException;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 use Drupal\backup_migrate\Core\Plugin\PluginBase;
 use Drupal\backup_migrate\Core\Config\Config;
-use Drupal\backup_migrate\Core\Translation\TranslatableTrait;
-use Drupal\Core\Database\Database;
 
 /**
- * Class DrupalUtils.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Filter
  */
 class DrupalUtils extends PluginBase {
 
   /**
-   * @var boolean Whether the site was put in maintenance mode before the operation.
+   * Whether the site was put in maintenance mode before the operation.
+   *
+   * @var bool
    */
-  protected $maintenance_mode;
+  protected $maintenanceMode;
 
   /**
    * {@inheritdoc}
@@ -54,7 +53,6 @@ class DrupalUtils extends PluginBase {
     ]);
   }
 
-
   /**
    * Run before the backup/restore begins.
    */
@@ -76,7 +74,7 @@ class DrupalUtils extends PluginBase {
     // Take the site offline.
     if ($this->confGet('site_offline') && !\Drupal::state()->get('system.maintenance_mode')) {
       \Drupal::state()->set('system.maintenance_mode', TRUE);
-      $this->maintenance_mode = TRUE;
+      $this->maintenanceMode = TRUE;
     }
   }
 
@@ -85,7 +83,7 @@ class DrupalUtils extends PluginBase {
    */
   protected function takeSiteOnline() {
     // Take the site online again.
-    if ($this->maintenance_mode) {
+    if ($this->maintenanceMode) {
       \Drupal::state()->set('system.maintenance_mode', FALSE);
     }
   }
@@ -98,9 +96,9 @@ class DrupalUtils extends PluginBase {
    *
    * @todo Remove this.
    *
-   * @param BackupFileReadableInterface $file
+   * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
    *
-   * @return BackupFileReadableInterface
+   * @return \Drupal\backup_migrate\Core\File\BackupFileReadableInterface
    */
   public function beforeRestore(BackupFileReadableInterface $file) {
     return $file;

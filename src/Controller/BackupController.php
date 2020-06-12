@@ -10,7 +10,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Utility\TableSort;
 
 /**
- * Class BackupController.
+ *
  *
  * @package Drupal\backup_migrate\Controller
  */
@@ -36,7 +36,7 @@ class BackupController extends ControllerBase {
 
       $out[$key] = [
         'title' => [
-          '#markup' => '<h2>' . $this->t('Most recent backups in %dest', ['%dest' => $label]) . '</h2>'
+          '#markup' => '<h2>' . $this->t('Most recent backups in %dest', ['%dest' => $label]) . '</h2>',
         ],
         'list' => $this::listDestinationBackups($destination, $key, 5),
       ];
@@ -80,15 +80,12 @@ class BackupController extends ControllerBase {
    * List the backups in the given destination.
    *
    * @param \Drupal\backup_migrate\Core\Destination\ListableDestinationInterface $destination
+   * @param $backup_migrate_destination_id
+   * @param int $count
    *
    * @return mixed
    */
-  public function listDestinationBackups(
-    ListableDestinationInterface $destination,
-    $backup_migrate_destination_id,
-    $count = NULL
-  ) {
-
+  public function listDestinationBackups(ListableDestinationInterface $destination, $backup_migrate_destination_id, $count = NULL) {
     // Get a sorted list of files.
     $rows = [];
     $header = [
@@ -184,7 +181,6 @@ class BackupController extends ControllerBase {
    * Download a backup via the browser.
    *
    * @param \Drupal\backup_migrate\Entity\Destination $backup_migrate_destination
-   *
    * @param $backup_id
    */
   public function download(Destination $backup_migrate_destination, $backup_id) {

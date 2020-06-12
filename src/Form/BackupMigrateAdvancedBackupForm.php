@@ -53,8 +53,8 @@ class BackupMigrateAdvancedBackupForm extends FormBase {
     else {
       $filename_token = [
         '#type' => 'markup',
-        '#markup' => 'In order to use tokens for File Name, please install & enable <a href="https://www.drupal.org/project/token" arget="_blank">Token module</a>. <p></p>'
-        ];
+        '#markup' => 'In order to use tokens for File Name, please install & enable <a href="https://www.drupal.org/project/token" arget="_blank">Token module</a>. <p></p>',
+      ];
     }
     array_splice($form['file'], 4, 0, ['filename_token' => $filename_token]);
 

@@ -16,27 +16,24 @@ class BackupMigrate implements BackupMigrateInterface {
   use PluginCallerTrait;
 
   /**
-   * @var \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface;
+   * @var \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface
    */
   protected $sources;
 
   /**
-   * @var \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface;
+   * @var \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface
    */
   protected $destinations;
 
   /**
-   * @var ServiceManager The service locator for this object.
+   * @var \Drupal\backup_migrate\Core\Service\ServiceManagerTheservicelocatorforthisobject
    */
   protected $services;
 
   /**
    * {@inheritdoc}
-   *
-   * @param \Drupal\backup_migrate\Core\Config\ConfigInterface $config
-   * @param \Drupal\backup_migrate\Core\Service\ServiceManagerInterface $services
    */
-  function __construct() {
+  public function __construct() {
     $this->setServiceManager(new ServiceManager());
     $services = $this->services();
 
@@ -53,9 +50,12 @@ class BackupMigrate implements BackupMigrateInterface {
    */
   public function backup($source_id, $destination_id) {
     try {
-
       // Allow the plugins to set up.
-      $this->plugins()->call('setUp', NULL, ['operation' => 'backup', 'source_id' => $source_id, 'destination_id' => $destination_id]);
+      $this->plugins()->call('setUp', NULL, [
+        'operation' => 'backup',
+        'source_id' => $source_id,
+        'destination_id' => $destination_id,
+      ]);
 
       // Get the source and the destination to use.
       $source = $this->sources()->get($source_id);
@@ -71,7 +71,7 @@ class BackupMigrate implements BackupMigrateInterface {
         }
 
         // Check that the destination can be written to.
-        // @todo Catch exceptions and continue if at least one destination is valid.
+        // @todo Catch exceptions and continue if at least one dest is valid.
         $destinations[$id]->checkWritable();
       }
 
@@ -80,13 +80,15 @@ class BackupMigrate implements BackupMigrateInterface {
         throw new BackupMigrateException('The source !id does not exist.', ['!id' => $source_id]);
       }
 
-      // Run each of the installed plugins which implements the 'beforeBackup' operation.
+      // Run each of the installed plugins which implements the 'beforeBackup'
+      // operation.
       $this->plugins()->call('beforeBackup');
 
       // Do the actual backup.
       $file = $source->exportToFile();
 
-      // Run each of the installed plugins which implements the 'afterBackup' operation.
+      // Run each of the installed plugins which implements the 'afterBackup'
+      // operation.
       $file = $this->plugins()->call('afterBackup', $file);
 
       // Save the file to each destination.
@@ -107,7 +109,6 @@ class BackupMigrate implements BackupMigrateInterface {
 
     // Allow the plugins to tear down.
     $this->plugins()->call('tearDown', NULL, ['operation' => 'backup', 'source_id' => $source_id, 'destination_id' => $destination_id]);
-
   }
 
   /**
@@ -120,10 +121,14 @@ class BackupMigrate implements BackupMigrateInterface {
       $destination = $this->destinations()->get($destination_id);
 
       if (!$source) {
-        throw new BackupMigrateException('The source !id does not exist.', ['!id' => $source_id]);
+        throw new BackupMigrateException('The source !id does not exist.', [
+          '!id' => $source_id,
+        ]);
       }
       if (!$destination) {
-        throw new BackupMigrateException('The destination !id does not exist.', ['!id' => $destination_id]);
+        throw new BackupMigrateException('The destination !id does not exist.', [
+          '!id' => $destination_id,
+        ]);
       }
 
       // Load the file from the destination.
@@ -138,7 +143,8 @@ class BackupMigrate implements BackupMigrateInterface {
         throw new BackupMigrateException('The file !id could not be opened for reading.', ['!id' => $file_id]);
       }
 
-      // Run each of the installed plugins which implements the 'backup' operation.
+      // Run each of the installed plugins which implements the 'backup'
+      // operation.
       $file = $this->plugins()->call('beforeRestore', $file);
 
       // Do the actual source restore.
@@ -147,7 +153,8 @@ class BackupMigrate implements BackupMigrateInterface {
         throw new BackupMigrateException('The file could not be imported.');
       }
 
-      // Run each of the installed plugins which implements the 'beforeBackup' operation.
+      // Run each of the installed plugins which implements the 'beforeBackup'
+      // operation.
       $this->plugins()->call('afterRestore');
 
       // Let plugins react to a successful operation.
@@ -163,11 +170,11 @@ class BackupMigrate implements BackupMigrateInterface {
   }
 
   /**
-   * Set the configuration for the service. This simply passes the configuration
-   * on to the plugin manager as all work is done by plugins.
+   * Set the configuration for the service.
    *
-   * This can be called after the service is instantiated to pass new configuration
-   * to the plugins.
+   * This simply passes the configuration on to the plugin manager as all work
+   * is done by plugins. This can be called after the service is instantiated to
+   * pass new configuration to the plugins.
    *
    * @param \Drupal\backup_migrate\Core\Config\ConfigInterface $config
    */
@@ -178,7 +185,7 @@ class BackupMigrate implements BackupMigrateInterface {
   /**
    * Get the list of available destinations.
    *
-   * @return PluginManagerInterface
+   * @return \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface
    */
   public function destinations() {
     return $this->destinations;
@@ -187,7 +194,7 @@ class BackupMigrate implements BackupMigrateInterface {
   /**
    * Set the destinations plugin manager.
    *
-   * @param PluginManagerInterface $destinations
+   * @param \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface $destinations
    */
   public function setDestinationManager(PluginManagerInterface $destinations) {
     $this->destinations = $destinations;
@@ -196,7 +203,7 @@ class BackupMigrate implements BackupMigrateInterface {
   /**
    * Get the list of sources.
    *
-   * @return PluginManagerInterface
+   * @return \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface
    */
   public function sources() {
     return $this->sources;
@@ -205,7 +212,7 @@ class BackupMigrate implements BackupMigrateInterface {
   /**
    * Set the sources plugin manager.
    *
-   * @param PluginManagerInterface $sources
+   * @param \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface $sources
    */
   public function setSourceManager(PluginManagerInterface $sources) {
     $this->sources = $sources;
@@ -214,7 +221,7 @@ class BackupMigrate implements BackupMigrateInterface {
   /**
    * Get the service locator.
    *
-   * @return ServiceManager
+   * @return \Drupal\backup_migrate\Core\Service\ServiceManager
    */
   public function services() {
     return $this->services;
@@ -223,9 +230,9 @@ class BackupMigrate implements BackupMigrateInterface {
   /**
    * Set the service locator.
    *
-   * @param ServiceManager $services
+   * @param \Drupal\backup_migrate\Core\Service\ServiceManager $services
    */
-  public function setServiceManager($services) {
+  public function setServiceManager(ServiceManager $services) {
     $this->services = $services;
   }
 

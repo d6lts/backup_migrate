@@ -10,9 +10,8 @@ use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 use Drupal\backup_migrate\Core\File\BackupFileWritableInterface;
 use Defuse\Crypto\File as CryptoFile;
 
-
 /**
- * Class DrupalEncrypt.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Filter
  */
@@ -64,7 +63,10 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
     ]);
   }
 
-  protected function _encryptFile (BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
+  /**
+   *
+   */
+  protected function encryptFile(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
     $path = \Drupal::service('file_system')->realpath($from->realpath());
     $out_path = \Drupal::service('file_system')->realpath($to->realpath());
 
@@ -79,7 +81,10 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
     }
   }
 
-  protected function decryptFile (BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
+  /**
+   *
+   */
+  protected function decryptFile(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
     $path = \Drupal::service('file_system')->realpath($from->realpath());
     $out_path = \Drupal::service('file_system')->realpath($to->realpath());
 
@@ -93,6 +98,9 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
     }
   }
 
+  /**
+   *
+   */
   public function beforeRestore(BackupFileReadableInterface $file) {
     $type = $file->getExtLast();
     if ($type == 'ssl' && $this->confGet('encrypt')) {
@@ -106,6 +114,9 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
     return $file;
   }
 
+  /**
+   *
+   */
   public function supportedOps() {
     return [
       'getFileTypes' => [],
@@ -115,7 +126,9 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
     ];
   }
 
-
+  /**
+   *
+   */
   public function afterBackup(BackupFileReadableInterface $file) {
     if ($this->confGet('encrypt')) {
       $out = $this->getTempFileManager()->pushExt($file, 'ssl');

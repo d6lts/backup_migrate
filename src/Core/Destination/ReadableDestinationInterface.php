@@ -12,16 +12,18 @@ use Drupal\backup_migrate\Core\File\BackupFileInterface;
 interface ReadableDestinationInterface extends DestinationInterface {
 
   /**
-   * Get a file object representing the file with the given ID from the destination.
+   * Get a file object representing the file with the given ID from the dest.
+   *
    * This file item will not necessarily be readable nor will it have extended
    * metadata loaded. Use loadForReading and loadFileMetadata to get those.
    *
    * @todo Decide if extended metadata should ALWAYS be loaded here.
    *
-   * @param string $id The unique identifier for the file. Usually the filename.
+   * @param string $id
+   *   The unique identifier for the file. Usually the filename.
    *
    * @return \Drupal\backup_migrate\Core\File\BackupFileInterface
-   *    The file if it exists or NULL if it doesn't
+   *   The file if it exists or NULL if it doesn't
    */
   public function getFile($id);
 
@@ -39,17 +41,19 @@ interface ReadableDestinationInterface extends DestinationInterface {
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileInterface $file
    *
-   * @return \Drupal\backup_migrate\Core\File\BackupFileReadableInterface The file if it exists or NULL if it doesn't
+   * @return \Drupal\backup_migrate\Core\File\BackupFileReadableInterface
+   *   The file if it exists or NULL if it doesn't.
    */
   public function loadFileForReading(BackupFileInterface $file);
-
 
   /**
    * Does the file with the given id (filename) exist in this destination.
    *
-   * @param string $id The id (usually the filename) of the file.
+   * @param string $id
+   *   The id (usually the filename) of the file.
    *
-   * @return bool True if the file exists, false if it does not.
+   * @return bool
+   *   Whether the file exists in this destination.
    */
   public function fileExists($id);
 

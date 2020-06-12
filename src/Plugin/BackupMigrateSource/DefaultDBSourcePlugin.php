@@ -2,6 +2,7 @@
 
 namespace Drupal\backup_migrate\Plugin\BackupMigrateSource;
 
+use Drupal\Core\Database\Database;
 use Drupal\backup_migrate\Core\Config\Config;
 use Drupal\backup_migrate\Core\Filter\DBExcludeFilter;
 use Drupal\backup_migrate\Core\Main\BackupMigrateInterface;
@@ -14,7 +15,7 @@ use Drupal\backup_migrate\Drupal\EntityPlugins\SourcePluginBase;
  * @BackupMigrateSourcePlugin(
  *   id = "DefaultDB",
  *   title = @Translation("Default Database"),
- *   description = @Translation("Back up the Drupal db."),
+ *   description = @Translation("Back up the Drupal database."),
  *   locked = true
  * )
  */
@@ -23,11 +24,11 @@ class DefaultDBSourcePlugin extends SourcePluginBase {
   /**
    * Get the Backup and Migrate plugin object.
    *
-   * @return Drupal\backup_migrate\Core\Plugin\PluginInterface;
+   * @return Drupal\backup_migrate\Core\Plugin\PluginInterface
    */
   public function getObject() {
     // Add the default database.
-    $info = \Drupal\Core\Database\Database::getConnectionInfo('default', 'default');
+    $info = Database::getConnectionInfo('default', 'default');
     $info = $info['default'];
 
     // Set a default port if none is set. Because that's what core does.

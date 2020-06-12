@@ -8,7 +8,7 @@ use Drupal\backup_migrate\Core\File\BackupFileInterface;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 
 /**
- * Class DestinationBase.
+ *
  *
  * @package Drupal\backup_migrate\Core\Destination
  */
@@ -36,7 +36,7 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
    */
   public function loadFileMetadata(BackupFileInterface $file) {
     // If this file is already loaded, simply return it.
-    // @todo fix this inappropriate use of file metadata.
+    // @todo Fix this inappropriate use of file metadata.
     if (!$file->getMeta('metadata_loaded')) {
       $metadata = $this->_loadFileMetadataArray($file);
       $file->setMetaMultiple($metadata);
@@ -69,21 +69,26 @@ abstract class DestinationBase extends PluginBase implements ReadableDestination
   /**
    * Do the actual delete for a file.
    *
-   * @param string $id The id of the file to delete.
+   * @param string $id
+   *   The id of the file to delete.
    */
   abstract protected function _deleteFile($id);
 
   /**
-   * Do the actual file save. Should take care of the actual creation of a file
-   * in the destination without regard for metadata.
+   * Do the actual file save.
+   *
+   * Should take care of the actual creation of a file in the destination
+   * without regard for metadata.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
    */
   abstract protected function _saveFile(BackupFileReadableInterface $file);
 
   /**
-   * Do the metadata save. This function is called to save the data file AND
-   * the metadata sidecar file.
+   * Do the metadata save.
+   *
+   * This function is called to save the data file AND the metadata sidecar
+   * file.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileInterface $file
    */

@@ -12,8 +12,10 @@ use Drupal\backup_migrate\Core\File\BackupFileWritableInterface;
 interface ArchiveWriterInterface {
 
   /**
-   * Get the file extension for this archiver. For a tarball writer this would
-   * be 'tar'. For a Zip file writer this would be 'zip'.
+   * Get the file extension for this archiver.
+   *
+   * For a tarball writer this would be 'tar'. For a Zip file writer this would
+   * be 'zip'.
    *
    * @return string
    */
@@ -26,16 +28,20 @@ interface ArchiveWriterInterface {
 
   /**
    * @param string $real_path
-   *  The real path to the file. Can be a stream URI.
+   *   The real path to the file. Can be a stream URI.
    * @param string $new_path
-   *  The path that the file should have in the archive. Leave blank to use the original path.
+   *   The path that the file should have in the archive. Leave blank to use the
+   *   original path.
+   *
    * @return
    */
   public function addFile($real_path, $new_path = '');
 
   /**
-   * This will be called when all files have been added. It gives the implementation
-   * a chance to clean up and commit the changes if needed.
+   * This will be called when all files have been added.
+   *
+   * It gives the implementation a chance to clean up and commit the changes if
+   * needed.
    *
    * @return mixed
    */

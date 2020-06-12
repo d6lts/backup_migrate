@@ -6,14 +6,14 @@ use Psr\Log\AbstractLogger;
 
 /**
  * Saves log entries to memory to be processed during the current process.
+ *
  * This simple service does no clearing or memory management so should not be
  * used for a long-running process.
- *
- * Class StashLogger.
  *
  * @package Drupal\backup_migrate\Core\Service
  */
 class StashLogger extends AbstractLogger {
+
   /**
    * @var array
    */
@@ -25,11 +25,13 @@ class StashLogger extends AbstractLogger {
    * @param mixed $level
    * @param string $message
    * @param array $context
-   *
-   * @return null
    */
   public function log($level, $message, array $context = []) {
-    $this->logs[] = ['level' => $level, 'message' => $message, 'context' => $context];
+    $this->logs[] = [
+      'level' => $level,
+      'message' => $message,
+      'context' => $context,
+    ];
   }
 
   /**

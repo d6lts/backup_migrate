@@ -5,7 +5,6 @@ namespace Drupal\backup_migrate\Plugin\BackupMigrateSource;
 use Drupal\backup_migrate\Core\Config\Config;
 use Drupal\backup_migrate\Core\Filter\FileExcludeFilter;
 use Drupal\backup_migrate\Core\Main\BackupMigrateInterface;
-use Drupal\backup_migrate\Core\Source\MySQLiSource;
 use Drupal\backup_migrate\Drupal\EntityPlugins\SourcePluginBase;
 
 /**
@@ -24,20 +23,13 @@ class DrupalFilesSourcePlugin extends SourcePluginBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function alterBackupMigrate(BackupMigrateInterface $bam, $key, $options = []) {
     $source = $this->getObject();
     $bam->sources()->add($key, $source);
 
     $config = [
       'exclude_filepaths' => [],
-      'source' => $source
+      'source' => $source,
     ];
 
     switch ($this->getConfig()->get('directory')) {

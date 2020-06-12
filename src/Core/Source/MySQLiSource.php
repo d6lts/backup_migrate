@@ -10,7 +10,7 @@ use Drupal\backup_migrate\Core\Plugin\PluginCallerInterface;
 use PDO;
 
 /**
- * Class MySQLiSource.
+ *
  *
  * @package Drupal\backup_migrate\Core\Source
  */
@@ -18,7 +18,9 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
   use PluginCallerTrait;
 
   /**
-   * @var resource A MySQLi connection.
+   * A MySQLi connection.
+   *
+   * @var resource
    */
   protected $connection;
 
@@ -28,16 +30,17 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
   public function supportedOps() {
     return [
       'exportToFile' => [],
-      'importFromFile' => []
+      'importFromFile' => [],
     ];
   }
 
   /**
-   * Export this source to the given temp file. This should be the main
-   * back up function for this source.
+   * Export this source to the given temp file.
    *
-   * @return \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
-   *    A backup file with the contents of the source dumped to it..
+   * This should be the main back up function for this source.
+   *
+   * @return \Drupal\backup_migrate\Core\File\BackupFileReadableInterface
+   *   A backup file with the contents of the source dumped to it.
    */
   public function exportToFile() {
     if ($connection = $this->_getConnection()) {
@@ -46,42 +49,45 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
       $exclude = (array) $this->confGet('exclude_tables');
       $nodata = (array) $this->confGet('nodata_tables');
 
-      $file->write($this->_getSQLHeader());
+      $file->write($this->_getSqlHeader());
       $tables = $this->_getTables();
 
       $lines = 0;
       foreach ($tables as $table) {
         // @todo reenable this.
-        //        if (_backup_migrate_check_timeout()) {
-        //          return FALSE;
-        //        }
-        $table = $this->plugins()->call('beforeDBTableBackup', $table, ['source' => $this]);
+        // @code
+        // if (_backup_migrate_check_timeout()) {
+        //   return FALSE;
+        // }
+        // @endcode
+        $table = $this->plugins()->call('beforeDbTableBackup', $table, ['source' => $this]);
         if ($table['name'] && !isset($exclude[$table['name']]) && empty($table['exclude'])) {
-          $file->write($this->_getTableCreateSQL($table));
+          $file->write($this->_getTableCreateSql($table));
           $lines++;
           if (empty($table['nodata']) && !in_array($table['name'], $nodata)) {
-            $lines += $this->_dumpTableSQLToFile($file, $table);
+            $lines += $this->_dumpTableSqlToFile($file, $table);
           }
         }
       }
 
-      $file->write($this->_getSQLFooter());
+      $file->write($this->_getSqlFooter());
       $file->close();
       return $file;
     }
     else {
-      // @todo Throw exception
+      // @todo Throw exception.
       return $this->getTempFileManager()->create('mysql');
     }
 
   }
 
   /**
-   * Import to this source from the given backup file. This is the main restore
-   * function for this source.
+   * Import to this source from the given backup file.
+   *
+   * This is the main restore function for this source.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
-   *    The file to read the backup from. It will not be opened for reading
+   *   The file to read the backup from. It will not be opened for reading.
    *
    * @return bool|int
    */
@@ -93,10 +99,13 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
       $file->openForRead();
 
       // Read one line at a time and run the query.
-      while ($line = $this->_readSQLCommand($file)) {
-        //        if (_backup_migrate_check_timeout()) {
-        //          return FALSE;
-        //        }
+      while ($line = $this->_readSqlCommand($file)) {
+        // @todo Why is this disabled?
+        // @code
+        // if (_backup_migrate_check_timeout()) {
+        //   return FALSE;
+        // }
+        // @endcode
         if ($line) {
           // Execute the sql query from the file.
           $conn->query($line);
@@ -109,11 +118,11 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
     return $num;
   }
 
-
   /**
    * Get the db connection for the specified db.
    *
-   * @return \mysqli Connection object.
+   * @return \mysqli
+   *   Connection object.
    *
    * @throws \Exception
    */
@@ -141,10 +150,9 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
       }
 
       if ($ssl_config['key'] || $ssl_config['cert'] || $ssl_config['ca'] || $ssl_config['capath'] || $ssl_config['cypher']) {
-
-        // Provide a workaround for PHP7 peer certificate verification issues:
-        // - https://bugs.php.net/bug.php?id=68344
-        // - https://bugs.php.net/bug.php?id=71003
+        // Provide a workaround for PHP7 peer certificate verification issues.
+        // @see https://bugs.php.net/bug.php?id=68344
+        // @see https://bugs.php.net/bug.php?id=71003
         if ($ssl_config['verify_server_cert']) {
           $flags = MYSQLI_CLIENT_SSL;
         }
@@ -190,13 +198,12 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
     return $this->connection;
   }
 
-
   /**
    * Get the header for the top of the SQL file.
    *
    * @return string
    */
-  protected function _getSQLHeader() {
+  protected function _getSqlHeader() {
     $info = $this->_dbInfo();
     $version = $info['version'];
     $host = $this->confGet('host');
@@ -231,11 +238,10 @@ SET NAMES utf8mb4;
 HEADER;
   }
 
-
   /**
    * The footer of the sql dump file.
    */
-  protected function _getSQLFooter() {
+  protected function _getSqlFooter() {
     return <<<FOOTER
 
 
@@ -256,19 +262,21 @@ FOOTER;
   /**
    * Read a multiline sql command from a file.
    *
-   * Supports the formatting created by mysqldump, but won't handle multiline comments.
+   * Supports the formatting created by mysqldump, but won't handle multiline
+   * comments.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
    *
    * @return string
    */
-  protected function _readSQLCommand(BackupFileReadableInterface $file) {
+  protected function _readSqlCommand(BackupFileReadableInterface $file) {
     $out = '';
     while ($line = $file->readLine()) {
       $first2 = substr($line, 0, 2);
       $first3 = substr($line, 0, 2);
 
-      // Ignore single line comments. This function doesn't support multiline comments or inline comments.
+      // Ignore single line comments. This function doesn't support multiline
+      // comments or inline comments.
       if ($first2 != '--' && ($first2 != '/*' || $first3 == '/*!')) {
         $out .= ' ' . trim($line);
         // If a line ends in ; or */ it is a sql command.
@@ -305,7 +313,7 @@ FOOTER;
    */
   protected function _getTables() {
     $out = [];
-    // get auto_increment values and names of all tables.
+    // Get auto_increment values and names of all tables.
     $tables = $this->query("SHOW TABLE STATUS");
     while ($tables && $table = $tables->fetch_assoc()) {
       // Lowercase the keys for consistency.
@@ -322,7 +330,7 @@ FOOTER;
    *
    * @return string
    */
-  protected function _getTableCreateSQL($table) {
+  protected function _getTableCreateSql(array $table) {
     $out = "";
 
     // If this is a view.
@@ -367,18 +375,19 @@ FOOTER;
   /**
    * Get the sql to insert the data for a given table.
    */
-  protected function _dumpTableSQLToFile(BackupFileWritableInterface $file, $table) {
-
+  protected function _dumpTableSqlToFile(BackupFileWritableInterface $file, $table) {
     // If this is a view, do not export any data.
     if (empty($table['engine'])) {
       return 0;
     }
 
     // Otherwise export the table data.
-    $rows_per_line  = 30;
-    // $this->confGet('rows_per_line');//variable_get('backup_migrate_data_rows_per_line', 30);
+    $rows_per_line = 30;
+    // $this->confGet('rows_per_line');
+    // variable_get('backup_migrate_data_rows_per_line', 30);
     $bytes_per_line = 2000;
-    // $this->confGet('bytes_per_line'); variable_get('backup_migrate_data_bytes_per_line', 2000);
+    // $this->confGet('bytes_per_line');
+    // variable_get('backup_migrate_data_bytes_per_line', 2000);
     $lines = 0;
     $result = $this->query("SELECT * FROM `" . $table['name'] . "`");
     $rows = $bytes = 0;
@@ -392,7 +401,7 @@ FOOTER;
       $items = [];
       foreach ($row as $key => $value) {
         $items[] = is_null($value) ? "null" : "'" . str_replace($search, $replace, $value) . "'";
-        // @todo escape binary data
+        // @todo escape binary data.
       }
 
       // If there is a row to be added.
@@ -430,7 +439,6 @@ FOOTER;
     return $lines;
   }
 
-
   /**
    * Run a db query on this destination's db.
    *
@@ -452,7 +460,8 @@ FOOTER;
   /**
    * Return the first result of the query as an associated array.
    *
-   * @param string $query A SQL query.
+   * @param string $query
+   *   A SQL query.
    *
    * @return array
    *
@@ -466,11 +475,11 @@ FOOTER;
     return [];
   }
 
-
   /**
    * Return the first field of the first result of a query.
    *
-   * @param string $query A SQL query.
+   * @param string $query
+   *   A SQL query.
    *
    * @return null|object
    *
@@ -480,7 +489,6 @@ FOOTER;
     $result = $this->_fetchAssoc($query);
     return reset($result);
   }
-
 
   /**
    * Get the version info for the given DB.

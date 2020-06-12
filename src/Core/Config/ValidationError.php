@@ -3,7 +3,7 @@
 namespace Drupal\backup_migrate\Core\Config;
 
 /**
- * Class ValidationError.
+ *
  *
  * @package Drupal\backup_migrate\Core\Config
  */
@@ -12,7 +12,7 @@ class ValidationError implements ValidationErrorInterface {
   /**
    * @var string
    */
-  protected $field_key = '';
+  protected $fieldKey = '';
 
   /**
    * @var string
@@ -29,8 +29,8 @@ class ValidationError implements ValidationErrorInterface {
    * @param $message
    * @param array $replacement
    */
-  public function __construct($field_key, $message, $replacement = []) {
-    $this->field_key = $field_key;
+  public function __construct($field_key, $message, array $replacement = []) {
+    $this->fieldKey = $field_key;
     $this->message = $message;
     $this->replacement = $replacement;
   }
@@ -53,13 +53,14 @@ class ValidationError implements ValidationErrorInterface {
    * @return string
    */
   public function getFieldKey() {
-    return $this->field_key;
+    return $this->fieldKey;
   }
 
   /**
    * String representation of the exception.
    *
-   * @return string the string representation of the exception.
+   * @return string
+   *   The string representation of the exception.
    */
   public function __toString() {
     return strtr($this->getMessage(), $this->getReplacement());

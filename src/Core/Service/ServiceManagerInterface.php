@@ -13,7 +13,7 @@ interface ServiceManagerInterface {
    * Retrieve a service from the locator.
    *
    * @param string $type
-   *  The service type identifier
+   *   The service type identifier.
    *
    * @return mixed
    */

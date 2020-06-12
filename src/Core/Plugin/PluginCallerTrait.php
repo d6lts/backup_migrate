@@ -2,19 +2,15 @@
 
 namespace Drupal\backup_migrate\Core\Plugin;
 
-use Drupal\backup_migrate\Core\Plugin\PluginManagerInterface;
-
 /**
- * Class PluginCallerTrait.
+ * Implements the injection code for a PluginCallerInterface object.
  *
  * @package Drupal\backup_migrate\Core\Plugin
- *
- * Implements the injection code for a PluginCallerInterface object.
  */
 trait PluginCallerTrait {
 
   /**
-   * @var \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface;
+   * @var \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface
    */
   protected $plugins;
 

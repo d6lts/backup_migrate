@@ -14,32 +14,37 @@ interface BackupFileInterface {
   /**
    * Get a metadata value.
    *
-   * @param string $key The key for the metadata item.
+   * @param string $key
+   *   The key for the metadata item.
    *
-   * @return mixed The value of the metadata for this file.
+   * @return mixed
+   *   The value of the metadata for this file.
    */
   public function getMeta($key);
 
   /**
    * Set a metadata value.
    *
-   * @param string $key The key for the metadata item.
-   * @param mixed $value The value for the metadata item.
+   * @param string $key
+   *   The key for the metadata item.
+   * @param mixed $value
+   *   The value for the metadata item.
    */
   public function setMeta($key, $value);
 
   /**
    * Set a metadata value.
    *
-   * @param array $values An array of key-value pairs for the file metadata.
+   * @param array $values
+   *   An array of key-value pairs for the file metadata.
    */
-  public function setMetaMultiple($values);
-
+  public function setMetaMultiple(array $values);
 
   /**
    * Get all meta data as an array.
    *
-   * @return array $values An array of key-value pairs for the file metadata.
+   * @return array
+   *   An array of key-value pairs for the file metadata.
    */
   public function getMetaAll();
 
@@ -61,16 +66,15 @@ interface BackupFileInterface {
    * Get the full filename with extensions.
    *
    * @return string
-   *  The full filename (with extension, without filepath)
+   *   The full filename (with extension, without filepath)
    */
   public function getFullName();
-
 
   /**
    * Set the full filename with extensions.
    *
    * @param string $fullname
-   *  The full filename (with extension, without filepath)
+   *   The full filename (with extension, without filepath)
    */
   public function setFullName($fullname);
 
@@ -105,8 +109,8 @@ interface BackupFileInterface {
    * Set the extension array for the file to the given array.
    *
    * @param array $ext
-   *  The list of file extensions for the file
+   *   The list of file extensions for the file.
    */
-  public function setExtList($ext);
+  public function setExtList(array $ext);
 
 }

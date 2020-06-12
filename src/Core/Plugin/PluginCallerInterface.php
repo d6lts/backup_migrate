@@ -2,15 +2,12 @@
 
 namespace Drupal\backup_migrate\Core\Plugin;
 
-use Drupal\backup_migrate\Core\Plugin\PluginManagerInterface;
-
 /**
- * Interface PluginCallerPluginInterface.
+ * For plugins which must have access to a plugin manager.
+ *
+ * .. because they need to access other plugins.
  *
  * @package Drupal\backup_migrate\Core\Plugin
- *
- * An interface for plugins which need to access other plugins and therefore
- * must have access to a plugin manager.
  */
 interface PluginCallerInterface {
 
@@ -23,7 +20,8 @@ interface PluginCallerInterface {
 
   /**
    * Get the plugin manager.
-   *    * @return \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface.
+   *
+   * @return \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface
    */
   public function plugins();
 

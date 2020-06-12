@@ -5,12 +5,9 @@ namespace Drupal\backup_migrate\Core\Plugin;
 use Drupal\backup_migrate\Core\File\TempFileManagerInterface;
 
 /**
- * Interface FileProcessorPluginInterface.
+ * For plugins which process files and must have access to a temp file factory.
  *
  * @package Drupal\backup_migrate\Core\Plugin
- *
- * An interface for plugins which process files and therefore must have access
- * to a temp file factory.
  */
 interface FileProcessorInterface {
 
@@ -25,7 +22,8 @@ interface FileProcessorInterface {
 
   /**
    * Get the temp file manager.
-   *    * @return \Drupal\backup_migrate\Core\File\TempFileManagerInterface.
+   *
+   * @return \Drupal\backup_migrate\Core\File\TempFileManagerInterface
    */
   public function getTempFileManager();
 

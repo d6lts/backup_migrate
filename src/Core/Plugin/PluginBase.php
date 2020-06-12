@@ -6,7 +6,7 @@ use Drupal\backup_migrate\Core\Config\ConfigurableInterface;
 use Drupal\backup_migrate\Core\Config\ConfigurableTrait;
 
 /**
- * Class PluginOperationTrait.
+ *
  *
  * @package Drupal\backup_migrate\Core\Plugin
  */
@@ -32,7 +32,8 @@ abstract class PluginBase implements PluginInterface, ConfigurableInterface {
   /**
    * Does this plugin implement the given operation.
    *
-   * @param $op string The name of the operation
+   * @param string $op
+   *   The name of the operation.
    *
    * @return bool
    */
@@ -48,7 +49,9 @@ abstract class PluginBase implements PluginInterface, ConfigurableInterface {
 
   /**
    * What is the weight of the given operation for this plugin.
-   *    * @param $op string The name of the operation.
+   *
+   * @param string $op
+   *   The name of the operation.
    *
    * @return int
    */

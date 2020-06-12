@@ -6,12 +6,9 @@ use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 
 /**
- * Class DrupalLogger.
+ * Sends messages to the browser when B&M Migrate is run in interactive mode.
  *
  * @package Drupal\backup_migrate\Drupal\Environment
- *
- * This logger sends messages to the browser when Backup and Migrate is run in
- * interactive mode.
  */
 class DrupalSetMessageLogger extends AbstractLogger {
 
@@ -21,8 +18,6 @@ class DrupalSetMessageLogger extends AbstractLogger {
    * @param mixed $level
    * @param string $message
    * @param array $context
-   *
-   * @return null
    */
   public function log($level, $message, array $context = []) {
     // Translate the PSR logging level to a drupal message type.

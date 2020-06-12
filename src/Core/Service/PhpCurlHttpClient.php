@@ -6,7 +6,7 @@ use Drupal\backup_migrate\Core\Exception\HttpClientException;
 use Drupal\backup_migrate\Core\File\ReadableStreamBackupFile;
 
 /**
- * Class PhpCurlHttpClient.
+ *
  *
  * @package Drupal\backup_migrate\Core\Service
  */

@@ -10,7 +10,7 @@ use Drupal\backup_migrate\Core\Service\ServiceManager;
 use Drupal\backup_migrate\Core\Service\ServiceManagerInterface;
 
 /**
- * Class PluginManager.
+ *
  *
  * @package Drupal\backup_migrate\Core\Plugin
  */
@@ -47,7 +47,6 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
     $this->items = [];
   }
 
-
   /**
    * Set the configuration. Reconfigure all of the installed plugins.
    *
@@ -59,7 +58,7 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
 
     // Pass the appropriate configuration to each of the installed plugins.
     foreach ($this->getAll() as $key => $plugin) {
-      $this->_configurePlugin($plugin, $key);
+      $this->configurePlugin($plugin, $key);
     }
   }
 
@@ -67,13 +66,13 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
    * {@inheritdoc}
    */
   public function add($id, PluginInterface $item) {
-    $this->_preparePlugin($item, $id);
+    $this->preparePlugin($item, $id);
     $this->items[$id] = $item;
   }
 
   /**
    * {@inheritdoc}
-   **/
+   */
   public function get($id) {
     return isset($this->items[$id]) ? $this->items[$id] : NULL;
   }
@@ -88,7 +87,8 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
   /**
    * Get all plugins that implement the given operation.
    *
-   * @param string $op The name of the operation.
+   * @param string $op
+   *   The name of the operation.
    *
    * @return \Drupal\backup_migrate\Core\Plugin\PluginInterface[]
    */
@@ -122,7 +122,7 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
   /**
    * {@inheritdoc}
    */
-  public function map($op, $params = []) {
+  public function map($op, array $params = []) {
     $out = [];
 
     // Run each of the installed plugins which implements the given operation.
@@ -133,20 +133,21 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
     return $out;
   }
 
-
   /**
-   * Prepare the plugin for use. This is called when a plugin is added to the
-   * manager and it configures the plugin according to the config object
-   * injected into the manager. It also injects other dependencies as needed.
+   * Prepare the plugin for use.
+   *
+   * This is called when a plugin is added to the manager and it configures the
+   * plugin according to the config object injected into the manager. It also
+   * injects other dependencies as needed.
    *
    * @param \Drupal\backup_migrate\Core\Plugin\PluginInterface $plugin
    *   The plugin to prepare for use.
    * @param string $id
    *   The id of the plugin (to extract the correct settings).
    */
-  protected function _preparePlugin(PluginInterface $plugin, $id) {
+  protected function preparePlugin(PluginInterface $plugin, $id) {
     // If this plugin can be configured, then pass in the configuration.
-    $this->_configurePlugin($plugin, $id);
+    $this->configurePlugin($plugin, $id);
 
     // Inject the available services.
     $this->services()->addClient($plugin);
@@ -158,31 +159,32 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
    * @param $plugin
    * @param $id
    */
-  protected function _configurePlugin(PluginInterface $plugin, $id) {
+  protected function configurePlugin(PluginInterface $plugin, $id) {
     // If this plugin can be configured, then pass in the configuration.
     if ($plugin instanceof ConfigurableInterface) {
       // Configure the plugin with the appropriate subset of the configuration.
-      $config = $this->confGet($id);
+      $config = (array)$this->confGet($id);
 
       // Set the config for the plugin.
       $plugin->setConfig(new Config($config));
 
-      // Get the configuration back from the plugin to populate defaults within the manager.
+      // Get the configuration back from the plugin to populate defaults within
+      // the manager.
       $this->config()->set($id, $plugin->config());
     }
   }
 
   /**
-   * @return ServiceManagerInterface
+   * @return \Drupal\backup_migrate\Core\Service\ServiceManagerInterface
    */
   public function services() {
     return $this->services;
   }
 
   /**
-   * @param ServiceManagerInterface $services
+   * @param \Drupal\backup_migrate\Core\Service\ServiceManagerInterface $services
    */
-  public function setServiceManager($services) {
+  public function setServiceManager(ServiceManagerInterface $services) {
     $this->services = $services;
 
     // Inject or re-inject the services.

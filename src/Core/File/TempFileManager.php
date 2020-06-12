@@ -3,7 +3,7 @@
 namespace Drupal\backup_migrate\Core\File;
 
 /**
- * Class TempFileManager.
+ *
  *
  * @package Drupal\backup_migrate\Core\Services
  */
@@ -15,8 +15,9 @@ class TempFileManager implements TempFileManagerInterface {
   protected $adapter;
 
   /**
-   * Build the manager with the given adapter. This manager needs the adapter
-   * to create the actual temp files.
+   * Build the manager with the given adapter.
+   *
+   * This manager needs the adapter to create the actual temp files.
    *
    * @param \Drupal\backup_migrate\Core\File\TempFileAdapterInterface $adapter
    */
@@ -25,10 +26,12 @@ class TempFileManager implements TempFileManagerInterface {
   }
 
   /**
-   * Create a brand new temp file with the given extension (if specified). The
-   * new file should be writable.
+   * Create a brand new temp file with the given extension (if specified).
    *
-   * @param string $ext The file extension for this file (optional)
+   * The new file should be writable.
+   *
+   * @param string $ext
+   *   The file extension for this file (optional)
    *
    * @return BackupFileWritableInterface
    */
@@ -39,19 +42,21 @@ class TempFileManager implements TempFileManagerInterface {
   }
 
   /**
-   * Return a new file based on the passed in file with the given file extension.
+   * Return a new file based on the passed in file with the given file ext.
+   *
    * This should maintain the metadata of the file passed in with the new file
    * extension added after the old one.
+   *
    * For example: xxx.mysql would become xxx.mysql.gz.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileInterface $file
-   *        The file to add the extension to.
+   *   The file to add the extension to.
    * @param $ext
-   *        The new file extension.
+   *   The new file extension.
    *
    * @return \Drupal\backup_migrate\Core\File\BackupFileWritableInterface
-   *        A new writable backup file with the new extension and all of the metadata
-   *        from the previous file.
+   *   A new writable backup file with the new extension and all of the metadata
+   *   from the previous file.
    */
   public function pushExt(BackupFileInterface $file, $ext) {
     // Push the new extension on to the new file.
@@ -71,15 +76,17 @@ class TempFileManager implements TempFileManagerInterface {
   }
 
   /**
-   * Return a new file based on the one passed in but with the last part of the
-   * file extension removed.
+   * Return a new file based on the one passed in.
+   *
+   * Has the last part of the file extension removed.
+   *
    * For example: xxx.mysql.gz would become xxx.mysql.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileInterface $file
    *
    * @return \Drupal\backup_migrate\Core\File\BackupFileWritableInterface
-   *        A new writable backup file with the last extension removed and
-   *        all of the metadata from the previous file.
+   *   A new writable backup file with the last extension removed and
+   *   all of the metadata from the previous file.
    */
   public function popExt(BackupFileInterface $file) {
     // Pop the last extension from the last of the file.

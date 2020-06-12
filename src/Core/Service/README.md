@@ -31,5 +31,3 @@ This plugin will have a logger injected if one is available:
 	
 	// The manager will inject the logger automatically.
 	$bam->plugins()->add('myplugin', new MyPlugin());
-	
-	

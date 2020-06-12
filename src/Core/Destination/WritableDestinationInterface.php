@@ -17,6 +17,6 @@ interface WritableDestinationInterface extends DestinationInterface {
    * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
    *   The file to save.
    */
-  function saveFile(BackupFileReadableInterface $file);
+  public function saveFile(BackupFileReadableInterface $file);
 
 }

@@ -2,11 +2,7 @@
 
 namespace Drupal\backup_migrate\Core\Config;
 
-use \Drupal\backup_migrate\Core\Config\ConfigInterface;
-
 /**
- * Class ConfigBase.
- *
  * A basic configuration manager with very little logic in it.
  *
  * @package Drupal\backup_migrate\Core\Config
@@ -21,7 +17,7 @@ class Config implements ConfigInterface {
   /**
    * @param array $init
    */
-  public function __construct($init = []) {
+  public function __construct(array $init = []) {
     if ($init instanceof ConfigInterface) {
       $this->fromArray($init->toArray());
     }
@@ -86,7 +82,7 @@ class Config implements ConfigInterface {
    * @param array $values
    *   An associative array of settings.
    */
-  public function fromArray($values) {
+  public function fromArray(array $values) {
     $this->config = $values;
   }
 

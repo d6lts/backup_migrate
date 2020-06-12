@@ -5,10 +5,12 @@ namespace Drupal\backup_migrate\Core\File;
 use Drupal\backup_migrate\Core\Exception\BackupMigrateException;
 
 /**
- * Provides a very basic temp file manager which assumes read/write access to a
- * local temp directory.
+ * A very basic temp file manager.
+ *
+ * Assumes read/write access to a local temp directory.
  */
 class TempFileAdapter implements TempFileAdapterInterface {
+
   /**
    * The path to the temp directory.
    *
@@ -33,8 +35,10 @@ class TempFileAdapter implements TempFileAdapterInterface {
   /**
    * Construct a manager.
    *
-   * @param string $dir A file path or stream URL for the temp directory
-   * @param string $prefix A string prefix to add to each created file.
+   * @param string $dir
+   *   A file path or stream URL for the temp directory.
+   * @param string $prefix
+   *   A string prefix to add to each created file.
    */
   public function __construct($dir, $prefix = 'bam') {
     // Add a trailing slash if needed.
@@ -48,7 +52,9 @@ class TempFileAdapter implements TempFileAdapterInterface {
   }
 
   /**
-   * Destruct the manager. Delete all the temporary files when this manager is destroyed.
+   * Destruct the manager.
+   *
+   * Delete all the temporary files when this manager is destroyed.
    */
   public function __destruct() {
     $this->deleteAllTempFiles();

@@ -9,14 +9,12 @@ use Drupal\Component\Plugin\DependentPluginInterface;
 /**
  * An interface for a plugin which wraps a Backup and Migrate plugin.
  *
- * Class WrapperPluginInterface.
- *
  * @package Drupal\backup_migrate\Drupal\EntityPlugins
  */
 interface WrapperPluginInterface extends ConfigurableInterface, DependentPluginInterface {
 
   /**
-   * Alter the backup and migrate object to add the source and required services.
+   * Alter the backup_migrate object to add the source and required services.
    *
    * @param \Drupal\backup_migrate\Core\Main\BackupMigrateInterface $bam
    *   The BackupMigrate object to add plugins and services to.

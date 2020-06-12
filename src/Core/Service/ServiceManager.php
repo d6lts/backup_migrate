@@ -3,10 +3,10 @@
 namespace Drupal\backup_migrate\Core\Service;
 
 /**
- * A very simple service locator. Does not handle dependency injection but could
- * be replaced by a more complex application specific version which does.
+ * A very simple service locator.
  *
- * Class ServiceManager.
+ * Note: Does not handle dependency injection but could be replaced by a more
+ * complex application specific version which does.
  *
  * @package Drupal\backup_migrate\Core\Service
  */
@@ -25,7 +25,7 @@ class ServiceManager implements ServiceManagerInterface {
   /**
    * The constructor. Initialise the list of services.
    */
-  function __construct() {
+  public function __construct() {
     $this->services = [];
 
     // Allow the locator to inject itself.
@@ -36,10 +36,8 @@ class ServiceManager implements ServiceManagerInterface {
    * Add a fully configured service to the service locator.
    *
    * @param string $type
-   *  The service type identifier.
+   *   The service type identifier.
    * @param mixed $service
-   *
-   * @return null
    */
   public function add($type, $service) {
     $this->services[$type] = $service;
@@ -59,7 +57,7 @@ class ServiceManager implements ServiceManagerInterface {
    * Retrieve a service from the locator.
    *
    * @param string $type
-   *  The service type identifier
+   *   The service type identifier.
    *
    * @return mixed
    */
@@ -80,8 +78,6 @@ class ServiceManager implements ServiceManagerInterface {
    * Inject all available services into the give plugin.
    *
    * @param object $client
-   *
-   * @return mixed|void
    */
   public function addClient($client) {
     // Inject available services.

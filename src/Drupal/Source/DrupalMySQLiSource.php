@@ -2,17 +2,19 @@
 
 namespace Drupal\backup_migrate\Drupal\Source;
 
-use Drupal\backup_migrate\Core\Config\Config;
 use Drupal\backup_migrate\Core\Source\MySQLiSource;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 
 /**
- * Class DrupalMySQLiSource.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Source
  */
 class DrupalMySQLiSource extends MySQLiSource {
 
+  /**
+   *
+   */
   public function importFromFile(BackupFileReadableInterface $file) {
     $num = 0;
 
@@ -21,10 +23,13 @@ class DrupalMySQLiSource extends MySQLiSource {
       $file->openForRead();
 
       // Read one line at a time and run the query.
-      while ($line = $this->_readSQLCommand($file)) {
-        //        if (_backup_migrate_check_timeout()) {
-        //          return FALSE;
-        //        }
+      while ($line = $this->_readSqlCommand($file)) {
+        // @todo Why was this commented out?
+        // @code
+        // if (_backup_migrate_check_timeout()) {
+        //   return FALSE;
+        // }
+        // @endcode
         if ($line) {
           // Execute the sql query from the file.
           $stmt = $conn->prepare($line);

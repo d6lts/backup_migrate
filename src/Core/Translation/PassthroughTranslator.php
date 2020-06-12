@@ -2,13 +2,8 @@
 
 namespace Drupal\backup_migrate\Core\Translation;
 
-use Drupal\backup_migrate\Core\Translation\TranslatorInterface;
-
 /**
- * This translator service simply passes through the us-english strings with the
- * replacement tokens substituted in.
- *
- * Class PassthroughTranslator.
+ * Passes through the us-english strings with the replacement tokens.
  *
  * @package Drupal\backup_migrate\Core\Service
  */
@@ -16,11 +11,11 @@ class PassthroughTranslator implements TranslatorInterface {
 
   /**
    * @param string $string
-   *  The string to be translated.
+   *   The string to be translated.
    * @param $replacements
-   *  Any untranslatable variables to be replaced into the string.
+   *   Any untranslatable variables to be replaced into the string.
    * @param $context
-   *  Extra context to help translators distinguish ambiguous strings.
+   *   Extra context to help translators distinguish ambiguous strings.
    *
    * @return mixed
    */

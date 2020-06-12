@@ -6,20 +6,22 @@ use Drupal\backup_migrate\Core\Exception\BackupMigrateException;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 
 /**
- * Class TarArchiveReader.
+ *
  *
  * @package Drupal\backup_migrate\Core\Service
  */
 class TarArchiveReader implements ArchiveReaderInterface {
 
   /**
-   * @var BackupFileReadableInterface
+   * @var \Drupal\backup_migrate\Core\File\BackupFileReadableInterface
    */
   protected $archive;
 
   /**
-   * Get the file extension for this archiver. For a tarball writer this would
-   * be 'tar'. For a Zip file writer this would be 'zip'.
+   * Get the file extension for this archiver.
+   *
+   * For a tarball writer this would be 'tar'. For a Zip file writer this would
+   * be 'zip'.
    *
    * @return string
    */
@@ -33,7 +35,6 @@ class TarArchiveReader implements ArchiveReaderInterface {
   public function setArchive(BackupFileReadableInterface $out) {
     $this->archive = $out;
   }
-
 
   /**
    * Extract all files to the given directory.
@@ -54,8 +55,10 @@ class TarArchiveReader implements ArchiveReaderInterface {
 
   /**
    * @param $directory
-   *  The directory to extract the files to.
+   *   The directory to extract the files to.
+   *
    * @return bool
+   *
    * @throws \Drupal\backup_migrate\Core\Exception\BackupMigrateException
    */
   private function extractAllToDirectory($directory) {
@@ -80,7 +83,7 @@ class TarArchiveReader implements ArchiveReaderInterface {
         );
       }
 
-      // ignore extended / pax headers.
+      // Ignore extended / pax headers.
       if ($header['typeflag'] == 'x' || $header['typeflag'] == 'g') {
         $this->archive->seekBytes(ceil(($header['size'] / 512)));
         continue;
@@ -115,7 +118,7 @@ class TarArchiveReader implements ArchiveReaderInterface {
           );
         }
         // Cannot overwrite a read-only file.
-        if (!is_writeable($header['filename'])) {
+        if (!is_writable($header['filename'])) {
           throw new BackupMigrateException(
             'File %filename already exists and is write protected',
             ['%filename' => $header['filename']]
@@ -132,7 +135,7 @@ class TarArchiveReader implements ArchiveReaderInterface {
           );
         }
       }
-      // Extract a file/symlink
+      // Extract a file/symlink.
       else {
         if (!$this->createDir(dirname($header['filename']))) {
           throw new BackupMigrateException(
@@ -179,7 +182,7 @@ class TarArchiveReader implements ArchiveReaderInterface {
           // Change the file mode, mtime.
           @touch($header['filename'], $header['mtime']);
           if ($header['mode'] & 0111) {
-            // make file executable, obey umask.
+            // Make file executable, obey umask.
             $mode = fileperms($header['filename']) | (~umask() & 0111);
             @chmod($header['filename'], $mode);
           }
@@ -199,7 +202,11 @@ class TarArchiveReader implements ArchiveReaderInterface {
           if ($file_size != $header['size']) {
             throw new BackupMigrateException(
               'Extracted file %filename does not have the correct file size. File is %actual bytes (%expected bytes expected). Archive may be corrupted',
-              ['%filename' => $header['filename'], '%expected' => (int) $header['size'], (int) '%actual' => $file_size]
+              [
+                '%filename' => $header['filename'],
+                '%expected' => (int) $header['size'],
+                (int) '%actual' => $file_size,
+              ]
             );
           }
         }
@@ -214,7 +221,7 @@ class TarArchiveReader implements ArchiveReaderInterface {
    *
    * @param $directory
    *
-   * @return boolean
+   * @return bool
    */
   private function createDir($directory) {
     if ((@is_dir($directory)) || ($directory == '')) {
@@ -245,7 +252,7 @@ class TarArchiveReader implements ArchiveReaderInterface {
    *
    * @throws \Drupal\backup_migrate\Core\Exception\BackupMigrateException
    */
-  private function readHeader($block, $header = []) {
+  private function readHeader($block, array $header = []) {
     if (strlen($block) == 0) {
       $header['filename'] = '';
       return TRUE;
@@ -279,14 +286,14 @@ class TarArchiveReader implements ArchiveReaderInterface {
     }
 
     if (version_compare(PHP_VERSION, "5.5.0-dev") < 0) {
-      $fmt = "a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/" .
-        "a8checksum/a1typeflag/a100link/a6magic/a2version/" .
-        "a32uname/a32gname/a8devmajor/a8devminor/a131prefix";
+      $fmt = "a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/"
+        . "a8checksum/a1typeflag/a100link/a6magic/a2version/"
+        . "a32uname/a32gname/a8devmajor/a8devminor/a131prefix";
     }
     else {
-      $fmt = "Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/" .
-        "Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/" .
-        "Z32uname/Z32gname/Z8devmajor/Z8devminor/Z131prefix";
+      $fmt = "Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/"
+        . "Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/"
+        . "Z32uname/Z32gname/Z8devmajor/Z8devminor/Z131prefix";
     }
     $data = unpack($fmt, $block);
 
@@ -333,13 +340,13 @@ class TarArchiveReader implements ArchiveReaderInterface {
   /**
    * Read a tar file header block for files with long names.
    *
-   * @param $header
+   * @param array $header
    *
    * @return array
    *
    * @throws \Drupal\backup_migrate\Core\Exception\BackupMigrateException
    */
-  private function readLongHeader($header) {
+  private function readLongHeader(array $header) {
     $filename = '';
     $filesize = $header['size'];
     $n = floor($header['size'] / 512);
@@ -380,8 +387,10 @@ class TarArchiveReader implements ArchiveReaderInterface {
   }
 
   /**
-   * This will be called when all files have been added. It gives the implementation
-   * a chance to clean up and commit the changes if needed.
+   * This will be called when all files have been added.
+   *
+   * It gives the implementation a chance to clean up and commit the changes if
+   * needed.
    *
    * @return mixed
    */

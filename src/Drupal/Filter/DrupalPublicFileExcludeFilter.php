@@ -6,13 +6,12 @@ use Drupal\backup_migrate\Core\Config\Config;
 use Drupal\backup_migrate\Core\Filter\FileExcludeFilter;
 
 /**
- * Class DrupalPublicFileExcludeFilter.
- *
  * A file exclusion filter that includes Drupal's cache directories by default.
  *
  * @package Drupal\backup_migrate\Drupal\Filter
  */
 class DrupalPublicFileExcludeFilter extends FileExcludeFilter {
+
   /**
    * Get the default values for the plugin.
    *

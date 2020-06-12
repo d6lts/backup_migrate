@@ -11,7 +11,7 @@ use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 use Drupal\backup_migrate\Core\File\ReadableStreamBackupFile;
 
 /**
- * Class ServerDirectoryDestination.
+ *
  *
  * @package Drupal\backup_migrate\Core\Destination
  */
@@ -21,7 +21,7 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
   /**
    * {@inheritdoc}
    */
-  function saveFile(BackupFileReadableInterface $file) {
+  public function saveFile(BackupFileReadableInterface $file) {
     $this->_saveFile($file);
     $this->_saveFileMetadata($file);
   }
@@ -54,21 +54,23 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
     return $schema;
   }
 
-
   /**
-   * Do the actual file save. This function is called to save the data file AND
-   * the metadata sidecar file.
+   * Do the actual file save.
+   *
+   * This function is called to save the data file AND the metadata sidecar
+   * file.
    *
    * @param \Drupal\backup_migrate\Core\File\BackupFileReadableInterface $file
    *
    * @throws \Drupal\backup_migrate\Core\Exception\BackupMigrateException
    */
-  function _saveFile(BackupFileReadableInterface $file) {
+  public function _saveFile(BackupFileReadableInterface $file) {
     // Check if the directory exists.
     $this->checkDirectory();
 
     copy($file->realpath(), $this->idToPath($file->getFullName()));
-    // @todo use copy/unlink if the temp file and the destination do not share a stream wrapper.
+    // @todo Use copy/unlink if the temp file and the destination do not share
+    // a stream wrapper.
   }
 
   /**
@@ -155,7 +157,7 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
 
     // Filter the output.
     if ($filters) {
-      $out = array_filter($out, function($file) use ($filters) {
+      $out = array_filter($out, function ($file) use ($filters) {
         foreach ($filters as $key => $value) {
           if ($file->getMeta($key) !== $value) {
             return FALSE;
@@ -186,7 +188,8 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
   }
 
   /**
-   * @return int The number of files in the destination.
+   * @return int
+   *   The number of files in the destination.
    */
   public function countFiles() {
     $files = $this->getAllFileNames();
@@ -233,7 +236,6 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
 
     // Read the list of files from the directory.
     $dir = $this->confGet('directory');
-    $scheme = 
 
     /** @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface $stream_wrapper_manager */
     $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager');
@@ -242,7 +244,7 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
     // Ensure the stream is configured.
     if (!$stream_wrapper_manager->isValidScheme($scheme)) {
       \Drupal::messenger()->addMessage(t('Your @scheme stream is not configured.', [
-        '@scheme' => $scheme . '://'
+        '@scheme' => $scheme . '://',
       ]), 'warning');
       return $files;
     }

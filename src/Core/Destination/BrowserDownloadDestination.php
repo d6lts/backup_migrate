@@ -8,7 +8,7 @@ use Drupal\backup_migrate\Core\Plugin\PluginCallerInterface;
 use Drupal\backup_migrate\Core\Plugin\PluginCallerTrait;
 
 /**
- * Class BrowserDownloadDestination.
+ *
  *
  * @package Drupal\backup_migrate\Core\Destination
  */
@@ -18,7 +18,7 @@ class BrowserDownloadDestination extends StreamDestination implements WritableDe
   /**
    * {@inheritdoc}
    */
-  function saveFile(BackupFileReadableInterface $file) {
+  public function saveFile(BackupFileReadableInterface $file) {
     // Set some default download headers.
     $headers = [
       ['key' => 'Content-Disposition', 'value' => 'attachment; filename="' . $file->getFullName() . '"'],

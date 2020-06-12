@@ -9,7 +9,7 @@ use Drupal\backup_migrate\Entity\SettingsProfile;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class DrupalConfigHelper.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Config
  */
@@ -19,15 +19,16 @@ class DrupalConfigHelper {
    * Build the configuration form for all plugins in a manager.
    *
    * @param \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface $plugins
-   *  The PluginManager containing all of the plugins to be configured.
+   *   The PluginManager containing all of the plugins to be configured.
    * @param string $operation
-   *  'backup', 'restore', or 'initialize' depending on the operation being configured for.
+   *   'backup', 'restore', or 'initialize' depending on the operation being
+   *   configured for.
    * @param array $parents
-   *  The form parents array.
+   *   The form parents array.
    *
    * @return array
    */
-  static public function buildAllPluginsForm(PluginManagerInterface $plugins, $operation, $parents = []) {
+  public static function buildAllPluginsForm(PluginManagerInterface $plugins, $operation, array $parents = []) {
     $form = [];
     foreach ($plugins->getAll() as $plugin_key => $plugin) {
       $schema = $plugin->configSchema(['operation' => $operation]);
@@ -43,14 +44,15 @@ class DrupalConfigHelper {
    * Build the configuration form for a single plugin, source or destination.
    *
    * @param \Drupal\backup_migrate\Core\Config\ConfigurableInterface $plugin
-   *  The plugin, source or destination to build the form for.
+   *   The plugin, source or destination to build the form for.
    * @param string $operation
-   *  'backup', 'restore', or 'initialize' depending on the operation being configured for.
+   *   'backup', 'restore', or 'initialize' depending on the operation being
+   *   configured for.
    * @param array $parents
    *
    * @return array
    */
-  static public function buildPluginForm($plugin, $operation, $parents = ['config']) {
+  public static function buildPluginForm(ConfigurableInterface $plugin, $operation, array $parents = ['config']) {
     $schema = $plugin->configSchema(['operation' => $operation]);
     $config = $plugin->config();
 
@@ -59,15 +61,16 @@ class DrupalConfigHelper {
 
   /**
    * @param array $schema
-   *  A configuration schema from one or more Backup and Migrate plugins.
+   *   A configuration schema from one or more Backup and Migrate plugins.
    * @param \Drupal\backup_migrate\Core\Config\ConfigInterface $config
-   *  The configuration object containing the default values.
+   *   The configuration object containing the default values.
    * @param array $parents
-   *  The form parents array.
+   *   The form parents array.
+   *
    * @return array
-   *  A drupal forms api array.
+   *   A drupal forms api array.
    */
-  static public function buildFormFromSchema($schema, ConfigInterface $config, $parents = [], $form = []) {
+  public static function buildFormFromSchema(array $schema, ConfigInterface $config, array $parents = []) {
     $form = [];
     DrupalConfigHelper::addFieldsFromSchema($form, $schema, $config, $parents);
     return $form;
@@ -76,19 +79,22 @@ class DrupalConfigHelper {
   /**
    * Add the schema fields to the given form array.
    *
+   * @param array $form
+   *   The form structure being worked on.
    * @param array $schema
-   *  A configuration schema from one or more Backup and Migrate plugins.
+   *   A configuration schema from one or more Backup and Migrate plugins.
    * @param \Drupal\backup_migrate\Core\Config\ConfigInterface $config
-   *  The configuration object containing the default values.
+   *   The configuration object containing the default values.
    * @param array $parents
-   *  The form parents array.
+   *   The form parents array.
    */
-  static public function addFieldsFromSchema(&$form, $schema, ConfigInterface $config, $parents = []) {
+  public static function addFieldsFromSchema(array &$form, array $schema, ConfigInterface $config, array $parents = []) {
     // Add the specified groups.
     if (isset($schema['groups'])) {
       foreach ($schema['groups'] as $group_key => $item) {
-        // If the group is just called 'default' then use the key from the plugin as the group key.
-        // @todo make this less ugly.
+        // If the group is just called 'default' then use the key from the
+        // plugin as the group key.
+        // @todo Make this less ugly.
         if ($group_key == 'default' && $parents) {
           $group_key = end($parents);
         }
@@ -116,7 +122,10 @@ class DrupalConfigHelper {
               if (!isset($form_item['#description'])) {
                 $form_item['#description'] = '';
               }
-              $form_item['#description'] .= ' ' . t('Add one item per line.');
+              if (!empty($form_item['#description'])) {
+                $form_item['#description'] .= ' ';
+              }
+              $form_item['#description'] .= t('Add one item per line.');
               $form_item['#element_validate'] = ['Drupal\backup_migrate\Drupal\Config\DrupalConfigHelper::validateMultiText'];
               $value = implode("\n", $value);
             }
@@ -146,7 +155,9 @@ class DrupalConfigHelper {
             $form_item['#type'] = 'select';
             $form_item['#multiple'] = !empty($item['multiple']);
             if (empty($item['#required']) && empty($item['multiple'])) {
-              $item['options'] = ['' => '--' . t('None') . '--'] + $item['options'];
+              $item['options'] = [
+                '' => '--' . t('None') . '--',
+              ] + $item['options'];
             }
             $form_item['#options'] = $item['options'];
             break;
@@ -164,7 +175,8 @@ class DrupalConfigHelper {
             $form_item['#description'] = $item['description'];
           }
 
-          // Add the field to it's group or directly to the top level of the form.
+          // Add the field to it's group or directly to the top level of the
+          // form.
           if (!empty($item['group'])) {
             $group_key = $item['group'];
             if ($group_key == 'default' && $parents) {
@@ -183,16 +195,18 @@ class DrupalConfigHelper {
   /**
    * Break a multi-line text value into an array.
    *
-   * @param $element
+   * @param array $element
    * @param $form_state
    */
-  public static function validateMultiText(&$element, FormStateInterface &$form_state) {
+  public static function validateMultiText(array &$element, FormStateInterface &$form_state) {
     $form_state->setValueForElement($element, array_map('trim', explode("\n", $element['#value'])));
   }
 
   /**
-   * A value mapping callback that replaces missing secrets because the Form API
-   * does not preserve the default values of password inputs.
+   * Replaces missing secrets.
+   *
+   * A value mapping callback. Because the Form API does not preserve the
+   * default values of password inputs.
    *
    * @param $element
    * @param $input
@@ -210,7 +224,7 @@ class DrupalConfigHelper {
    *
    * @param \Drupal\backup_migrate\Core\Config\ConfigurableInterface[]|\Drupal\backup_migrate\Core\Plugin\PluginManagerInterface $plugins
    * @param $title
-   * @param null $default_value
+   * @param $default_value
    *
    * @return array
    */
@@ -223,7 +237,7 @@ class DrupalConfigHelper {
       '#type' => 'select',
       '#title' => $title,
       '#options' => $options,
-      '#default_value' => $default_value
+      '#default_value' => $default_value,
     ];
   }
 
@@ -232,7 +246,7 @@ class DrupalConfigHelper {
    *
    * @param \Drupal\backup_migrate\Core\Main\BackupMigrateInterface $bam
    * @param $title
-   * @param null $default_value
+   * @param $default_value
    *
    * @return array
    */
@@ -244,8 +258,8 @@ class DrupalConfigHelper {
    * Get a select form item for the given list of sources.
    *
    * @param \Drupal\backup_migrate\Core\Main\BackupMigrateInterface $bam
-   * @param $title
-   * @param null $default_value
+   * @param string $title
+   * @param mixed $default_value
    *
    * @return array
    */
@@ -253,11 +267,11 @@ class DrupalConfigHelper {
     return DrupalConfigHelper::getPluginSelector($bam->destinations(), $title, $default_value);
   }
 
-
   /**
-   * GEt a pulldown for the list of all settings profiles.
+   * Get a pulldown for the list of all settings profiles.
    *
-   * @param $title
+   * @param string $title
+   * @param mixed $default_value
    *
    * @return array
    */
@@ -271,7 +285,7 @@ class DrupalConfigHelper {
         '#type' => 'select',
         '#title' => $title,
         '#options' => $options,
-        '#default_value' => $default_value
+        '#default_value' => $default_value,
       ];
     }
   }

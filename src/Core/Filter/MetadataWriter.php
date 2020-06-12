@@ -11,11 +11,9 @@ use Drupal\backup_migrate\Core\Plugin\PluginCallerInterface;
 use Drupal\backup_migrate\Core\Plugin\PluginCallerTrait;
 
 /**
- * Class MetadataWriter.
+ * Add metadata such as a description to the backup file.
  *
  * @package Drupal\backup_migrate\Core\Filter
- *
- * Add metadata such as a description to the backup file.
  */
 class MetadataWriter extends PluginBase implements FileProcessorInterface, PluginCallerInterface {
   use FileProcessorTrait;
@@ -72,7 +70,6 @@ class MetadataWriter extends PluginBase implements FileProcessorInterface, Plugi
       'bam_scheduleid',
     ];
   }
-
 
   /**
    * Run before the backup/restore begins.

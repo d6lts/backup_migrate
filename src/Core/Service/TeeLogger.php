@@ -6,21 +6,21 @@ use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class TeeLogger.
+ *
  *
  * @package Drupal\backup_migrate\Core\Tests\Service
  */
 class TeeLogger extends AbstractLogger {
 
   /**
-   * @var LoggerInterface[]
+   * @var \Psr\Log\LoggerInterface[]
    */
   protected $loggers;
 
   /**
    * @param \Psr\Log\LoggerInterface[] $loggers
    */
-  public function __construct($loggers) {
+  public function __construct(array $loggers) {
     $this->setLoggers($loggers);
   }
 
@@ -30,8 +30,6 @@ class TeeLogger extends AbstractLogger {
    * @param mixed $level
    * @param string $message
    * @param array $context
-   *
-   * @return null
    */
   public function log($level, $message, array $context = []) {
     foreach ($this->getLoggers() as $logger) {
@@ -49,7 +47,7 @@ class TeeLogger extends AbstractLogger {
   /**
    * @param \Psr\Log\LoggerInterface[] $loggers
    */
-  public function setLoggers($loggers) {
+  public function setLoggers(array $loggers) {
     $this->loggers = $loggers;
   }
 

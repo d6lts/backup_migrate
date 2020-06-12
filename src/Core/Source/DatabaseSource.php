@@ -8,7 +8,7 @@ use Drupal\backup_migrate\Core\Plugin\FileProcessorTrait;
 use Drupal\backup_migrate\Core\Plugin\PluginBase;
 
 /**
- * Class DatabaseSource.
+ *
  *
  * @package Drupal\backup_migrate\Core\Source
  */
@@ -29,11 +29,11 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
     if ($params['operation'] == 'initialize') {
       $schema['fields']['host'] = [
         'type' => 'text',
-        'title' => 'Hostname'
+        'title' => 'Hostname',
       ];
       $schema['fields']['database'] = [
         'type' => 'text',
-        'title' => 'Database'
+        'title' => 'Database',
       ];
       $schema['fields']['username'] = [
         'type' => 'text',
@@ -41,7 +41,7 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
       ];
       $schema['fields']['password'] = [
         'type' => 'password',
-        'title' => 'Password'
+        'title' => 'Password',
       ];
       $schema['fields']['port'] = [
         'type' => 'number',
@@ -79,8 +79,9 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
   }
 
   /**
-   * Get an array of tables with some info. Each entry must have at least a
-   * 'name' key containing the table name.
+   * Get an array of tables with some info.
+   *
+   * Each entry must have at least a 'name' key containing the table name.
    *
    * @return array
    */
@@ -93,7 +94,6 @@ abstract class DatabaseSource extends PluginBase implements DatabaseSourceInterf
       return [];
     }
   }
-
 
   /**
    * Get the list of tables from this db.

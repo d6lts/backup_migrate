@@ -7,7 +7,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 
 /**
- * Class SourcePluginManager.
+ *
  *
  * @package Drupal\backup_migrate\Drupal\Source
  */

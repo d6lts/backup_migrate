@@ -7,7 +7,7 @@ use Drupal\backup_migrate\Core\Plugin\PluginInterface;
 /**
  * Provides an interface defining a backup destination.
  *
- * ie: a place where backup files are stored).
+ * Ie: a place where backup files are stored).
  */
 interface DestinationInterface extends PluginInterface {
 

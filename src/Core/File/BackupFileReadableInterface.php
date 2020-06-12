@@ -3,7 +3,7 @@
 namespace Drupal\backup_migrate\Core\File;
 
 /**
- * Provides a service to provision temp files in the correct place for the environment.
+ * A service to provision temp files in the correct place for the environment.
  */
 interface BackupFileReadableInterface extends BackupFileInterface {
 
@@ -17,30 +17,37 @@ interface BackupFileReadableInterface extends BackupFileInterface {
   /**
    * Read a given number of bytes from the file.
    *
-   * @param int $size The number of bites to read
+   * @param int $size
+   *   The number of bites to read.
    *
-   * @return string The data read from the file or NULL if the file can't be read or is at the end of the file.
+   * @return string
+   *   The data read from the file or NULL if the file can't be read or is at
+   *   the end of the file.
    */
   public function readBytes($size = 0);
 
   /**
    * Read a single line from the file.
    *
-   * @return string The data read from the file or NULL if the file can't be read or is at the end of the file.
+   * @return string
+   *   The data read from the file or NULL if the file can't be read or is at
+   *   the end of the file.
    */
   public function readLine();
 
   /**
    * Read a line from the file.
    *
-   * @return string The data read from the file or NULL if the file can't be read.
+   * @return string
+   *   The data read from the file or NULL if the file can't be read.
    */
   public function readAll();
 
   /**
    * Open a file for reading or writing.
    *
-   * @param bool $binary If true open as a binary file
+   * @param bool $binary
+   *   If true open as a binary file.
    */
   public function openForRead($binary = FALSE);
 
@@ -55,7 +62,7 @@ interface BackupFileReadableInterface extends BackupFileInterface {
    * @param int $bytes
    *
    * @return int
-   *  The number of bytes moved or -1 if the operation failed.
+   *   The number of bytes moved or -1 if the operation failed.
    */
   public function seekBytes($bytes);
 
