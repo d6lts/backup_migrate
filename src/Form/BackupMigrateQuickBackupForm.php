@@ -40,9 +40,9 @@ class BackupMigrateQuickBackupForm extends FormBase {
       "#tree" => FALSE,
     ];
 
-    $form['quickbackup']['source_id'] = DrupalConfigHelper::getSourceSelector($bam, t('Backup Source'));
-    $form['quickbackup']['destination_id'] = DrupalConfigHelper::getDestinationSelector($bam, t('Backup Destination'));
-    $form['quickbackup']['settings_profile_id'] = DrupalConfigHelper::getSettingsProfileSelector(t('Settings Profile'));
+    $form['quickbackup']['source_id'] = DrupalConfigHelper::getSourceSelector($bam, $this->t('Backup Source'));
+    $form['quickbackup']['destination_id'] = DrupalConfigHelper::getDestinationSelector($bam, $this->t('Backup Destination'));
+    $form['quickbackup']['settings_profile_id'] = DrupalConfigHelper::getSettingsProfileSelector($this->t('Settings Profile'));
     unset($form['quickbackup']['destination_id']['#options']['upload']);
     // @todo Is this needed?
     // Create the service.

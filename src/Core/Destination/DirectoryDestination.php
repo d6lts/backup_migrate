@@ -243,7 +243,7 @@ class DirectoryDestination extends DestinationBase implements ListableDestinatio
 
     // Ensure the stream is configured.
     if (!$stream_wrapper_manager->isValidScheme($scheme)) {
-      \Drupal::messenger()->addMessage(t('Your @scheme stream is not configured.', [
+      \Drupal::messenger()->addMessage($this->t('Your @scheme stream is not configured.', [
         '@scheme' => $scheme . '://',
       ]), 'warning');
       return $files;

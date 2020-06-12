@@ -3,6 +3,7 @@
 namespace Drupal\Tests\backup_migrate\Functional;
 
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -11,6 +12,7 @@ use Drupal\Tests\BrowserTestBase;
  * @group backup_migrate
  */
 class BackupMigrateQuickBackupTest extends BrowserTestBase {
+  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}
@@ -62,7 +64,7 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
       'source_id' => 'default_db',
       'destination_id' => 'private_files',
     ];
-    $this->submitForm($data, t('Backup now'));
+    $this->submitForm($data, $this->t('Backup now'));
 
     // Confirm that the form submitted.
     $this->assertSession()->pageTextContains('Backup Complete.');
