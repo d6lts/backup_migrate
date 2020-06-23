@@ -131,9 +131,9 @@ abstract class BmTestBase extends DrupalWebTestCase {
    *   The backup files found in the requested backup destination.
    */
   protected function listBackupFiles($destination_id = 'manual') {
-    $items = array();
+    require_once dirname(__FILE__) . '/../includes/destinations.inc';
 
-    backup_migrate_include('destinations');
+    $items = array();
 
     // Load the destination object.
     $destination = backup_migrate_get_destination($destination_id);
@@ -205,8 +205,9 @@ abstract class BmTestBase extends DrupalWebTestCase {
    *   Returns 1 if found, 0 if not found, FALSE if an error occurs.
    */
   protected function fileHasTimestamp($file) {
+    require_once dirname(__FILE__) . '/../includes/files.inc';
+
     // Get the default filename, this is used later.
-    backup_migrate_include('files');
     $default_filename = _backup_migrate_default_filename();
     $ext = implode('.', $file->ext);
     $pattern = "/{$default_filename}-(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d)-(\d\d)-(\d\d).{$ext}/";
@@ -250,7 +251,8 @@ abstract class BmTestBase extends DrupalWebTestCase {
    *   The profile object.
    */
   protected function getProfile($profile_id = 'default') {
-    backup_migrate_include('profiles');
+    require_once dirname(__FILE__) . '/../includes/profiles.inc';
+
     return backup_migrate_get_profile($profile_id);
   }
 

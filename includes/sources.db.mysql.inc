@@ -4,7 +4,7 @@
  * @file
  */
 
-backup_migrate_include('sources.db');
+require_once dirname(__FILE__) . '/sources.db.inc';
 
 /**
  * @file

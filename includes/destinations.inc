@@ -5,7 +5,8 @@
  * All of the destination handling code needed for Backup and Migrate.
  */
 
-backup_migrate_include('crud', 'locations');
+require_once dirname(__FILE__) . '/crud.inc';
+require_once dirname(__FILE__) . '/locations.inc';
 
 /**
  * Get the available destination types.
@@ -87,7 +88,9 @@ function backup_migrate_backup_migrate_destination_subtypes() {
  * Get the built in backup destinations and those in the db.
  */
 function backup_migrate_backup_migrate_destinations() {
-  $out              = array();
+  require_once dirname(__FILE__) . '/filters.inc';
+
+  $out = array();
 
   // Add the default, out of the box destinations for new users.
   if (variable_get('backup_migrate_allow_backup_to_file', TRUE)) {
@@ -104,9 +107,9 @@ function backup_migrate_backup_migrate_destinations() {
     $out['download']  = backup_migrate_create_destination('browser_download');
   }
   $out['upload']    = backup_migrate_create_destination('browser_upload');
+
   // Expose the configured databases as sources.
-  backup_migrate_include('filters');
-  $out              += backup_migrate_filters_invoke_all('destinations');
+  $out += backup_migrate_filters_invoke_all('destinations');
 
   return $out;
 }
@@ -520,9 +523,11 @@ function _backup_migrate_ui_destination_display_file_list_options($files, $limit
  */
 function backup_migrate_ui_destination_download_file($destination_id = NULL, $file_id = NULL) {
   if ($file = backup_migrate_destination_get_file($destination_id, $file_id)) {
-    backup_migrate_include('files');
+    require_once dirname(__FILE__) . '/files.inc';
+
     $file->transfer();
   }
+
   drupal_goto(BACKUP_MIGRATE_MENU_PATH);
 }
 
@@ -833,13 +838,15 @@ class backup_migrate_destination extends backup_migrate_location {
       $files = $this->file_cache_get();
     }
     if ($files === NULL) {
+      require_once dirname(__FILE__) . '/files.inc';
+
       $files = $this->_list_files();
       $files = $this->load_files_info($files);
       if ($this->cache_files) {
         $this->file_cache_set($files);
       }
+
       // Clean up any previous abandoned tmp files before going further.
-      backup_migrate_include('files');
       _backup_migrate_temp_files_delete();
     }
 
@@ -929,13 +936,15 @@ class backup_migrate_destination extends backup_migrate_location {
    * Retrieve the file list.
    */
   public function file_cache_get() {
-    backup_migrate_include('files');
+    require_once dirname(__FILE__) . '/files.inc';
+
     $cache = cache_get('backup_migrate_file_list:' . $this->get_id());
     if (!empty($cache->data) && $cache->created > (time() - $this->cache_expire)) {
       $this->fetch_time = $cache->created;
       return $cache->data;
     }
     $this->fetch_time = 0;
+
     return NULL;
   }
 

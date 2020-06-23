@@ -4,7 +4,7 @@
  * @file
  */
 
-backup_migrate_include('sources.filesource');
+require_once dirname(__FILE__) . '/sources.filesource.inc';
 
 /**
  * @file
@@ -174,7 +174,10 @@ class backup_migrate_files_destination_archivesource extends backup_migrate_dest
    * Gets a database dump to add to the archive.
    */
   public function get_db() {
-    backup_migrate_include('destinations', 'files', 'filters', 'profiles');
+    require_once dirname(__FILE__) . '/destinations.inc';
+    require_once dirname(__FILE__) . '/files.inc';
+    require_once dirname(__FILE__) . '/filters.inc';
+    require_once dirname(__FILE__) . '/profiles.inc';
 
     $file = new backup_file();
     // Clone the default settings so we can make changes without them leaking

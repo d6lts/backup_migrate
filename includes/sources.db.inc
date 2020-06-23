@@ -24,10 +24,10 @@ class backup_migrate_source_db extends backup_migrate_source_remote {
    * Save the info by importing it into the database.
    */
   public function save_file($file, $settings) {
-    backup_migrate_include('files');
+    require_once dirname(__FILE__) . '/files.inc';
 
-    // Set the source_id to the destination_id in the settings since for a restore, the source_id is the
-    // database that gets restored to.
+    // Set the source_id to the destination_id in the settings since for a
+    // restore, the source_id is the database that gets restored to.
     $settings->set_source($this->get_id());
 
     // Restore the file to the source database.

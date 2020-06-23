@@ -35,7 +35,8 @@ class BmTestUpdate7310 extends BmTestBase {
    * Test update 7310.
    */
   public function testUpdate_7310() {
-    backup_migrate_include('schedules', 'destinations');
+    require_once dirname(__FILE__) . '/../includes/destinations.inc';
+    require_once dirname(__FILE__) . '/../includes/schedules.inc';
 
     $this->assertEqual(function_exists('backup_migrate_update_7310'), TRUE, 'Update 7310 exists.');
 

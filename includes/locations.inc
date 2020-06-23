@@ -5,13 +5,16 @@
  * All of the location handling code needed for Backup and Migrate.
  */
 
-backup_migrate_include('crud');
+require_once dirname(__FILE__) . '/crud.inc';
 
 /**
  * Get the available location types.
  */
 function backup_migrate_get_location_subtypes() {
-  backup_migrate_include('crud', 'destinations', 'sources');
+  require_once dirname(__FILE__) . '/crud.inc';
+  require_once dirname(__FILE__) . '/destinations.inc';
+  require_once dirname(__FILE__) . '/sources.inc';
+
   return backup_migrate_crud_subtypes('destination') + backup_migrate_crud_subtypes('source');
 }
 
@@ -21,10 +24,11 @@ function backup_migrate_get_location_subtypes() {
  * Get the built in backup locations and those in the db.
  */
 function backup_migrate_backup_migrate_locations() {
+  require_once dirname(__FILE__) . '/filters.inc';
+
   $out = array();
 
   // Allow the filter plugins to declare the default locations.
-  backup_migrate_include('filters');
   $out += backup_migrate_filters_invoke_all('locations');
 
   return $out;

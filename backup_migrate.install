@@ -18,7 +18,8 @@ function backup_migrate_requirements($phase) {
     // Get a list of all destinations, make sure none of them are publicly
     // accessible.
     // @todo Expand the API to add methods to specifically check this.
-    backup_migrate_include('destinations');
+    require_once dirname(__FILE__) . '/includes/destinations.inc';
+
     foreach (backup_migrate_get_destinations() as $dest_name => $destination) {
       if (method_exists($destination, 'get_display_location')) {
         $dest_path = $destination->get_display_location();
@@ -935,11 +936,12 @@ function backup_migrate_update_7308() {
 }
 
 /**
-< * NodeSquirrel support has been removed.
+ * NodeSquirrel support has been removed.
  */
 function backup_migrate_update_7309() {
-  backup_migrate_include('destinations');
-  backup_migrate_include('schedules');
+  require_once dirname(__FILE__) . '/includes/destinations.inc';
+  require_once dirname(__FILE__) . '/includes/schedules.inc';
+
   foreach (backup_migrate_get_schedules() as $schedule) {
     // Look for backups which use NodeSquirrel as its destination.
     if ($schedule->destination_id == 'nodesquirrel') {
