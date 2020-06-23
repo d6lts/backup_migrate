@@ -869,7 +869,7 @@ function backup_migrate_update_7305() {
     'backup_migrate_sources',
     'backup_migrate_schedules',
   ) as $table) {
-    if (!db_field_exists($table, $machine_name)) {
+    if (!db_field_exists($table, 'machine_name')) {
       try {
         db_add_field($table, 'machine_name', $field_spec);
       }
