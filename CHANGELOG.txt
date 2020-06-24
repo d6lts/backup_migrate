@@ -5,6 +5,7 @@ Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
   install file.
 #3143250 by DamienMcKenna: Use utf8mb4 for MySQL files.
 #3154166 by DamienMcKenna: Remove use of backup_migrate_include() entirely.
+#3129399 by solideogloria, DamienMcKenna: Missing ctools_export_form parameter.
 
 
 Backup and Migrate 7.x-3.7, 2020-02-28
