@@ -1,5 +1,5 @@
-Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
-------------------------------------------
+Backup and Migrate 7.x-3.8, 2020-07-10
+--------------------------------------
 #3119038 by solideogloria, gisle: Spelling typo in update scripts.
 #3143362 by DamienMcKenna, solideogloria: Undefined variable $machine_name in
   install file.
