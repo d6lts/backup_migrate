@@ -1031,3 +1031,38 @@ function backup_migrate_update_7310() {
     return t('No destinations were affected by this change.');
   }
 }
+
+/**
+ * Adjust the default performance settings.
+ */
+function backup_migrate_update_7311() {
+  $settings = array(
+    'backup_migrate_data_rows_per_query' => array(
+      'old' => 1000,
+      'new' => 50000,
+    ),
+    'backup_migrate_data_rows_per_line' => array(
+      'old' => 30,
+      'new' => 10,
+    ),
+    'backup_migrate_data_bytes_per_line' => array(
+      'old' => 2000,
+      'new' => 2*1024,
+    ),
+  );
+  foreach ($settings as $var_name => $data) {
+    $stored = variable_get($var_name);
+
+    // Nothing was stored in the database
+    if (empty($stored)) {
+      // Don't do anything, the new default will be picked up automatically.
+    }
+    // The old value was smaller than or equal to the new value, or was the
+    // same as the old default, delete it so that the new default can be picked
+    // up.
+    elseif (intval($stored) <= $data['new'] || $stored == $data['old']) {
+      variable_del($var_name);
+      drupal_set_message(t('!var setting reset to the new default of !val.', array('!var' => $var_name, '!val' => $data['new'])));
+    }
+  }
+}
