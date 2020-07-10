@@ -24,7 +24,7 @@ define('BACKUP_MIGRATE_KEEP_DEFAULT', 100);
 require_once dirname(__FILE__) . '/crud.inc';
 
 /**
- * Implementation of hook_backup_migrate_destination_types().
+ * Implements hook_backup_migrate_destination_types().
  *
  * Get the built in Backup and Migrate destination types.
  */
@@ -253,6 +253,7 @@ class backup_migrate_schedule extends backup_migrate_item {
 
     return backup_migrate_get_destination($this->get('destination_remote_id'));
   }
+
   /**
    * Get the destination object of the schedule.
    */
@@ -525,7 +526,7 @@ class backup_migrate_schedule extends backup_migrate_item {
     );
 
     $keep_hourly = variable_get('backup_migrate_smart_keep_hourly', BACKUP_MIGRATE_SMART_KEEP_HOURLY);
-    $keep_daily  = variable_get('backup_migrate_smart_keep_daily', BACKUP_MIGRATE_SMART_KEEP_DAILY);
+    $keep_daily = variable_get('backup_migrate_smart_keep_daily', BACKUP_MIGRATE_SMART_KEEP_DAILY);
     $keep_weekly = variable_get('backup_migrate_smart_keep_weekly', BACKUP_MIGRATE_SMART_KEEP_WEEKLY);
     $form['delete_settings']['smartdelete'] = array(
       "#type" => "radio",
@@ -785,11 +786,13 @@ class backup_migrate_schedule extends backup_migrate_item {
         $sorted[$id] = $time;
       }
     }
-    asort($sorted); // Sort files, oldest first.
+    // Sort files, oldest first.
+    asort($sorted);
 
     // Reset internal pointer and get the oldest file time.
     $oldest_file_time = reset($sorted);
-    $keep_files[key($sorted)] = key($sorted); // Save the oldest file.
+    // Save the oldest file.
+    $keep_files[key($sorted)] = key($sorted);
 
     foreach ($periods as $i => $period) {
       $period_keep_files = array();
@@ -824,6 +827,9 @@ class backup_migrate_schedule extends backup_migrate_item {
     }
   }
 
+  /**
+   *
+   */
   protected function find_nearest_file($files, $time) {
     $last_file_id = NULL;
     $last_file_time = NULL;
@@ -845,7 +851,8 @@ class backup_migrate_schedule extends backup_migrate_item {
           return $last_file_id;
         }
 
-        break; // Shouldn't hit this but you never know.
+        // Shouldn't hit this but you never know.
+        break;
       }
       $last_file_id = $id;
       $last_file_time = $file_time;

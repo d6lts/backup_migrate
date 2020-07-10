@@ -8,7 +8,7 @@
 require_once dirname(__FILE__) . '/crud.inc';
 
 /**
- * Implementation of hook_backup_migrate_profile_subtypes().
+ * Implements hook_backup_migrate_profile_subtypes().
  *
  * Get the built in Backup and Migrate profile types.
  */
@@ -22,7 +22,6 @@ function backup_migrate_backup_migrate_profile_subtypes() {
   );
   return $out;
 }
-
 
 /**
  * Get all the available backup profiles.
@@ -40,7 +39,7 @@ function backup_migrate_get_profiles() {
 }
 
 /**
- * Implementation of hook_backup_migrate_profiles_alter().
+ * Implements hook_backup_migrate_profiles_alter().
  *
  * Add default settings for any plugins which didn't exist when the profile was saved.
  */
@@ -60,7 +59,7 @@ function backup_migrate_get_profile($profile_id) {
 }
 
 /**
- * Implementation of hook_backup_migrate_profiles().
+ * Implements hook_backup_migrate_profiles().
  */
 function backup_migrate_backup_migrate_profiles() {
   $out = array();
@@ -96,7 +95,7 @@ function _backup_migrate_ui_backup_settings_form($profile) {
   drupal_add_js(drupal_get_path('module', 'backup_migrate') . '/backup_migrate.js', array('type' => 'file', 'scope' => 'footer'));
   drupal_add_css(drupal_get_path('module', 'backup_migrate') . '/backup_migrate.css');
 
-  $form    = array();
+  $form = array();
 
   $form['file'] = array(
     "#type" => "fieldset",
@@ -159,8 +158,8 @@ function _backup_migrate_ui_backup_settings_form($profile) {
     $form['advanced']['#collapsible'] = TRUE;
   }
 
-  $form['#validate'][]  = '_backup_migrate_ui_backup_settings_form_validate';
-  $form['#submit'][]    = '_backup_migrate_ui_backup_settings_form_submit';
+  $form['#validate'][] = '_backup_migrate_ui_backup_settings_form_validate';
+  $form['#submit'][]   = '_backup_migrate_ui_backup_settings_form_submit';
 
   return $form;
 }

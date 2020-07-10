@@ -16,8 +16,8 @@ define('BACKUP_MIGRATE_VERBOSE', NULL);
 define('BACKUP_MIGRATE_DISABLE_CRON', FALSE);
 define('BACKUP_MIGRATE_DATA_ROWS_PER_QUERY', 50000);
 define('BACKUP_MIGRATE_DATA_ROWS_PER_LINE', 10);
-define('BACKUP_MIGRATE_DATA_BYTES_PER_LINE', 2*1024);
-define('BACKUP_MIGRATE_MAX_EMAIL_SIZE', 2*1024*1024);
+define('BACKUP_MIGRATE_DATA_BYTES_PER_LINE', 2 * 1024);
+define('BACKUP_MIGRATE_MAX_EMAIL_SIZE', 2 * 1024 * 1024);
 define('BACKUP_MIGRATE_CLEANUP_TEMP_FILES', TRUE);
 define('BACKUP_MIGRATE_CLEANUP_TIME', 21600);
 define('BACKUP_MIGRATE_SCHEDULE_BUFFER', 0.01);
@@ -31,38 +31,46 @@ function backup_migrate_help($section, $arg) {
     case BACKUP_MIGRATE_MENU_PATH:
       $help = t('Use this form to run simple manual backups of your database and files.');
       break;
+
     case BACKUP_MIGRATE_MENU_PATH . '/export/advanced':
       $help = t('Use this form to run manual backups of your database and files with more advanced options. If you have any !profilelink saved you can load those settings. You can save any of the changes you make to these settings as a new settings profile.', array(
-          "!profilelink" => user_access('administer backup and migrate') ? l(t('settings profiles'), BACKUP_MIGRATE_MENU_PATH . '/profile') : t('settings profiles'),
-          '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
-          '!phpmyadminurl' => 'http://www.phpmyadmin.net',
-        ));
+        "!profilelink" => user_access('administer backup and migrate') ? l(t('settings profiles'), BACKUP_MIGRATE_MENU_PATH . '/profile') : t('settings profiles'),
+        '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
+        '!phpmyadminurl' => 'http://www.phpmyadmin.net',
+      ));
       break;
+
     case BACKUP_MIGRATE_MENU_PATH . '/restore':
       $help = t('Upload a backup and migrate backup file. The restore function will not work with database dumps from other sources such as phpMyAdmin.');
       break;
+
     case BACKUP_MIGRATE_MENU_PATH . '/settings/destination':
       $help = t('Destinations are the places you can save your backup files to or them load from.');
       break;
+
     case BACKUP_MIGRATE_MENU_PATH . '/settings/source':
       $help = t('Sources are the things that can be backed up such as database or file directories.');
       break;
+
     case BACKUP_MIGRATE_MENU_PATH . '/settings/profile':
       $help = t('Profiles are saved backup settings. Profiles store your table exclusion settings as well as your backup file name, compression and timestamp settings. You can use profiles in !schedulelink and for !manuallink.', array(
-          '!schedulelink' => user_access('administer backup and migrate') ? l(t('schedules'), BACKUP_MIGRATE_MENU_PATH . '/schedule') : t('settings profiles'),
-          '!manuallink' => user_access('perform backups') ? l(t('manual backups'), BACKUP_MIGRATE_MENU_PATH) : t('manual backups'),
-        ));
+        '!schedulelink' => user_access('administer backup and migrate') ? l(t('schedules'), BACKUP_MIGRATE_MENU_PATH . '/schedule') : t('settings profiles'),
+        '!manuallink' => user_access('perform backups') ? l(t('manual backups'), BACKUP_MIGRATE_MENU_PATH) : t('manual backups'),
+      ));
       break;
+
     case BACKUP_MIGRATE_MENU_PATH . '/schedule':
       $help = t('Automatically backup up your database and files on a regular schedule using <a href="!cronurl">cron</a>.', array(
-          '!cronurl' => 'http://drupal.org/cron',
-        ));
+        '!cronurl' => 'http://drupal.org/cron',
+      ));
       break;
+
     case BACKUP_MIGRATE_MENU_PATH . '/settings/import':
       $help = t('Import a settings profile, backup schedule, source or destination by pasting the export code into the textarea.', array(
-          '!cronurl' => 'http://drupal.org/cron',
-        ));
+        '!cronurl' => 'http://drupal.org/cron',
+      ));
       break;
+
     case 'admin/advanced_help':
       // Help link on module list page (admin/modules/list) or advanced help
       // module (admin/advanced_help/backup_migrate), use $arg to see if it
@@ -70,13 +78,13 @@ function backup_migrate_help($section, $arg) {
       if ($arg[2] != 'backup_migrate') {
         break;
       }
-    // Explicit fall-through.
+      // Explicit fall-through.
     case 'admin/help#backup_migrate':
       // Assemble help page based on all strings above plus more.
       $help = t('Backup and Migrate makes the task of backing up your Drupal database and migrating data from one Drupal install to another easier. It provides a function to backup the entire database to file or download, and to restore from a previous backup. You can also schedule the backup operation. Compression of backup files is also supported.  The database backup files created with this module can be imported into this or any other Drupal installation with the !restorelink, or you can use a database tool such as <a href="!phpmyadminurl">phpMyAdmin</a> or the mysql command line command.', array(
-          '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
-          '!phpmyadminurl' => 'http://www.phpmyadmin.net',
-        ));
+        '!restorelink' => user_access('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
+        '!phpmyadminurl' => 'http://www.phpmyadmin.net',
+      ));
       $help = '<p>' . $help . '</p>';
       $help .= backup_migrate_help_section(t('Quick Backup Tab'), BACKUP_MIGRATE_MENU_PATH, NULL, array('perform backup'));
       $help .= backup_migrate_help_section(t('Advanced Backup Tab'), BACKUP_MIGRATE_MENU_PATH . '/export/advanced', NULL, array('perform backup'));
@@ -99,7 +107,7 @@ function backup_migrate_help_section($title, $section, $more = NULL, $access_arg
   $show_this = TRUE;
   $help = '';
 
-  foreach($access_arguments as $access) {
+  foreach ($access_arguments as $access) {
     $show_this = $show_this && user_access($access);
   }
 
@@ -941,12 +949,12 @@ function theme_backup_migrate_ui_manual_quick_backup_form_inline($form) {
   // This is not good translation practice as it relies on the structure of
   // English. If I add the pulldown to the label, howerver, the box toggles
   // when the pulldown is clicked.
-  // $form['quickbackup']['destination']['copy']['#title']  = t('Save a copy to');
+  // $form['quickbackup']['destination']['copy']['#title']  = t('Save a copy to');.
   unset($form['quickbackup']['source_id']);
   unset($form['quickbackup']['destination']['destination_id']);
   unset($form['quickbackup']['destination']['copy_destination']);
   unset($form['quickbackup']['profile_id']);
-  // unset($form['quickbackup']['submit']);
+  // unset($form['quickbackup']['submit']);.
   return drupal_render_children($form);
 }
 
@@ -1557,11 +1565,13 @@ function backup_migrate_to_bytes($from) {
   switch ($unit) {
     case "M":
       return $number * pow(1024, 2);
-      break;
+
+    break;
 
     case "G":
       return $number * pow(1024, 3);
-      break;
+
+    break;
 
     default:
       return $number * pow(1024, 2);
@@ -1593,7 +1603,7 @@ function backup_migrate_perform_backup(&$settings) {
     // Hint: To further increase the memory limit used by Backup Migrate add one
     // of the following line to the settings.php file:
     // * $conf['backup_migrate_memory_limit'] = '512M';
-    // * $conf['backup_migrate_memory_limit'] = '1G';
+    // * $conf['backup_migrate_memory_limit'] = '1G';.
     $backup_migrate_memory_limit = variable_get('backup_migrate_memory_limit', BACKUP_MIGRATE_MEMORY_LIMIT);
 
     // Convert the Backup Migrate memory limit to bytes.
@@ -1872,14 +1882,15 @@ function backup_migrate_shutdown($settings) {
 /**
  * Implements hook_action_info().
  */
-// function backup_migrate_action_info() {
+// Function backup_migrate_action_info() {
 //   return array(
 //     'backup_migrate_action_backup' => array(
 //       'label' => t('Backup the database'),
 //       'description' => t('Backup the database with the default settings.'),
 //     ),
 //   );
-// }
+// }.
+
 /**
  * Action callback.
  */
@@ -2142,6 +2153,7 @@ function backup_migrate_array_name_value($a) {
  */
 function _backup_migrate_is_valid_memory_limit($value) {
   $test = preg_match('/^(-1|[0-9]+|[0-9]*(\.[0-9]+)?[mg])$/i', $value);
-  $out = $test ? TRUE : FALSE; // preg_match() returns truthy or falsy values, this makes it explicit.
+  // preg_match() returns truthy or falsy values, this makes it explicit.
+  $out = $test ? TRUE : FALSE;
   return $test;
 }

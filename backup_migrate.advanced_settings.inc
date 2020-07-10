@@ -176,6 +176,7 @@ function backup_migrate_unsigned_integer_validate($element, &$form_state, $form)
 
 /**
  * Validate fields that require a decimal between 0 and 1.
+ *
  * @todo Better name.
  */
 function backup_migrate_fraction_validate($element, &$form_state, $form) {

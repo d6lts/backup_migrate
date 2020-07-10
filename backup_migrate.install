@@ -995,9 +995,9 @@ function backup_migrate_update_7310() {
   // Which e-mail destinations exist?
   $destinations = db_select('backup_migrate_destinations', 'bmd')
     ->fields('bmd', array('machine_name'))
-      ->condition('subtype', 'email', '=')
-      ->execute()
-      ->fetchAllAssoc('machine_name', PDO::FETCH_ASSOC);
+    ->condition('subtype', 'email', '=')
+    ->execute()
+    ->fetchAllAssoc('machine_name', PDO::FETCH_ASSOC);
   $destinations = array_keys($destinations);
 
   if (!empty($destinations)) {
@@ -1047,13 +1047,13 @@ function backup_migrate_update_7311() {
     ),
     'backup_migrate_data_bytes_per_line' => array(
       'old' => 2000,
-      'new' => 2*1024,
+      'new' => 2 * 1024,
     ),
   );
   foreach ($settings as $var_name => $data) {
     $stored = variable_get($var_name);
 
-    // Nothing was stored in the database
+    // Nothing was stored in the database.
     if (empty($stored)) {
       // Don't do anything, the new default will be picked up automatically.
     }

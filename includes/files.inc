@@ -93,8 +93,6 @@ function _backup_migrate_move_files($from, $to) {
   return FALSE;
 }
 
-
-
 /**
  * Create a temporary directory.
  */
@@ -201,7 +199,6 @@ function _backup_migrate_file_dispose_buffer($buffer) {
   return "";
 }
 
-
 /**
  * A backup file which allows for saving to and reading from the server.
  */
@@ -288,6 +285,7 @@ class backup_file {
   public function info_set($key, $value) {
     $this->file_info[$key] = $value;
   }
+
   /**
    * Get the file extension.
    */
@@ -316,6 +314,9 @@ class backup_file {
     return @$this->type['id'];
   }
 
+  /**
+   *
+   */
   public function filesize() {
     if (empty($this->file_info['filesize'])) {
       $this->calculate_filesize();
@@ -323,6 +324,9 @@ class backup_file {
     return $this->file_info['filesize'];
   }
 
+  /**
+   *
+   */
   public function calculate_filesize() {
     $this->file_info['filesize'] = '';
     if (!empty($this->path) && file_exists($this->path)) {

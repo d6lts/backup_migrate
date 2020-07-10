@@ -158,6 +158,9 @@ class backup_migrate_destination_s3 extends backup_migrate_destination_remote {
     return implode('/', array_filter($parts));
   }
 
+  /**
+   *
+   */
   public function s3_object() {
     // Try to use libraries module if available to find the path.
     if (function_exists('libraries_get_path')) {

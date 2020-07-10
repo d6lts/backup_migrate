@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_drush_command().
+ * Implements hook_drush_command().
  */
 function backup_migrate_drush_command() {
   $items['bam-backup'] = array(
@@ -70,7 +70,7 @@ function backup_migrate_drush_command() {
 }
 
 /**
- * Implementation of hook_drush_help().
+ * Implements hook_drush_help().
  */
 function backup_migrate_drush_help($section) {
   switch ($section) {
@@ -209,7 +209,6 @@ function backup_migrate_drush_sources() {
   return _backup_migrate_drush_sources('source');
 }
 
-
 /**
  * Get a list of available destinations with the given op.
  */
@@ -226,7 +225,6 @@ function _backup_migrate_drush_destinations($op = NULL) {
   }
   drush_print_table($rows, TRUE, array(32, 32));
 }
-
 
 /**
  * Get a list of available destinations with the given op.

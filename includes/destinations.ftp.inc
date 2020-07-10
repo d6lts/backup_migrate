@@ -47,6 +47,9 @@ class backup_migrate_destination_ftp extends backup_migrate_destination_remote {
     drupal_ftp_delete_file($file_id, $this->ftp);
   }
 
+  /**
+   *
+   */
   public function _list_files() {
     require_once dirname(__FILE__) . '/files.inc';
 
@@ -81,14 +84,23 @@ class backup_migrate_destination_ftp extends backup_migrate_destination_remote {
     return $form;
   }
 
+  /**
+   *
+   */
   public function set_pasv($value) {
     $this->settings['pasv'] = (bool) $value;
   }
 
+  /**
+   *
+   */
   public function get_pasv() {
     return isset($this->settings['pasv']) ? $this->settings['pasv'] : FALSE;
   }
 
+  /**
+   *
+   */
   public function ftp_object() {
     if (!$this->ftp) {
       $this->dest_url['port'] = empty($this->dest_url['port']) ? '21' : $this->dest_url['port'];
@@ -103,7 +115,7 @@ class backup_migrate_destination_ftp extends backup_migrate_destination_remote {
 // The FTP code below was taken from the ftp module by Aaron Winborn.
 // Inspired by http://www.devarticles.com/c/a/PHP/My-FTP-Wrapper-Class-for-PHP/
 // It's been drupalized, however, and most of the bugs from that example have been fixed.
-// - winborn 2007-06-22 - 2007-06-28
+// - winborn 2007-06-22 - 2007-06-28.
 define('DRUPAL_FTP_FT_DIRECTORY', 0);
 define('DRUPAL_FTP_FT_FILE', 1);
 
@@ -389,7 +401,7 @@ function drupal_ftp_delete_folder($folder_name, &$ftp) {
   $file_counter = 0;
   $content = @ftp_nlist($ftp->__conn, ".");
 
-  for ($i = 0; $i < sizeof($content); $i++) {
+  for ($i = 0; $i < count($content); $i++) {
     // If we can change into this then it's a directory.
     // If not, it's a file.
     if ($content[$i] != "." && $content[$i] != "..") {
@@ -412,7 +424,7 @@ function drupal_ftp_delete_folder($folder_name, &$ftp) {
   }
 
   for ($j = 0; $j < $dir_counter; $j++) {
-    if ($directories[$j] != "." OR $directories[$j] != "..") {
+    if ($directories[$j] != "." or $directories[$j] != "..") {
       $location = ftp_pwd($ftp->__conn);
       drupal_ftp_delete_folder($directories[$j], $ftp);
       @ftp_cdup($ftp->__conn);

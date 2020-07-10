@@ -39,6 +39,9 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
    */
   protected static $viewNames = array();
 
+  /**
+   *
+   */
   public function type_name() {
     return t("MySQL Database");
   }

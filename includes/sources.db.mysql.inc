@@ -39,6 +39,9 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
    */
   protected static $viewNames = array();
 
+  /**
+   *
+   */
   public function type_name() {
     return t("MySQL Database");
   }
@@ -387,8 +390,6 @@ class backup_migrate_source_db_mysql extends backup_migrate_source_db {
     }
     return $out;
   }
-
-
 
   /**
    * Get the sql for the structure of the given table.
