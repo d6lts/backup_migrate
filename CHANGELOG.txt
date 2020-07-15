@@ -1,5 +1,5 @@
-Backup and Migrate 7.x-3.x-dev, xxxx-xx-xx
-------------------------------------------
+Backup and Migrate 7.x-3.9, 2020-07-15
+--------------------------------------
 #3158379 by DamienMcKenna, monnerat: Fixed compatibility with PHP 5.4.
 
 
