@@ -8,6 +8,8 @@ Backup and Migrate 5.0.0-rc1, 2020-06-12
 #3143652 by DamienMcKenna: Rename class methods that start with an underscore.
 #3124193 by vsujeetkumar, DamienMcKenna, Neslee Canil Pinto: t() calls should be
   avoided in classes.
+#3159638 by DamienMcKenna, endless_wander, snehalgaikwad, kvantstudio,
+  naresh_bavaskar: Error when saving destination.
 
 
 Backup and Migrate 8.x-4.x-dev, xxxx-xx-xx
