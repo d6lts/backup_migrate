@@ -5,6 +5,8 @@ namespace Drupal\backup_migrate\Drupal\Config;
 use Drupal\backup_migrate\Core\Config\ConfigInterface;
 use Drupal\backup_migrate\Core\Main\BackupMigrateInterface;
 use Drupal\backup_migrate\Core\Plugin\PluginManagerInterface;
+use Drupal\backup_migrate\Core\Source\FileDirectorySource;
+use Drupal\backup_migrate\Core\Source\MySQLiSource;
 use Drupal\backup_migrate\Entity\SettingsProfile;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\backup_migrate\Drupal\Destination\DrupalDirectoryDestination;
@@ -43,8 +45,7 @@ class DrupalConfigHelper {
   /**
    * Build the configuration form for a single plugin, source or destination.
    *
-   * @param Drupal\backup_migrate\Drupal\Destination\DrupalDirectoryDestination;
- $plugin
+   * @param DrupalDirectoryDestination|FileDirectorySource|MySQLiSource $plugin
    *   The plugin, source or destination to build the form for.
    * @param string $operation
    *   'backup', 'restore', or 'initialize' depending on the operation being
@@ -53,7 +54,7 @@ class DrupalConfigHelper {
    *
    * @return array
    */
-  public static function buildPluginForm(DrupalDirectoryDestination $plugin, $operation, array $parents = ['config']) {
+  public static function buildPluginForm($plugin, $operation, array $parents = ['config']) {
     $schema = $plugin->configSchema(['operation' => $operation]);
     $config = $plugin->config();
 

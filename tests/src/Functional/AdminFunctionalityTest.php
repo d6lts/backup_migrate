@@ -127,6 +127,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
     $session->addressEquals('admin/config/development/backup_migrate/settings/destination/edit/test_destination');
+    $session->pageTextContains('Created Test destination.');
     $session->fieldExists('label');
     $session->fieldExists('config[directory]');
     $session->buttonExists('Save');
@@ -143,6 +144,132 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('Saved Test destination.');
     $session->pageTextContains('Private Files Directory');
     $session->pageTextContains('private_files');
+    $session->pageTextContains('Test destination');
+    $session->pageTextContains('test_destination');
+  }
+
+  /**
+   * Make sure the 'sources' system works correctly.
+   */
+  public function testSourcesAdmin() {
+    // Load the source page.
+    $this->drupalGet('admin/config/development/backup_migrate/settings/source');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextContains('Backup Source');
+    $session->pageTextContains('Default Drupal Database');
+    $session->pageTextContains('default_db');
+    $session->pageTextContains('Default Database');
+
+    $session->pageTextContains('Entire Site');
+    $session->pageTextContains('entire_site');
+    $session->pageTextContains('Entire Site');
+
+    $session->pageTextContains('Private Files Directory');
+    $session->pageTextContains('private_files');
+    $session->pageTextContains('Public Files');
+
+    // @todo Confirm the table has four records.
+
+    // Load the add source form.
+    $this->drupalGet('admin/config/development/backup_migrate/settings/source/add');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextContains('Add Backup Source');
+    $session->fieldExists('label');
+    $session->fieldExists('type');
+    $session->buttonExists('Save and edit');
+
+    // Create a new source of type File Directory.
+    $edit = [
+        'label' => 'Test FileDirectory source',
+        'id' => 'test_filedirectory_source',
+        'type' => 'FileDirectory',
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Save and edit');
+
+    // This should load a new version of the form with the directory filled in.
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->addressEquals('admin/config/development/backup_migrate/settings/source/edit/test_filedirectory_source');
+    $session->pageTextContains('Created Test FileDirectory source.');
+    $session->fieldExists('label');
+    $session->fieldExists('config[directory]');
+    $session->buttonExists('Save');
+    $session->linkExists('Delete');
+
+    // Fill in a path.
+    $edit = [
+        'config[directory]' => 'test_path',
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Save');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->addressEquals('admin/config/development/backup_migrate/settings/source');
+    $session->pageTextContains('Saved Test FileDirectory source.');
+    $session->pageTextContains('Default Drupal Database');
+    $session->pageTextContains('default_db');
+    $session->pageTextContains('Entire Site');
+    $session->pageTextContains('entire_site');
+    $session->pageTextContains('Private Files Directory');
+    $session->pageTextContains('private_files');
+    $session->pageTextContains('Test FileDirectory source');
+    $session->pageTextContains('test_filedirectory_source');
+    $session->pageTextContains('File Directory');
+
+    // Load the add source form.
+    $this->drupalGet('admin/config/development/backup_migrate/settings/source/add');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextContains('Add Backup Source');
+    $session->fieldExists('label');
+    $session->fieldExists('type');
+    $session->buttonExists('Save and edit');
+
+    // Create a new source of type MySQL Database.
+    $edit = [
+        'label' => 'Test MySQL source',
+        'id' => 'test_mysql_source',
+        'type' => 'MySQL',
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Save and edit');
+
+    // This should load a new version of the form with the directory filled in.
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->addressEquals('admin/config/development/backup_migrate/settings/source/edit/test_mysql_source');
+    $session->pageTextContains('Created Test MySQL source.');
+    $session->fieldExists('label');
+    $session->fieldExists('config[host]');
+    $session->fieldExists('config[database]');
+    $session->fieldExists('config[username]');
+    $session->fieldExists('config[password]');
+    $session->fieldExists('config[port]');
+    $session->buttonExists('Save');
+    $session->linkExists('Delete');
+
+    // Fill in fields with test values.
+    $edit = [
+      'config[host]' => 'test_host',
+      'config[database]' => 'test_dbname',
+      'config[username]' => 'test_user',
+      'config[password]' => 'test_pw',
+      'config[port]' => '12345',
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Save');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->addressEquals('admin/config/development/backup_migrate/settings/source');
+    $session->pageTextContains('Saved Test MySQL source.');
+    $session->pageTextContains('Default Drupal Database');
+    $session->pageTextContains('default_db');
+    $session->pageTextContains('Entire Site');
+    $session->pageTextContains('entire_site');
+    $session->pageTextContains('Private Files Directory');
+    $session->pageTextContains('private_files');
+    $session->pageTextContains('Test MySQL source');
+    $session->pageTextContains('test_mysql_source');
+    $session->pageTextContains('MySQL Database');
   }
 
   /**

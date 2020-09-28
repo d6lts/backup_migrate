@@ -3,6 +3,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3158790 by devad, raman.b, karolus, robcarr, DamienMcKenna, endless_wander,
   Bagz, jhnnsbstnbch, abdul_azeez_drusys, celia_ccs: Unable to add schedules and
   profiles.
+#3169301 by devad, snehalgaikwad, DamienMcKenna: Unable to add backup source.
 
 
 Backup and Migrate 5.0.0-rc1, 2020-06-12
