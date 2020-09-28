@@ -9,7 +9,9 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3164263 by devad, DamienMcKenna, bigmonmulgrew: Incompatible PluginManager
   ::call() declaration.
 #3173582 by DamienMcKenna: Replace BACKUP_MIGRATE_MODULE_VERSION constant with
-  the module'\''s actual version.
+  the module's actual version.
+#3154715 by DamienMcKenna, xmacinfo: Add an update script to clear the caches
+  for upgrading to 5.0.x.
 
 
 Backup and Migrate 5.0.0-rc1, 2020-06-12
