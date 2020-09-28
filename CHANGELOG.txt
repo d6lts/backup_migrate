@@ -8,6 +8,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   in the UI.
 #3164263 by devad, DamienMcKenna, bigmonmulgrew: Incompatible PluginManager
   ::call() declaration.
+#3173582 by DamienMcKenna: Replace BACKUP_MIGRATE_MODULE_VERSION constant with
+  the module'\''s actual version.
 
 
 Backup and Migrate 5.0.0-rc1, 2020-06-12

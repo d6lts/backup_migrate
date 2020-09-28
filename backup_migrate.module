@@ -30,8 +30,6 @@ use Drupal\backup_migrate\Core\Filter\MetadataWriter;
 use Drupal\backup_migrate\Core\File\TempFileManager;
 use Drupal\backup_migrate\Drupal\File\DrupalTempFileAdapter;
 
-define('BACKUP_MIGRATE_MODULE_VERSION', '8.x-4.x-dev');
-
 /**
  * Back up a source to 1 or more destinations.
  *
@@ -163,7 +161,7 @@ function backup_migrate_backup_migrate_service_object_alter(BackupMigrateInterfa
     new Config([
       'generator' => 'Backup and Migrate for Drupal (https://www.drupal.org/project/backup_migrate)',
       'generatorurl' => 'https://www.drupal.org/project/backup_migrate',
-      'generatorversion' => BACKUP_MIGRATE_MODULE_VERSION,
+      'generatorversion' => backup_migrate_module_version(),
     ])
   ));
 
@@ -307,4 +305,27 @@ function backup_migrate_help($route_name, RouteMatchInterface $route_match) {
 
     return $output;
   }
+}
+
+/**
+ * Track this module's version.
+ *
+ * @return string
+ *   A module version string; defaults to '5.0.x-dev'.
+ */
+function backup_migrate_module_version() {
+  static $version;
+
+  if (is_null($version)) {
+    // The default version string for this release of the module.
+    $version = '5.0.x-dev';
+
+    // If the module's version can be identified, use it instead of the default.
+    $modules = Drupal::service('extension.list.module')->getAllInstalledInfo();
+    if (!empty($modules['backup_migrate']['version'])) {
+      $version = $modules['backup_migrate']['version'];
+    }
+  }
+
+  return $version;
 }

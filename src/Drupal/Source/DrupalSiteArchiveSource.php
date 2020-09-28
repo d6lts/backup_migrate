@@ -91,7 +91,7 @@ class DrupalSiteArchiveSource extends FileDirectorySource {
         'datestamp' => time(),
         "formatversion" => "2011-07-02",
         "generator" => "Backup and Migrate (http://drupal.org/project/backup_migrate)",
-        "generatorversion" => BACKUP_MIGRATE_MODULE_VERSION,
+        "generatorversion" => backup_migrate_module_version(),
       ],
       'Site 0' => [
         'version' => \Drupal::VERSION,
