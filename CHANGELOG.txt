@@ -4,6 +4,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   Bagz, jhnnsbstnbch, abdul_azeez_drusys, celia_ccs: Unable to add schedules and
   profiles.
 #3169301 by devad, snehalgaikwad, DamienMcKenna: Unable to add backup source.
+#3173623 by DamienMcKenna: Add test coverage for running a backup through cron
+  in the UI.
 
 
 Backup and Migrate 5.0.0-rc1, 2020-06-12

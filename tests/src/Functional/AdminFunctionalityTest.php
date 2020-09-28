@@ -46,6 +46,8 @@ class AdminFunctionalityTest extends BrowserTestBase {
       'administer backup and migrate',
       'perform backup',
       'restore from backup',
+      // Used to access the system cron page.
+      'administer site configuration',
     ]);
     $this->drupalLogin($account);
   }
@@ -53,7 +55,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
   /**
    * Tests each of the admin pages loads correctly.
    *
-   * This is to be unsed until a 
+   * This is to be used until all of the admin functionality has separate
    *
    * @param string $path
    *   The path to check.
@@ -294,6 +296,26 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('Last backups');
     // @todo Confirm the table only has one record.
 
+    // Edit an existing schedule - turn on the default schedule.
+    $this->drupalGet('admin/config/development/backup_migrate/schedule/edit/daily_schedule');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->fieldExists('Schedule enabled');
+    $edit = [
+      'enabled' => TRUE,
+      'period_number' => 1,
+      'period_type' => 'days',
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Save');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextContains('Saved the Daily Schedule Schedule.');
+    $session->pageTextContains('Yes');
+    $session->pageTextContains('Daily');
+    $session->pageTextContains('Never');
+    $session->pageTextContains('Next cron run');
+    $session->pageTextNotContains('Disabled');
+
     // Load the schedule-add form.
     $this->drupalGet('admin/config/development/backup_migrate/schedule/add');
     $session = $this->assertSession();
@@ -322,6 +344,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
     ];
     $this->drupalPostForm(NULL, $edit, 'Save');
 
+    // Make sure the form saved correctly.
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
     $session->addressEquals('admin/config/development/backup_migrate/schedule');
@@ -392,6 +415,58 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('none');
     $session->pageTextContains('1');
     $session->pageTextContains('Test description text.');
+  }
+
+  /**
+   * Run the system cron.
+   */
+  public function testCron() {
+    // Turn on the default schedule.
+    $this->drupalGet('admin/config/development/backup_migrate/schedule/edit/daily_schedule');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->fieldExists('Schedule enabled');
+    $edit = [
+      'enabled' => TRUE,
+      'period_number' => 1,
+      'period_type' => 'days',
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Save');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextContains('Saved the Daily Schedule Schedule.');
+    $session->pageTextContains('Never');
+    $session->pageTextContains('Next cron run');
+
+    // Confirm the backup destination is empty.
+    $this->drupalGet('admin/config/development/backup_migrate/settings/destination/backups/private_files');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextContains('There are no backups in this destination.');
+
+    // Trigger cron.
+    $this->drupalGet('admin/reports/status');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->linkExists('Run cron');
+    $this->clickLink('Run cron');
+
+    // Make sure that cron ran correctly.
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->addressEquals('admin/reports/status');
+    $session->pageTextContains('Cron ran successfully.');
+
+    // Check that the schedule is enabled.
+    $this->drupalGet('admin/config/development/backup_migrate/schedule/edit/daily_schedule');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+
+    // Confirm a backup was created.
+    $this->drupalGet('admin/config/development/backup_migrate/settings/destination/backups/private_files');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextNotContains('There are no backups in this destination.');
   }
 
 }
