@@ -109,7 +109,7 @@ class PluginManager implements PluginManagerInterface, ConfigurableInterface {
   /**
    * {@inheritdoc}
    */
-  public function call($op, $operand = NULL, $params = []) {
+  public function call($op, $operand = NULL, array $params = []) {
 
     // Run each of the installed plugins which implements the given operation.
     foreach ($this->getAllByOp($op) as $plugin) {
