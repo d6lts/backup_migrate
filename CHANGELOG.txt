@@ -1,4 +1,4 @@
-Backup and Migrate 5.0.x-dev, xxxx-xx-xx
+Backup and Migrate 5.0.0-rc2, 2020-09-28
 ----------------------------------------
 #3158790 by devad, raman.b, karolus, robcarr, DamienMcKenna, endless_wander,
   Bagz, jhnnsbstnbch, abdul_azeez_drusys, celia_ccs: Unable to add schedules and
