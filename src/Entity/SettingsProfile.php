@@ -37,6 +37,7 @@ use Drupal\backup_migrate\SettingsProfileInterface;
  *     "id",
  *     "label",
  *     "uuid",
+ *     "config"
  *   }
  * )
  */
