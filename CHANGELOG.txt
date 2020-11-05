@@ -1,5 +1,6 @@
 Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 ----------------------------------------
+#3177961 by DamienMcKenna, nikhitarathore: Full site backup doesn't work.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

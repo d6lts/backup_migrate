@@ -8,6 +8,8 @@ use Drupal\backup_migrate\Core\File\BackupFileWritableInterface;
 use Drupal\backup_migrate\Core\Plugin\PluginCallerTrait;
 use Drupal\backup_migrate\Core\Plugin\PluginCallerInterface;
 use PDO;
+use Drupal\backup_migrate\Drupal\File\DrupalTempFileAdapter;
+use Drupal\backup_migrate\Core\File\TempFileManager;
 
 /**
  *
@@ -44,6 +46,9 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
    */
   public function exportToFile() {
     if ($connection = $this->_getConnection()) {
+      $adapter = new DrupalTempFileAdapter(\Drupal::service('file_system'));
+      $tempfilemanager = new TempFileManager($adapter);
+      $this->setTempFileManager($tempfilemanager);
       $file = $this->getTempFileManager()->create('mysql');
 
       $exclude = (array) $this->confGet('exclude_tables');
