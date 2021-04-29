@@ -6,6 +6,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3200714 by DiegoPino, pdcarto, azovsky, felixoe, DamienMcKenna:
   Incompatibility with s3fs.
 #3186638 by bgilhome, DamienMcKenna: Schema for plugin 'config' keys.
+#3186656 by fgm, DamienMcKenna: Use state API instead of custom KV collection
+  for last run.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28
