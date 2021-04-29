@@ -1,6 +1,8 @@
 Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 ----------------------------------------
 #3177961 by DamienMcKenna, nikhitarathore: Full site backup doesn't work.
+#3200694 by David Radcliffe, DamienMcKenna: Returning bool from comparison
+  function is deprecated in PHP 8.0.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28
