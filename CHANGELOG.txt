@@ -5,6 +5,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   function is deprecated in PHP 8.0.
 #3200714 by DiegoPino, pdcarto, azovsky, felixoe, DamienMcKenna:
   Incompatibility with s3fs.
+#3186638 by bgilhome, DamienMcKenna: Schema for plugin 'config' keys.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28
