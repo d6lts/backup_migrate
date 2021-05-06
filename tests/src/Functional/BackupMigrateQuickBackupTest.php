@@ -80,4 +80,33 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
     $this->assertNotNull($row);
   }
 
+  /**
+   * Verify that backups can be restored.
+   */
+  public function testBackupsCanBeRestored() {
+    $this->testQuickBackup();
+
+    // Load the destination page for the private files destination.
+    $this->drupalGet('admin/config/development/backup_migrate/settings/destination/backups/private_files');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+
+    // Confirm a file exists with a "restore" link.
+    $session->linkExists('Restore');
+
+    // Load the route for deleting an existing backup.
+    $this->clickLink('Restore');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    // $session->addressEquals('admin/reports/status');
+    $session->pageTextContains('Are you sure you want to restore this backup?');
+
+    // Restore the backup.
+    $this->drupalPostForm(NULL, [], 'Restore');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->addressEquals('admin/config/development/backup_migrate/settings/destination/backups/private_files');
+    $session->pageTextContains('Restore Complete.');
+  }
+
 }
