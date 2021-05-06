@@ -9,6 +9,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3186656 by fgm, DamienMcKenna: Use state API instead of custom KV collection
   for last run.
 #3210689 by DamienMcKenna, MichaelvonB: Can't restore backups.
+#3154716 by DamienMcKenna, xmacinfo: Unable to delete backups.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

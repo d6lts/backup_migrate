@@ -98,7 +98,6 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
     $this->clickLink('Restore');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
-    // $session->addressEquals('admin/reports/status');
     $session->pageTextContains('Are you sure you want to restore this backup?');
 
     // Restore the backup.
@@ -107,6 +106,38 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
     $session->statusCodeEquals(200);
     $session->addressEquals('admin/config/development/backup_migrate/settings/destination/backups/private_files');
     $session->pageTextContains('Restore Complete.');
+  }
+
+  /**
+   * Verify that backups can be deleted.
+   */
+  public function testBackupsCanBeDeleted() {
+    $this->testQuickBackup();
+
+    // Load the destination page for the private files destination.
+    $this->drupalGet('admin/config/development/backup_migrate/settings/destination/backups/private_files');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+
+    // Confirm a file exists with a "delete" link.
+    $session->linkExists('Delete');
+
+    // Load the route for deleting an existing backup.
+    $this->clickLink('Delete');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->pageTextContains('Are you sure you want to delete this backup?');
+
+    // Make sure the text without a filename is not present, which would
+    // indicate that the filename was not passed correctly.
+    $session->pageTextNotContains('This will permanently remove from Private Files Directory.');
+
+    // Delete the backup.
+    $this->drupalPostForm(NULL, [], 'Delete');
+    $session = $this->assertSession();
+    $session->statusCodeEquals(200);
+    $session->addressEquals('admin/config/development/backup_migrate/settings/destination/backups/private_files');
+    $session->pageTextContains('There are no backups in this destination.');
   }
 
 }
