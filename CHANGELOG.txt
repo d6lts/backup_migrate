@@ -10,6 +10,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   for last run.
 #3210689 by DamienMcKenna, MichaelvonB: Can't restore backups.
 #3154716 by DamienMcKenna, xmacinfo: Unable to delete backups.
+#3174581 by paulocs, kleiton_rodrigues, DamienMcKenna: drupalPostForm in
+  functional tests is deprecated.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

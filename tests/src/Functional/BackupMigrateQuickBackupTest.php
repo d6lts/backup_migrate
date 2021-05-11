@@ -101,7 +101,7 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
     $session->pageTextContains('Are you sure you want to restore this backup?');
 
     // Restore the backup.
-    $this->drupalPostForm(NULL, [], 'Restore');
+    $this->submitForm([], 'Restore');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
     $session->addressEquals('admin/config/development/backup_migrate/settings/destination/backups/private_files');
@@ -133,7 +133,7 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
     $session->pageTextNotContains('This will permanently remove from Private Files Directory.');
 
     // Delete the backup.
-    $this->drupalPostForm(NULL, [], 'Delete');
+    $this->submit([], 'Delete');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
     $session->addressEquals('admin/config/development/backup_migrate/settings/destination/backups/private_files');
