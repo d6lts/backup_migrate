@@ -12,6 +12,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3154716 by DamienMcKenna, xmacinfo: Unable to delete backups.
 #3174581 by paulocs, kleiton_rodrigues, DamienMcKenna: drupalPostForm in
   functional tests is deprecated.
+#3187818 by AndrewsizZ, DamienMcKenna: Replace uses of REQUEST_TIME and time()
+  with time service.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28
