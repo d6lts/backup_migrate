@@ -19,6 +19,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3186486 by SivaprasadC, DamienMcKenna: Duplicated words and minor typos in a
   couple of files.
 #3186527 by DamienMcKenna: Fix tests on 5.0.x branch.
+#3214038 by DamienMcKenna: Discourage "full site" backup option.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

@@ -163,7 +163,6 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('default_db');
     $session->pageTextContains('Default Database');
 
-    $session->pageTextContains('Entire Site');
     $session->pageTextContains('entire_site');
     $session->pageTextContains('Entire Site');
 
