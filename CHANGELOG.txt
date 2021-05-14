@@ -16,6 +16,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   with time service.
 #3136294 by Pooja Ganjage, ergophobe, DamienMcKenna, gagarine: Change Defuse
   message to a notice, not warning.
+#3186486 by SivaprasadC, DamienMcKenna: Duplicated words and minor typos in a
+  couple of files.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

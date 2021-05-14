@@ -230,7 +230,7 @@ class Schedule extends ConfigEntityBase {
   }
 
   /**
-   * Convert a number of of seconds into a period array.
+   * Convert a number of seconds into a period array.
    *
    * @param int $seconds
    *   The number of seconds to convert.
