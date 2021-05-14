@@ -133,7 +133,7 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
     $session->pageTextNotContains('This will permanently remove from Private Files Directory.');
 
     // Delete the backup.
-    $this->submit([], 'Delete');
+    $this->submitForm([], 'Delete');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
     $session->addressEquals('admin/config/development/backup_migrate/settings/destination/backups/private_files');

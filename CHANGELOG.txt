@@ -18,6 +18,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   message to a notice, not warning.
 #3186486 by SivaprasadC, DamienMcKenna: Duplicated words and minor typos in a
   couple of files.
+#3186527 by DamienMcKenna: Fix tests on 5.0.x branch.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28
