@@ -14,6 +14,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   functional tests is deprecated.
 #3187818 by AndrewsizZ, DamienMcKenna: Replace uses of REQUEST_TIME and time()
   with time service.
+#3136294 by Pooja Ganjage, ergophobe, DamienMcKenna, gagarine: Change Defuse
+  message to a notice, not warning.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28
