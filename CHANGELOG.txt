@@ -20,6 +20,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   couple of files.
 #3186527 by DamienMcKenna: Fix tests on 5.0.x branch.
 #3214038 by DamienMcKenna: Discourage "full site" backup option.
+#3197359 by larisse, bart lambert, DamienMcKenna, hmendes: Encryption fails to
+  produce backup.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

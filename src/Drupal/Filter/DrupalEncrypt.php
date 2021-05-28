@@ -70,7 +70,7 @@ class DrupalEncrypt extends PluginBase implements FileProcessorInterface {
   /**
    *
    */
-  protected function encryptFile(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
+  protected function _encryptFile(BackupFileReadableInterface $from, BackupFileWritableInterface $to) {
     $path = \Drupal::service('file_system')->realpath($from->realpath());
     $out_path = \Drupal::service('file_system')->realpath($to->realpath());
 
