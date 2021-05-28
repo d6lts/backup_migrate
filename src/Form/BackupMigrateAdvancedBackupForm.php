@@ -92,7 +92,14 @@ class BackupMigrateAdvancedBackupForm extends FormBase {
 
     // Let the plugins validate their own config data.
     if ($plugin_errors = $bam->plugins()->map('configErrors', ['operation' => 'backup'])) {
+      $has_token_module = \Drupal::moduleHandler()->moduleExists('token');
+
       foreach ($plugin_errors as $plugin_key => $errors) {
+        if ($plugin_key == "namer" && isset($errors[0])) {
+          if ($errors[0]->getFieldKey() == "filename" && $has_token_module) {
+            continue;
+          }
+        }
         foreach ($errors as $error) {
           $form_state->setErrorByName($plugin_key . '][' . $error->getFieldKey(), $this->t($error->getMessage(), $error->getReplacement()));
         }
