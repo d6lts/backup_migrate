@@ -25,6 +25,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3156794 by larisse, hmendes, pglatz, DamienMcKenna: Add token support to
   filename output.
 #3217908 by DamienMcKenna: Inconsistent arguments on alterBackupMigrate().
+#3216400 by jacob.embree, larisse, DamienMcKenna: Rename HTTPClientInterface.php
+  to HttpClientInterface.php.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28
