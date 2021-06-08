@@ -45,7 +45,7 @@ class EntireSiteSourcePlugin extends SourcePluginBase {
   /**
    * {@inheritdoc}
    */
-  public function alterBackupMigrate(BackupMigrateInterface $bam, $key, $options = []) {
+  public function alterBackupMigrate(BackupMigrateInterface $bam, $key, array $options = []) {
     if ($source = $this->getObject()) {
       $bam->sources()->add($key, $source);
       // @todo Enable this, fix it.
