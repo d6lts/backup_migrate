@@ -27,6 +27,8 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
 #3217908 by DamienMcKenna: Inconsistent arguments on alterBackupMigrate().
 #3216400 by jacob.embree, larisse, DamienMcKenna: Rename HTTPClientInterface.php
   to HttpClientInterface.php.
+#3216285 by paulocs, larisse, DamienMcKenna: PHPUnit 8 introduced void return
+  types on setUp() methods.
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

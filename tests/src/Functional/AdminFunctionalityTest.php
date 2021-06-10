@@ -30,7 +30,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->container->get('router.builder')->rebuild();
 

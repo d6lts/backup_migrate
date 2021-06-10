@@ -32,7 +32,7 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     // Ensure backup_migrate folder exists.
