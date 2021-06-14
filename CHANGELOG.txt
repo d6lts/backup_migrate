@@ -31,6 +31,7 @@ Backup and Migrate 5.0.x-dev, xxxx-xx-xx
   types on setUp() methods.
 #3180214 by larisse, djg_tram, DamienMcKenna: Site does not switch out of
   maintenance mode after backup finished.
+#3218417 by DamienMcKenna, larisse: Update output header (incorrect URL, etc).
 
 
 Backup and Migrate 5.0.0-rc2, 2020-09-28

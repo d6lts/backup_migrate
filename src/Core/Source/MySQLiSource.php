@@ -216,14 +216,15 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
     $timestamp = gmdate('r');
     $generator = $this->confGet('generator');
 
+    // @todo Expose these options in config with the ability to turn on and off.
     return <<<HEADER
--- Backup and Migrate MySQL Dump
--- http://github.com/backupmigrate
+-- Generator: Backup and Migrate
+-- https://www.drupal.org/project/backup_migrate
 --
--- Generator: $generator
 -- Host: $host
 -- Database: $db
 -- Generation Time: $timestamp
+-- Database Type: MySQL
 -- MySQL Version: $version
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -232,8 +233,6 @@ class MySQLiSource extends DatabaseSource implements PluginCallerInterface {
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=NO_AUTO_VALUE_ON_ZERO */;
-
-/* @todo expose these options in config with the ability to turn on and off */
 
 SET AUTOCOMMIT = 0;
 SET FOREIGN_KEY_CHECKS=0;
@@ -257,7 +256,6 @@ HEADER;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
-/* @todo expose these options in config with the ability to turn on and off */
 SET FOREIGN_KEY_CHECKS = 1;
 COMMIT;
 SET AUTOCOMMIT = 1;
