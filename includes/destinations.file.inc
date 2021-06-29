@@ -179,7 +179,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
     if (!is_dir($directory)) {
       foreach (explode('/', $directory) as $dir) {
         $dirs[] = $dir;
-        $path = implode($dirs, '/');
+        $path = implode('/', $dirs);
         if ($path && !is_dir(realpath($path)) && !file_check_directory($path, FILE_CREATE_DIRECTORY)) {
           $out = FALSE;
         }
